@@ -13,10 +13,10 @@ stages:
   before_script:
     - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
 
-build-master:
+build-main:
   stage: build
   only:
-    - master
+    - main
   extends: .docker_build_template
   script:
     - docker build -t $IMAGE_TAG_LATEST .
