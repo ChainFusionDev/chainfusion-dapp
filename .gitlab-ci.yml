@@ -1,0 +1,24 @@
+image: docker:20
+
+variables:
+  IMAGE_TAG: chainfusion/dapp:$CI_COMMIT_REF_NAME
+  IMAGE_TAG_LATEST: chainfusion/dapp:latest
+
+stages:
+  - build
+
+.docker_login_before_script_template:
+  before_script:
+    - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+
+build-tags:
+  extends: .docker_login_before_script_template
+  services:
+    - docker:20-dind
+  stage: build
+  only:
+    - tags
+  script:
+    - docker build -t $IMAGE_TAG -t $IMAGE_TAG_LATEST .
+    - docker push $IMAGE_TAG
+    - docker push $IMAGE_TAG_LATEST
