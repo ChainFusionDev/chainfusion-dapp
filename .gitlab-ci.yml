@@ -13,6 +13,20 @@ stages:
   before_script:
     - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
 
+.deploy-template:
+  image: crosscone/k8s-gcloud:latest
+  script:
+    - configure
+    - helm upgrade --install --wait $CHART_NAME ./chart
+        --set image=$IMAGE_TAG
+        --set replicas=$REPLICAS
+        --set hostname=$HOSTNAME
+        --set tls.enabled=true
+        --set tls.secretName=$TLS_SECRET_NAME
+        --set redirect.hostname=$REDIRECT_HOSTNAME
+        --set redirect.tls.enabled=true
+        --set redirect.tls.secretName=$REDIRECT_TLS_SECRET_NAME
+
 build-main:
   stage: build
   only:
@@ -30,3 +44,26 @@ build-tags:
   script:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+
+deploy:dev:
+  stage: deploy
+  only:
+    - tags
+  extends: .deploy-template
+  variables:
+    CHART_NAME: chainfusion-dapp-dev
+    REPLICAS: 1
+    HOSTNAME: dev-app.chainfusion.org
+    TLS_SECRET_NAME: chainfusion-org-tls
+
+deploy:prod:
+  stage: deploy
+  only:
+    - tags
+  extends: .deploy-template
+  when: manual
+  variables:
+    CHART_NAME: chainfusion-dapp
+    REPLICAS: 1
+    HOSTNAME: app.chainfusion.org
+    TLS_SECRET_NAME: chainfusion-org-tls

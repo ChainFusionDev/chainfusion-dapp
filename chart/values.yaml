@@ -1,0 +1,13 @@
+image: ""
+replicas: 1
+
+hostname: ""
+tls:
+  enabled: false
+  secretName: ""
+
+redirect:
+  hostname: ""
+  tls:
+    enabled: false
+    secretName: ""
