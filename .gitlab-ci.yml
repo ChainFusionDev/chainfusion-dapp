@@ -7,18 +7,26 @@ variables:
 stages:
   - build
 
-.docker_login_before_script_template:
+.docker_build_template:
+  services:
+    - docker:20-dind
   before_script:
     - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
 
+build-master:
+  stage: build
+  only:
+    - master
+  extends: .docker_build_template
+  script:
+    - docker build -t $IMAGE_TAG_LATEST .
+    - docker push $IMAGE_TAG_LATEST
+
 build-tags:
-  extends: .docker_login_before_script_template
-  services:
-    - docker:20-dind
   stage: build
   only:
     - tags
+  extends: .docker_build_template
   script:
-    - docker build -t $IMAGE_TAG -t $IMAGE_TAG_LATEST .
+    - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
-    - docker push $IMAGE_TAG_LATEST
