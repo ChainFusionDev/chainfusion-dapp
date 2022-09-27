@@ -1,7 +1,17 @@
+import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '../styles/responsive.css'
+import '../styles/fontawesome/css/all.min.css'
+import 'animate.css';
 
-function App({ Component, pageProps }: AppProps) {
+
+import type { AppProps } from 'next/app'
+import { useEffect } from 'react'
+
+function App({ Component, pageProps }: AppProps): JSX.Element {
+  useEffect(() => {
+    require("bootstrap/dist/js/bootstrap");
+  }, []);
   return <Component {...pageProps} />
 }
 
