@@ -28,9 +28,10 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
+.title {
+  color: #0D7EE7;
   text-decoration: none;
+  margin-top: 30px !important;
 }
 
 .title a:hover,
@@ -42,7 +43,7 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .title,

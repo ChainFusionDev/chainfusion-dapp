@@ -1,0 +1,152 @@
+@media only screen and (max-width: 768px) {
+  .form-bridge {
+    margin-top: 100px;
+    padding: 30px;
+  }
+  input[type="text"] {
+    font-size: 19px;
+    height: 55px;
+    padding-right: 25px;
+  }
+  .select-token {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    position: unset;
+    height: 35px;
+    border: 1px solid var(--light);
+  }
+
+  .blockchanin-label {
+    position: unset;
+    display: inline-block;
+  }
+
+  .select-token {
+    margin-bottom: 5px;
+    padding: 5px;
+    height: 40px;
+  }
+
+  .blockchanin-label.send-from {
+    padding-left: 50px;
+  }
+
+  .blockchanin-label.send-to {
+    padding-left: 35px;
+  }
+
+  .token-label {
+    position: unset;
+    display: inline-block;
+    padding-left: 10px;
+  }
+  .select-token .fa-chevron-down {
+    top: 13px;
+    padding-right: 5px;
+  }
+  .token-amount {
+    position: absolute;
+    left: 13px;
+    top: 8px;
+    font-size: 13px;
+    width: 35px;
+  }
+  .change-token {
+    top: 170px;
+  }
+  .logo {
+    width: 230px;
+    margin-top: 0px;
+  }
+  .change-token {
+    top: 150px !important;
+    right: 40px;
+    margin-right: 0;
+  }
+  .setting-receiver {
+    font-size: 18px;
+    top: 20px;
+    right: 16px;
+  }
+
+  .progress-transfer-list li {
+    padding: 11px;
+    font-size: 12px;
+    min-height: 45px;
+  }
+
+  .progress-transfer-list li .fa-circle-check,
+  .progress-active .fa-spinner-third {
+    margin-top: 3px;
+  }
+
+}
+
+@media only screen and (max-width: 992px) {
+  .modal-dialog {
+    min-height: calc(100vh - 20px);
+  }
+  .navbarMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-top: 0px;
+    border-bottom: 1px solid var(--light);
+    background: rgb(255 255 255 / 80%);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 1030;
+  }
+
+  .navbarMenu .navbar-nav .nav-item a {
+    padding: 15px;
+  }
+
+  .logo-mobile img {
+    width: 150px;
+  }
+
+  .change-token {
+    top: 165px;
+  }
+
+  .connect-wallet-btn {
+    max-width: 210px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .transaction-info {
+    padding: 3px 15px !important;
+    display: flex !important;
+    align-items: start !important;
+    flex-direction: column;
+  }
+
+  .transfer-block .fa-chevron-down {
+    position: absolute;
+    right: 30px;
+    margin-top: 13px;
+  }
+
+  .transaction-arrow {
+    left: 34px !important;
+    right: unset !important;
+  }
+
+  .transaction-arrow .fa-arrows-repeat {
+    position: relative;
+    color: var(--silver);
+    transform: rotateZ(90deg);
+    top: 18px;
+  }
+
+  .from-transaction,
+  .to-transaction {
+    margin-left: 20px;
+  }
+
+
+}
