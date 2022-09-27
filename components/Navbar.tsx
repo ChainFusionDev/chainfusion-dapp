@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
-        <a className="logo-mobile d-none" href="/">
+        <Link className="logo-mobile d-none" href="/">
           <img src="/img/icon.svg" className="img-fluid" />
-        </a>
+        </Link>
         <button
           className="navbar-toggler collapsed ml-auto"
           type="button"
