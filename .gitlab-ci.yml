@@ -28,6 +28,15 @@ stages:
         --set redirect.tls.enabled=true
         --set redirect.tls.secretName=$REDIRECT_TLS_SECRET_NAME
 
+build-mr:
+  stage: build
+  only:
+    - merge_requests
+  image: node:16-alpine
+  script:
+    - yarn
+    - yarn build
+
 build-main:
   stage: build
   only:
