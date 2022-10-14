@@ -100,11 +100,11 @@
     z-index: 1030;
   }
 
-  .navbarMenu .navbar-nav .nav-item a {
+  .navbarMenu .navbar-nav .nav-item .nav-link {
     padding: 15px;
   }
 
-  .logo-mobile img {
+  .logo-mobile {
     width: 150px;
   }
 
