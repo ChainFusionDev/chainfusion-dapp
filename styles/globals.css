@@ -22,7 +22,8 @@ body,
 body {
   font: normal 14px/1.8 "Inter", sans-serif, "Font Awesome 6 Pro";
   color: var(--white);
-  background-image: url("../public/img/bg.svg");
+  background-image: url("/img/bg.svg");
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -105,7 +106,7 @@ main,
   margin-top: 25px;
 }
 
-.navbarMenu .navbar-nav .nav-item a {
+.navbarMenu .navbar-nav .nav-item .nav-link {
   padding: 13px 15px;
   min-width: 100px;
   text-align: center;
@@ -117,8 +118,9 @@ main,
   transition: all ease-out 0.3s;
 }
 
-.navbarMenu .navbar-nav .nav-item a:hover {
+.navbarMenu .navbar-nav .nav-item .nav-link:hover {
   color: var(--main-color);
+  text-decoration: none;
 }
 
 .navbar-nav .nav-item.active a {
@@ -141,6 +143,7 @@ main,
   background: var(--main-color);
   transition: all ease-out 0.3s;
   border-radius: 50px;
+  cursor: pointer;
 }
 
 .connect-wallet-btn:hover {
@@ -166,6 +169,10 @@ main,
   margin-top: 0px;
   margin-bottom: 20px;
 }
+.logo-mobile{
+  display: none;
+}
+
 .form-group {
   margin-bottom: 10px;
 }
@@ -191,14 +198,44 @@ input[type="text"] {
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
   height: 76px;
-  border: 1px solid;
-  border-color: transparent;
+  border: 1px solid transparent;
+  /*border-color: transparent;*/
   border-radius: 50px;
   box-shadow: none;
   box-sizing: border-box;
   outline: none;
   transition: all ease-out 0.3s;
 }
+
+.roundedInput{
+  padding: 15px 25px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--dark);
+  background: rgb(231 238 245 / 52%);
+  height: 76px;
+  border: 1px solid transparent;
+  border-radius: 50px;
+  box-shadow: none;
+  box-sizing: border-box;
+  outline: none;
+  transition: all ease-out 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.roundedInput:hover,
+.roundedInput:focus{
+  color: var(--dark);
+  background: rgb(231 238 245 / 52%);
+}
+.roundedInput:focus{
+  border: 1px solid;
+  border-color: var(--light-blue);
+}
+
 input[type="text"]:hover,
 input[type="text"]:focus {
   color: var(--dark);
@@ -326,7 +363,7 @@ label {
   transform: rotate(180deg);
 }
 
-button[type="submit"] {
+.transfer-button {
   width: 100%;
   padding: 5px 15px;
   height: 58px;
@@ -339,7 +376,7 @@ button[type="submit"] {
   box-shadow: 0px 10px 30px rgba(21, 101, 192, 0.3);
   transition: all ease-out 0.3s;
 }
-button[type="submit"]:hover {
+.transfer-button:hover {
   background: var(--hover-color);
   box-shadow: 0px 3px 30px rgba(21, 101, 192, 0.1);
 }
@@ -614,17 +651,11 @@ button[type="submit"]:hover {
   transform: rotate(180deg);
 }
 
-.with-chevron[aria-expanded="true"] .fa-chevron-down {
-  display: block;
-  padding: 4px 5px;
-  transform: rotate(180deg) !important;
-}
-
-.with-chevron .fa-chevron-down {
+.with-chevron .fa-regular {
   color: var(--main-color);
 }
 
-.with-chevron .fa-chevron-down:hover {
+.with-chevron .fa-regular:hover {
   color: var(--hover-color);
 }
 
@@ -648,7 +679,7 @@ button[type="submit"]:hover {
   border-bottom: solid 1px var(--light);
 }
 
-.fees-alert .fa-chevron-down {
+.fees-alert .fa-regular {
   padding: 5px;
   border-radius: 50px;
   height: 24px;
@@ -913,7 +944,7 @@ button[type="submit"]:hover {
   border-bottom: solid 1px var(--light);
 }
 
-.transfer-block .fa-chevron-down {
+.transfer-block .fa-regular {
   padding: 5px;
   border-radius: 50px;
   height: 24px;
@@ -1007,6 +1038,7 @@ button[type="submit"]:hover {
   border-radius: 50px;
   text-decoration: none !important;
   transition: all ease-out 0.3s;
+  cursor: pointer;
 }
 
 .loadmore-btn:hover {

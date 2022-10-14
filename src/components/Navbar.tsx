@@ -1,12 +1,24 @@
 import Link from "next/link";
+import Image from "next/image";
+import React from "react";
+import ConnectWalletModal from "./Modals/ConnectWalletModal";
 
 const Navbar = () => {
+  const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
+
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
-        <Link className="logo-mobile d-none" href="/">
-          <img src="/img/icon.svg" className="img-fluid" />
-        </Link>
+        <div className="logo-mobile" style={{ position: "relative", height: 87, width: 87 }}>
+          <Link className=" d-none" href="/">
+            <Image
+              src="/img/icon.svg"
+              alt="ChainFusion Logo"
+              className="img-fluid"
+              layout="fill"
+            />
+          </Link>
+        </div>
         <button
           className="navbar-toggler collapsed ml-auto"
           type="button"
@@ -29,50 +41,50 @@ const Navbar = () => {
           </ul>
           <ul className="navbar-nav w-100 justify-content-center">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Bridge
-              </a>
+              <Link href="/">
+                <a className="nav-link">Bridge</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Staking
-              </a>
+              <Link href="">
+                <a className="nav-link">Staking</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Slashing
-              </a>
+              <Link href="">
+                <a className="nav-link">Slashing</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Liquidity
-              </a>
+              <Link href="">
+                <a className="nav-link">Liquidity</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Apps
-              </a>
+              <Link href="">
+                <a className="nav-link">Apps</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Analytics
-              </a>
+              <Link href="">
+                <a className="nav-link">Analytics</a>
+              </Link>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <a
+              <span
                 className="nav-link connect-wallet-btn"
-                href="#"
-                data-toggle="modal"
-                data-target="#modalConnectwallet"
+                onClick={() => setShowConnectWalletModal(true)}
               >
                 <i className="fa-regular fa-wallet"></i> Connect Wallet
-              </a>
+              </span>
             </li>
           </ul>
         </div>
       </div>
+
+      <ConnectWalletModal isShow={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
     </nav>
   );
 };
