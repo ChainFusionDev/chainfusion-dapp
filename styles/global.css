@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/*!
+ * Global CSS
+ */
 
 :root {
   --main-color: #0d7ee7;
@@ -19,6 +21,7 @@ body,
   width: 100% !important;
   height: 100% !important;
 }
+
 body {
   font: normal 14px/1.8 "Inter", sans-serif, "Font Awesome 6 Pro";
   color: var(--white);
@@ -149,6 +152,7 @@ main,
 .connect-wallet-btn:hover {
   background: var(--hover-color);
 }
+
 .connect-wallet-btn:active,
 .connect-wallet-btn:focus {
   background: var(--main-color);
@@ -164,32 +168,38 @@ main,
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
+
 .logo {
   width: 270px;
   margin-top: 0px;
   margin-bottom: 20px;
 }
-.logo-mobile{
+
+.logo-mobile {
   display: none;
 }
 
 .form-group {
   margin-bottom: 10px;
 }
+
 .form-control:focus {
   border-color: var(--main-color);
   box-shadow: none;
 }
+
 .form-bridge small {
   color: var(--silver);
 }
-.form-bridge small > strong {
+
+.form-bridge small>strong {
   color: var(--dark);
 }
 
 .form-block {
   position: relative;
 }
+
 input[type="text"] {
   padding: 15px 25px;
   font-style: normal;
@@ -207,7 +217,7 @@ input[type="text"] {
   transition: all ease-out 0.3s;
 }
 
-.roundedInput{
+.roundedInput {
   padding: 15px 25px;
   font-style: normal;
   font-weight: 500;
@@ -227,11 +237,12 @@ input[type="text"] {
 }
 
 .roundedInput:hover,
-.roundedInput:focus{
+.roundedInput:focus {
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
 }
-.roundedInput:focus{
+
+.roundedInput:focus {
   border: 1px solid;
   border-color: var(--light-blue);
 }
@@ -241,6 +252,7 @@ input[type="text"]:focus {
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
 }
+
 input[type="text"]:focus {
   border: 1px solid;
   border-color: var(--light-blue);
@@ -249,15 +261,19 @@ input[type="text"]:focus {
 .form-control::-webkit-input-placeholder {
   color: var(--silver);
 }
+
 .form-control:-moz-placeholder {
   color: var(--silver);
 }
+
 .form-control::-moz-placeholder {
   color: var(--silver);
 }
+
 .form-control::placeholder {
   color: var(--silver);
 }
+
 .form-control:-ms-input-placeholder {
   color: var(--silver);
 }
@@ -332,6 +348,7 @@ label {
   color: var(--silver);
   z-index: 2;
 }
+
 .change-token {
   position: absolute;
   cursor: pointer;
@@ -376,10 +393,12 @@ label {
   box-shadow: 0px 10px 30px rgba(21, 101, 192, 0.3);
   transition: all ease-out 0.3s;
 }
+
 .transfer-button:hover {
   background: var(--hover-color);
   box-shadow: 0px 3px 30px rgba(21, 101, 192, 0.1);
 }
+
 .modal-dialog {
   min-height: calc(100vh - 60px);
   display: flex;
@@ -387,6 +406,7 @@ label {
   justify-content: center;
   overflow: auto;
 }
+
 .modal-content {
   border: none !important;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
@@ -394,9 +414,11 @@ label {
   -o-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
 }
+
 .modal-title {
   color: var(--dark);
 }
+
 .form-control-search {
   position: absolute;
   top: 33px;
@@ -411,6 +433,7 @@ label {
   pointer-events: none;
   color: var(--silver);
 }
+
 .modal-header {
   border-bottom: 1px solid #dee2e669;
 }
@@ -449,10 +472,12 @@ label {
   margin-bottom: 5px;
   border-radius: 12px;
 }
+
 .token-icon:hover,
 .blockchain-icon:hover {
   border-color: var(--light-blue);
 }
+
 .token-icon span,
 .blockchain-icon span {
   color: var(--silver);
@@ -470,11 +495,13 @@ label {
   font-size: 14px;
   margin-top: 2px;
 }
-.token-icon .media > img {
+
+.token-icon .media>img {
   width: 17px;
   margin-top: 1px;
 }
-.blockchain-icon .media > img {
+
+.blockchain-icon .media>img {
   width: 18px;
 }
 
@@ -757,15 +784,19 @@ label {
 .input-standart::-webkit-input-placeholder {
   color: var(--silver);
 }
+
 .input-standart:-moz-placeholder {
   color: var(--silver);
 }
+
 .input-standart::-moz-placeholder {
   color: var(--silver);
 }
+
 .input-standart::placeholder {
   color: var(--silver);
 }
+
 .input-standart:-ms-input-placeholder {
   color: var(--silver);
 }
@@ -796,7 +827,7 @@ label {
   border: 1px solid var(--light-blue);
 }
 
-.wallet-list li > img {
+.wallet-list li>img {
   margin-top: -3px;
   width: 17px;
   margin-right: 6px;
@@ -908,6 +939,7 @@ label {
   from {
     -webkit-transform: rotate(0deg);
   }
+
   to {
     -webkit-transform: rotate(360deg);
   }
