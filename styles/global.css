@@ -1467,4 +1467,5 @@ label {
 
 .amount-afterform span {
   color: var(--main-color);
+  cursor: pointer;
 }
