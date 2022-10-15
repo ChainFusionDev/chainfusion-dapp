@@ -1,7 +1,7 @@
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'animate.css';
-import '@styles/fontawesome/css/all.css'
+import '@styles/fontawesome.css'
 import '@styles/inter.css';
 import '@styles/global.css'
 import '@styles/responsive.css'
