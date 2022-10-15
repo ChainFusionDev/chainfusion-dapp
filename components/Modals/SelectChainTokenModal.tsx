@@ -2,14 +2,14 @@ import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 
 interface SelectChainTokenModalProps {
-  isShow: boolean;
+  show: boolean;
   title: string;
   close: () => void;
 }
 
-const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalProps) => {
+const SelectChainTokenModal = ({ show, title, close }: SelectChainTokenModalProps) => {
   return (
-    <Modal show={isShow} onHide={close}>
+    <Modal show={show} onHide={close}>
       <ModalTitle close={close}>
         <span>
           Select <strong>{title}</strong>

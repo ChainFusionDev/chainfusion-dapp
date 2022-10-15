@@ -2,13 +2,13 @@ import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 
 interface TransferModalProps {
-  isShow: boolean;
+  show: boolean;
   close: () => void;
 }
 
-const TransferModal = ({ isShow, close }: TransferModalProps) => {
+const TransferModal = ({ show, close }: TransferModalProps) => {
   return (
-    <Modal show={isShow} onHide={close}>
+    <Modal show={show} onHide={close}>
       <ModalTitle close={close}>Please wait</ModalTitle>
       <ModalBody>
         <div className="progress-transfer">

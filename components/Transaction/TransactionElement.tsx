@@ -61,8 +61,9 @@ const TransactionElement = ({
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
             <span className="blockchain-fees ml-2">
-              <img src={`/img/${from.blockchain.img}.svg`} alt={`${from.blockchain.name} Logo`} />{' '}
-              {from.blockchain.name}: <strong>{from.amount}</strong>{' '}
+              <img src={`/img/${from.blockchain.img}.svg`} alt={`${from.blockchain.name} Logo`} />
+              &nbsp;
+              {from.blockchain.name}: <strong>{from.amount}</strong>&nbsp;
             </span>
             <span className="token-fees">
               <img src={`/img/${from.token.img}.svg`} alt={`${from.token.name} Logo`} /> {from.token.name}
@@ -75,7 +76,8 @@ const TransactionElement = ({
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
               <img src={`/img/${to.blockchain.img}.svg`} alt={`${to.blockchain.name} Logo`} />
-              {to.blockchain.name}: <strong>{to.amount}</strong>{' '}
+              &nbsp;
+              {to.blockchain.name}: <strong>{to.amount}</strong>&nbsp;
             </span>
             <span className="token-fees">
               <img src={`/img/${to.token.img}.svg`} alt={`${to.token.name} Logo`} /> {to.token.name}
@@ -93,16 +95,18 @@ const TransactionElement = ({
               Receiver: <strong>{receiver}</strong>
             </span>
             <span className="fees-details">
-              Validators refund: <strong>{validatorFee.amount}</strong>{' '}
+              Validators refund: <strong>{validatorFee.amount}</strong>&nbsp;
               <span className="token-fees">
-                <img src={`/img/${validatorFee.token.img}.svg`} alt={`${validatorFee.token.name} Logo`} />{' '}
+                <img src={`/img/${validatorFee.token.img}.svg`} alt={`${validatorFee.token.name} Logo`} />
+                &nbsp;
                 {validatorFee.token.name}
               </span>
             </span>
             <span className="fees-details">
-              Liquidity Fee: <strong>{liquidityFee.amount}</strong>{' '}
+              Liquidity Fee: <strong>{liquidityFee.amount}</strong>&nbsp;
               <span className="token-fees">
-                <img src={`/img/${liquidityFee.token.img}.svg`} alt={`${liquidityFee.token.name} Logo`} />{' '}
+                <img src={`/img/${liquidityFee.token.img}.svg`} alt={`${liquidityFee.token.name} Logo`} />
+                &nbsp;
                 {liquidityFee.token.name}
               </span>
             </span>

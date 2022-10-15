@@ -93,9 +93,63 @@
     margin-top: 3px;
   }
 
+  .staking-table-title {
+    display: none !important;
+  }
+
+  .staking-table-tr {
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 3px solid #e4edf8;
+  }
+
+  .staking-table-tr .rank,
+  .staking-table-tr .wallet {
+    border: none;
+  }
+
+  .staking-table-tr .rank,
+  .staking-table-tr .amount {
+    display: flex;
+    min-width: 100%;
+    justify-content: left;
+  }
+
+  .staking-table-tr .wallet {
+    display: block;
+    font-size: 12px;
+    min-width: 100%;
+  }
+
+  .staking-table-tr .wallet p {
+    font-size: 13px;
+  }
+
+  .staking-table-tr .rank {
+    font-weight: 500;
+  }
+
+  .staking-table-tr .rank p,
+  .staking-table-tr .wallet p,
+  .staking-table-tr .amount p {
+    font-family: "Inter", sans-serif;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 3px;
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  .modal-staking {
+    width: auto !important;
+  }
 }
 
 @media only screen and (max-width: 992px) {
+  .section-page {
+    margin-top: 100px;
+  }
+
   .modal-dialog {
     min-height: calc(100vh - 20px);
   }
@@ -117,7 +171,7 @@
     padding: 15px;
   }
 
-  .logo-mobile {
+  .logo-nav img {
     width: 150px;
   }
 
@@ -159,5 +213,9 @@
   .from-transaction,
   .to-transaction {
     margin-left: 20px;
+  }
+
+  .logo-nav {
+    position: static;
   }
 }

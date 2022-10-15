@@ -1,12 +1,12 @@
-import Layout from '@components/Layout';
-import FeesAlert from '@components/FeesAlert';
-import Transaction from '@components/Transaction/Transaction';
+import Layout from '../components/Layout';
+import FeesAlert from '../components/FeesAlert';
+import Transaction from '../components/Transaction/Transaction';
 import React from 'react';
-import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
-import OptionsModal from '@components/Modals/OptionsModal';
-import TransferModal from '@components/Modals/TransferModal';
+import SelectChainTokenModal from '../components/Modals/SelectChainTokenModal';
+import OptionsModal from '../components/Modals/OptionsModal';
+import TransferModal from '../components/Modals/TransferModal';
 
-function Bridge() {
+const Bridge = () => {
   const [showFromModal, setShowFromModal] = React.useState(false);
   const [showToModal, setShowToModal] = React.useState(false);
   const [showOptionsModal, setShowOptionsModal] = React.useState(false);
@@ -16,7 +16,11 @@ function Bridge() {
   const [to, setTo] = React.useState<number>(0.0);
 
   return (
-    <Layout title="bridge" metaDescription="bridge">
+    <Layout
+      module="bridge"
+      title="Bridge"
+      description="Bridge allows you to transfer assets between different blockchain in a safe and decentralized way"
+    >
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
@@ -82,12 +86,12 @@ function Bridge() {
         </div>
       </div>
 
-      <SelectChainTokenModal title="From" isShow={showFromModal} close={() => setShowFromModal(false)} />
-      <SelectChainTokenModal title="To" isShow={showToModal} close={() => setShowToModal(false)} />
-      <OptionsModal isShow={showOptionsModal} close={() => setShowOptionsModal(false)} />
-      <TransferModal isShow={showTransferModal} close={() => setShowTransferModal(false)} />
+      <SelectChainTokenModal title="From" show={showFromModal} close={() => setShowFromModal(false)} />
+      <SelectChainTokenModal title="To" show={showToModal} close={() => setShowToModal(false)} />
+      <OptionsModal show={showOptionsModal} close={() => setShowOptionsModal(false)} />
+      <TransferModal show={showTransferModal} close={() => setShowTransferModal(false)} />
     </Layout>
   );
-}
+};
 
 export default Bridge;

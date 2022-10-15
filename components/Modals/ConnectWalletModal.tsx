@@ -2,13 +2,13 @@ import React from 'react';
 import { Modal, ModalBody, ModalTitle } from '@components/Modal';
 
 interface ConnectWalletModalProps {
-  isShow: boolean;
+  show: boolean;
   close: () => void;
 }
 
-const ConnectWalletModal = ({ isShow, close }: ConnectWalletModalProps) => {
+const ConnectWalletModal = ({ show, close }: ConnectWalletModalProps) => {
   return (
-    <Modal show={isShow} onHide={close}>
+    <Modal show={show} onHide={close}>
       <ModalTitle close={close}>Connect a wallet</ModalTitle>
       <ModalBody>
         <ul className="wallet-list">
