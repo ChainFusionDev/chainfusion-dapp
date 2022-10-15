@@ -2,16 +2,14 @@ import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 
 interface OptionsModalProps {
-  isShow: boolean,
-  close: () => void,
+  isShow: boolean;
+  close: () => void;
 }
 
 const OptionsModal = ({ isShow, close }: OptionsModalProps) => {
   return (
     <Modal show={isShow} onHide={close}>
-      <ModalTitle close={close}>
-        Options
-      </ModalTitle>
+      <ModalTitle close={close}>Options</ModalTitle>
       <ModalBody>
         <div className="form-group">
           <label>Receiver:</label>

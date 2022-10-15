@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
-import React from "react";
-import ConnectWalletModal from "./Modals/ConnectWalletModal";
+import Link from 'next/link';
+import Image from 'next/image';
+import React from 'react';
+import ConnectWalletModal from './Modals/ConnectWalletModal';
 
 const Navbar = () => {
   const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
@@ -9,14 +9,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
-        <div className="logo-mobile" style={{ position: "relative", height: 87, width: 87 }}>
+        <div className="logo-mobile" style={{ position: 'relative', height: 87, width: 87 }}>
           <Link className=" d-none" href="/">
-            <Image
-              src="/img/icon.svg"
-              alt="ChainFusion Logo"
-              className="img-fluid"
-              layout="fill"
-            />
+            <Image src="/img/icon.svg" alt="ChainFusion Logo" className="img-fluid" layout="fill" />
           </Link>
         </div>
         <button
@@ -32,10 +27,7 @@ const Navbar = () => {
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
         </button>
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="navbarMenu"
-        >
+        <div className="collapse navbar-collapse justify-content-center" id="navbarMenu">
           <ul className="navbar-nav mr-auto w-100">
             <li className="nav-item"></li>
           </ul>
@@ -73,10 +65,7 @@ const Navbar = () => {
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <span
-                className="nav-link connect-wallet-btn"
-                onClick={() => setShowConnectWalletModal(true)}
-              >
+              <span className="nav-link connect-wallet-btn" onClick={() => setShowConnectWalletModal(true)}>
                 <i className="fa-regular fa-wallet"></i> Connect Wallet
               </span>
             </li>

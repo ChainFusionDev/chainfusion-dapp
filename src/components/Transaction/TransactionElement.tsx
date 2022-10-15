@@ -1,37 +1,36 @@
-import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface Token {
-  name: string,
-  img: string
+  name: string;
+  img: string;
 }
 
 interface Blockchain {
-  name: string,
-  img: string
+  name: string;
+  img: string;
 }
 
 interface Fee {
-  token: Token,
-  amount: number,
+  token: Token;
+  amount: number;
 }
 
 export interface TransactionElementProps {
   from: {
-    blockchain: Blockchain,
-    token: Token,
-    amount: number,
-  }
+    blockchain: Blockchain;
+    token: Token;
+    amount: number;
+  };
   to: {
-    blockchain: Blockchain,
-    token: Token,
-    amount: number,
-  },
-  sender: string,
-  receiver: string,
-  validatorFee: Fee,
-  liquidityFee: Fee,
-  status: string
+    blockchain: Blockchain;
+    token: Token;
+    amount: number;
+  };
+  sender: string;
+  receiver: string;
+  validatorFee: Fee;
+  liquidityFee: Fee;
+  status: string;
 }
 
 const TransactionElement = ({
@@ -62,16 +61,11 @@ const TransactionElement = ({
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
             <span className="blockchain-fees ml-2">
-              <img
-                src={`/img/${from.blockchain.img}.svg`}
-                alt={`${from.blockchain.name} Logo`}
-              /> {from.blockchain.name}: <strong>{from.amount}</strong>{" "}
+              <img src={`/img/${from.blockchain.img}.svg`} alt={`${from.blockchain.name} Logo`} />{' '}
+              {from.blockchain.name}: <strong>{from.amount}</strong>{' '}
             </span>
             <span className="token-fees">
-              <img
-                src={`/img/${from.token.img}.svg`}
-                alt={`${from.token.name} Logo`}
-              /> {from.token.name}
+              <img src={`/img/${from.token.img}.svg`} alt={`${from.token.name} Logo`} /> {from.token.name}
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
@@ -80,16 +74,11 @@ const TransactionElement = ({
           </span>
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
-              <img
-                src={`/img/${to.blockchain.img}.svg`}
-                alt={`${to.blockchain.name} Logo`}
-              /> {to.blockchain.name}: <strong>{to.amount}</strong>{" "}
+              <img src={`/img/${to.blockchain.img}.svg`} alt={`${to.blockchain.name} Logo`} />
+              {to.blockchain.name}: <strong>{to.amount}</strong>{' '}
             </span>
             <span className="token-fees">
-              <img
-                src={`/img/${to.token.img}.svg`}
-                alt={`${to.token.name} Logo`}
-              /> {to.token.name}
+              <img src={`/img/${to.token.img}.svg`} alt={`${to.token.name} Logo`} /> {to.token.name}
             </span>
           </span>
         </p>
@@ -104,21 +93,17 @@ const TransactionElement = ({
               Receiver: <strong>{receiver}</strong>
             </span>
             <span className="fees-details">
-              Validators refund: <strong>{validatorFee.amount}</strong>{" "}
+              Validators refund: <strong>{validatorFee.amount}</strong>{' '}
               <span className="token-fees">
-                <img
-                  src={`/img/${validatorFee.token.img}.svg`}
-                  alt={`${validatorFee.token.name} Logo`}
-                /> {validatorFee.token.name}
+                <img src={`/img/${validatorFee.token.img}.svg`} alt={`${validatorFee.token.name} Logo`} />{' '}
+                {validatorFee.token.name}
               </span>
             </span>
             <span className="fees-details">
-              Liquidity Fee: <strong>{liquidityFee.amount}</strong>{" "}
+              Liquidity Fee: <strong>{liquidityFee.amount}</strong>{' '}
               <span className="token-fees">
-                <img
-                  src={`/img/${liquidityFee.token.img}.svg`}
-                  alt={`${liquidityFee.token.name} Logo`}
-                /> {liquidityFee.token.name}
+                <img src={`/img/${liquidityFee.token.img}.svg`} alt={`${liquidityFee.token.name} Logo`} />{' '}
+                {liquidityFee.token.name}
               </span>
             </span>
             <span className="success-status">
@@ -128,7 +113,7 @@ const TransactionElement = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TransactionElement;

@@ -2,20 +2,12 @@ import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 
 interface SelectChainTokenModalProps {
-  isShow: boolean,
-  title: string,
-  close: () => void,
+  isShow: boolean;
+  title: string;
+  close: () => void;
 }
 
 const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalProps) => {
-  const [blockchainOptionList, setBlockchainOptionList] = React.useState([])
-  const [tokenOptionList, setTokenOptionList] = React.useState([])
-
-  const [blockchainFilter, setBlockchainFilter] = React.useState('');
-  const [tokenFilter, setTokenFilter] = React.useState('')
-
-  const [token, setToken] = React.useState({})
-
   return (
     <Modal show={isShow} onHide={close}>
       <ModalTitle close={close}>
@@ -29,36 +21,20 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
           <div className="select-block">
             <input type="hidden" id="blockchain-from" />
-            <button
-              type="button"
-              className="btn btn-default dropdown-toggle select-custom"
-              data-toggle="dropdown"
-            >
+            <button type="button" className="btn btn-default dropdown-toggle select-custom" data-toggle="dropdown">
               <img className="mr-2" src="/img/ethereum.svg" alt="" />
               Ethereum <i className="fa-regular fa-chevron-down"></i>
             </button>
-            <ul
-              className="dropdown-menu scroll-select-list"
-              role="menu"
-            >
+            <ul className="dropdown-menu scroll-select-list" role="menu">
               <div className="form-group search-form">
                 <span className="fa-light fa-magnifying-glass form-control-search"></span>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="search-blockchain"
-                  placeholder="Search.."
-                />
+                <input type="text" className="form-control" id="search-blockchain" placeholder="Search.." />
               </div>
 
               <div className="listInCustomDropdown">
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -67,11 +43,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon active">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -80,11 +52,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -93,11 +61,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -106,11 +70,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -119,11 +79,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -132,11 +88,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -145,11 +97,7 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
                 <li className="blockchain-icon">
                   <div className="media">
-                    <img
-                      className="mr-2"
-                      src="/img/ethereum.svg"
-                      alt=""
-                    />
+                    <img className="mr-2" src="/img/ethereum.svg" alt="" />
                     <div className="media-body">
                       <h6>Ether</h6>
                     </div>
@@ -165,26 +113,14 @@ const SelectChainTokenModal = ({ isShow, title, close }: SelectChainTokenModalPr
 
           <div className="select-block">
             <input type="hidden" id="token-to" />
-            <button
-              type="button"
-              className="btn btn-default dropdown-toggle select-custom"
-              data-toggle="dropdown"
-            >
+            <button type="button" className="btn btn-default dropdown-toggle select-custom" data-toggle="dropdown">
               <img className="mr-2" src="/img/usdt.svg" alt="" />
               USDT <i className="fa-regular fa-chevron-down"></i>
             </button>
-            <ul
-              className="dropdown-menu scroll-select-list"
-              role="menu"
-            >
+            <ul className="dropdown-menu scroll-select-list" role="menu">
               <div className="form-group search-form">
                 <span className="fa-light fa-magnifying-glass form-control-search"></span>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="search-token"
-                  placeholder="Search.."
-                />
+                <input type="text" className="form-control" id="search-token" placeholder="Search.." />
               </div>
 
               <div className="listInCustomDropdown">

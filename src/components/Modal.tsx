@@ -1,18 +1,16 @@
 import React from 'react';
-import { Modal as BootstrapModal } from "react-bootstrap";
+import { Modal as BootstrapModal } from 'react-bootstrap';
 
 interface ModalProps {
-  show: boolean,
+  show: boolean;
   children: JSX.Element[] | JSX.Element;
-  onHide: () => void,
+  onHide: () => void;
 }
 
 export const Modal = ({ show, children, onHide }: ModalProps) => {
   return (
-    <BootstrapModal show={show} onHide={onHide} size={"sm"}>
-      <div className="modal-content">
-        {children}
-      </div>
+    <BootstrapModal show={show} onHide={onHide} size={'sm'}>
+      <div className="modal-content">{children}</div>
     </BootstrapModal>
   );
 };
@@ -25,9 +23,7 @@ interface ModalTitleProps {
 export const ModalTitle = ({ children, close }: ModalTitleProps) => {
   return (
     <div className="modal-header text-center">
-      <h4 className="modal-title w-100">
-        {children}
-      </h4>
+      <h4 className="modal-title w-100">{children}</h4>
       <button type="button" className="close" onClick={close}>
         <i className="fa-light fa-xmark-large"></i>
       </button>
@@ -40,11 +36,7 @@ interface ModalBodyProps {
 }
 
 export const ModalBody = ({ children }: ModalBodyProps) => {
-  return (
-    <div className="modal-body">
-     {children}
-    </div>
-  );
+  return <div className="modal-body">{children}</div>;
 };
 
 interface ModalFooterProps {
@@ -52,9 +44,5 @@ interface ModalFooterProps {
 }
 
 export const ModalFooter = ({ children }: ModalFooterProps) => {
-  return (
-    <div className="modal-footer">
-      {children}
-    </div>
-  );
+  return <div className="modal-footer">{children}</div>;
 };
