@@ -15,7 +15,7 @@ interface Fee {
   amount: number;
 }
 
-export interface TransactionElementProps {
+export interface TransactionItemProps {
   from: {
     blockchain: Blockchain;
     token: Token;
@@ -33,22 +33,13 @@ export interface TransactionElementProps {
   status: string;
 }
 
-const TransactionElement = ({
-  from,
-  to,
-  sender,
-  receiver,
-  validatorFee,
-  liquidityFee,
-  status,
-}: TransactionElementProps) => {
+const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFee, status }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="transfer-block mb-2">
       <a
         data-toggle="collapse"
-        href={`#${sender}`}
         role="button"
         aria-expanded={open}
         aria-controls={sender}
@@ -120,4 +111,4 @@ const TransactionElement = ({
   );
 };
 
-export default TransactionElement;
+export default TransactionItem;

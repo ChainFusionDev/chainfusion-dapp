@@ -1,6 +1,6 @@
 import Layout from '../components/Layout';
 import FeesAlert from '../components/FeesAlert';
-import Transaction from '../components/Transaction/Transaction';
+import TransactionHistory from '../components/Transaction/TransactionHistory';
 import React from 'react';
 import SelectChainTokenModal from '../components/Modals/SelectChainTokenModal';
 import OptionsModal from '../components/Modals/OptionsModal';
@@ -82,7 +82,7 @@ const Bridge = () => {
               </button>
             </div>
           </div>
-          <Transaction />
+          <TransactionHistory />
         </div>
       </div>
 
