@@ -41,7 +41,7 @@ const Slashing = () => {
                     <strong>Votes:</strong> <span>4 / 15</span>
                   </div>
                   <div className="slashing-date">
-                    <strong>Date of creation:&nbsp;</strong>
+                    <strong>Created at:&nbsp;</strong>
                     <i className="fa-light fa-calendar-plus"></i> 12.10.2022 - 14:36
                   </div>
                   <div className="slashing-timer">
@@ -74,7 +74,7 @@ const Slashing = () => {
                     <strong>Votes:</strong> <span>10 / 15</span>
                   </div>
                   <div className="slashing-date">
-                    <strong>Date of creation:&nbsp;</strong>
+                    <strong>Created at:&nbsp;</strong>
                     <i className="fa-light fa-calendar-plus"></i> 12.10.2022 - 14:36
                   </div>
                   <div className="slashing-timer">
@@ -107,7 +107,7 @@ const Slashing = () => {
                     <strong>Votes:</strong> <span>3 / 15</span>
                   </div>
                   <div className="slashing-date">
-                    <strong>Date of creation:&nbsp;</strong>
+                    <strong>Created at:&nbsp;</strong>
                     <i className="fa-light fa-calendar-plus"></i> 12.10.2022 - 14:36
                   </div>
                   <div className="slashing-timer">
@@ -137,7 +137,7 @@ const Slashing = () => {
                     <strong>Votes:</strong> <span>4 / 15</span>
                   </div>
                   <div className="slashing-date">
-                    <strong>Date of creation:&nbsp;</strong>
+                    <strong>Created at:&nbsp;</strong>
                     <i className="fa-light fa-calendar-plus"></i> 12.10.2022 - 14:36
                   </div>
                   <div className="slashing-timer">
@@ -170,7 +170,7 @@ const Slashing = () => {
                     <strong>Votes:</strong> <span>3 / 15</span>
                   </div>
                   <div className="slashing-date">
-                    <strong>Date of creation:&nbsp;</strong>
+                    <strong>Created at:&nbsp;</strong>
                     <i className="fa-light fa-calendar-plus"></i> 12.10.2022 - 14:36
                   </div>
                   <div className="slashing-timer">
