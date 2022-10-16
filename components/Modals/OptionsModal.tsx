@@ -8,7 +8,7 @@ interface OptionsModalProps {
 
 const OptionsModal = ({ show, close }: OptionsModalProps) => {
   return (
-    <Modal show={show} onHide={close}>
+    <Modal show={show} size="sm" onHide={close}>
       <ModalTitle close={close}>Options</ModalTitle>
       <ModalBody>
         <div className="form-group">

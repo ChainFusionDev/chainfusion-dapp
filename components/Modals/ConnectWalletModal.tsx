@@ -8,7 +8,7 @@ interface ConnectWalletModalProps {
 
 const ConnectWalletModal = ({ show, close }: ConnectWalletModalProps) => {
   return (
-    <Modal show={show} onHide={close}>
+    <Modal show={show} size="sm" onHide={close}>
       <ModalTitle close={close}>Connect a wallet</ModalTitle>
       <ModalBody>
         <ul className="wallet-list">

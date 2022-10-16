@@ -2,14 +2,15 @@ import React from 'react';
 import { Modal as BootstrapModal } from 'react-bootstrap';
 
 interface ModalProps {
+  children?: React.ReactElement | React.ReactElement[];
   show: boolean;
-  children: JSX.Element[] | JSX.Element;
+  size?: 'sm' | 'lg' | 'xl';
   onHide: () => void;
 }
 
-export const Modal = ({ show, children, onHide }: ModalProps) => {
+export const Modal = ({ children, show, size, onHide }: ModalProps) => {
   return (
-    <BootstrapModal show={show} onHide={onHide} size={'sm'}>
+    <BootstrapModal show={show} onHide={onHide} size={size}>
       <div className="modal-content">{children}</div>
     </BootstrapModal>
   );

@@ -8,7 +8,8 @@
     padding: 30px;
   }
 
-  input[type="number"], input[type="text"] {
+  input[type="number"],
+  input[type="text"] {
     font-size: 19px;
     height: 55px;
     padding-right: 25px;
@@ -143,11 +144,60 @@
   .modal-staking {
     width: auto !important;
   }
+
+  .slashing-block {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    -ms-flex-order: 0;
+    order: 0;
+  }
+
+  .slashing-info {
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid #e4edf8;
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+
+  .vote-block {
+    -ms-flex-order: 1;
+    order: 1;
+  }
+
+  .slashing-adress p {
+    font-size: 12px;
+  }
+
+  .slashing-vote-label {
+    position: static;
+    display: block;
+    margin-top: 5px;
+  }
+
+  .modal-slashing,
+  .modal-slashing-create-done {
+    width: auto !important;
+  }
+
+  .select-slashing-adress .scroll-select-list {
+    width: 93% !important;
+  }
+
+  .successCreateProposal p {
+    font-weight: 400;
+    text-align: center;
+    font-size: 16px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
   .section-page {
-    margin-top: 100px;
+    padding-top: 100px;
   }
 
   .modal-dialog {
