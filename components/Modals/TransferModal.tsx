@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
+import { Modal, ModalBody, ModalTitle } from '@components/Modal';
 
 interface TransferModalProps {
   show: boolean;
@@ -24,8 +24,6 @@ const TransferModal = ({ show, close }: TransferModalProps) => {
             </div>
           </div>
         </div>
-      </ModalBody>
-      <ModalFooter>
         <ul className="progress-transfer-list">
           <li>
             <i className="fa-light fa-circle-check"></i> <span>1. Confirming transaction on source chain</span>
@@ -37,7 +35,7 @@ const TransferModal = ({ show, close }: TransferModalProps) => {
             <i className="fa-light fa-spinner-third"></i> <span>3. Confirming transaction on destination chain</span>
           </li>
         </ul>
-      </ModalFooter>
+      </ModalBody>
     </Modal>
   );
 };
