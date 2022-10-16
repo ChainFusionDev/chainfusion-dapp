@@ -50,19 +50,19 @@ const Navbar = ({ module }: NavbarProps) => {
                 <a className="nav-link">Slashing</a>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="">
+            <li className={`nav-item ${module === 'liquidity' ? 'active' : ''}`}>
+              <Link href="/liquidity">
                 <a className="nav-link">Liquidity</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="">
-                <a className="nav-link">Apps</a>
+              <Link href="/">
+                <a className="nav-link">Analytics</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="">
-                <a className="nav-link">Analytics</a>
+              <Link href="/">
+                <a className="nav-link">Apps</a>
               </Link>
             </li>
           </ul>
