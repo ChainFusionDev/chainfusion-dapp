@@ -14,7 +14,7 @@ const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close 
   const [amount, setAmount] = React.useState<number>(0.0);
 
   return (
-    <Modal show={show} size="sm" onHide={close}>
+    <Modal show={show} onHide={close}>
       <ModalTitle close={close}>{title}</ModalTitle>
       <ModalBody>
         <div className="form-group">
