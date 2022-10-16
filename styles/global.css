@@ -194,6 +194,11 @@ main,
   display: none;
 }
 
+.chain-icon-sm {
+  width: 14px;
+  height: 14px;
+}
+
 .form-group {
   margin-bottom: 10px;
 }
@@ -452,9 +457,9 @@ label {
   transition: transform 0.3s ease-in-out;
 }
 
-.change-token:hover .fa-arrow-up-arrow-down {
+.change-token.swap .fa-arrow-up-arrow-down {
   transition: 0.3s;
-  transform: rotate(180deg);
+  transform: rotate(360deg);
 }
 
 .transfer-button {
@@ -763,7 +768,7 @@ label {
   transition: all ease-out 0.1s;
 }
 
-.select-custom:focus .fa-chevron-down {
+.select-custom[aria-expanded="true"] .fa-chevron-down {
   transform: rotate(180deg);
 }
 

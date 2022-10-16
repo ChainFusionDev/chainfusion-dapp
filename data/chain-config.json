@@ -1,0 +1,55 @@
+{
+    "chains": [
+        {
+            "identifier": "ethereum",
+            "name": "Ethereum"
+        },
+        {
+            "identifier": "bsc",
+            "name": "BSC"
+        },
+        {
+            "identifier": "q",
+            "name": "Q"
+        },
+        {
+            "identifier": "polygon",
+            "name": "Polygon"
+        },
+        {
+            "identifier": "avalanche",
+            "name": "Avalanche"
+        },
+        {
+            "identifier": "fantom",
+            "name": "Fantom"
+        }
+    ],
+    "tokens": [
+        {
+            "identifier": "usdt",
+            "symbol": "USDT",
+            "name": "Tether"
+        },
+        {
+            "identifier": "usdc",
+            "symbol": "USDC",
+            "name": "USD Coin"
+        },
+        {
+            "identifier": "busd",
+            "symbol": "BUSD",
+            "name": "Binance USD"
+        },
+        {
+            "identifier": "dai",
+            "symbol": "DAI",
+            "name": "Dai"
+        },
+        {
+            "identifier": "eth",
+            "symbol": "ETH",
+            "name": "Ether"
+        }
+    ]
+}

@@ -17,7 +17,7 @@ const OptionsModal = ({ show, close }: OptionsModalProps) => {
             type="text"
             className="input-standart"
             id="receiver"
-            value="0xc46b8n9cd6f7ghde40w3fd45653"
+            value="0xd13F66863ED91704e386C57501F00b5307CAbA18"
             placeholder="Please write your wallet.."
           />
         </div>

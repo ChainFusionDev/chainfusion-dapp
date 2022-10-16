@@ -1,6 +1,13 @@
+import { Token } from '@src/config';
 import React from 'react';
 
-const FeesAlert = () => {
+interface FeeEstimateProps {
+  token: Token;
+  validatorsFee: number;
+  liquidityFee: number;
+}
+
+const FeeEstimate = ({ token, validatorsFee, liquidityFee }: FeeEstimateProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -17,7 +24,8 @@ const FeesAlert = () => {
           <span className="title-panel">
             Fees: <strong>0.5</strong>{' '}
             <span className="token-fees">
-              <img src="/img/usdt.svg" alt="USDT Logo" /> USDT
+              <img className="chain-icon-sm" src={`/img/${token.identifier}.svg`} alt={token.name} />
+              {` ${token.symbol}`}
             </span>
           </span>
           <i className={`fa-regular ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
@@ -27,15 +35,17 @@ const FeesAlert = () => {
         <div className="card">
           <div className="card-body">
             <span className="fees-details">
-              Validators refund: <strong>0.3</strong>{' '}
+              Validators refund: <strong>{validatorsFee}</strong>{' '}
               <span className="token-fees">
-                <img src="/img/usdt.svg" alt="USDT Logo" /> USDT
+                <img className="chain-icon-sm" src={`/img/${token.identifier}.svg`} alt={token.name} />
+                {` ${token.symbol}`}
               </span>
             </span>
             <span className="fees-details">
-              Liquidity Fee: <strong>0.2</strong>{' '}
+              Liquidity Fee: <strong>{liquidityFee}</strong>{' '}
               <span className="token-fees">
-                <img src="/img/usdt.svg" alt="USDT Logo" /> USDT
+                <img className="chain-icon-sm" src={`/img/${token.identifier}.svg`} alt={token.name} />
+                {` ${token.symbol}`}
               </span>
             </span>
           </div>
@@ -45,4 +55,4 @@ const FeesAlert = () => {
   );
 };
 
-export default FeesAlert;
+export default FeeEstimate;

@@ -1,10 +1,11 @@
 import Layout from '../components/Layout';
-import FeesAlert from '../components/FeesAlert';
+import FeeEstimate from '../components/FeeEstimate';
 import TransactionHistory from '../components/Transaction/TransactionHistory';
-import React from 'react';
+import React, { useState } from 'react';
 import SelectChainTokenModal from '../components/Modals/SelectChainTokenModal';
 import OptionsModal from '../components/Modals/OptionsModal';
 import TransferModal from '../components/Modals/TransferModal';
+import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
 
 const Bridge = () => {
   const [showFromModal, setShowFromModal] = React.useState(false);
@@ -14,6 +15,28 @@ const Bridge = () => {
 
   const [from, setFrom] = React.useState<number>(0.0);
   const [to, setTo] = React.useState<number>(0.0);
+  const [swap, setSwap] = React.useState(false);
+
+  const chains = supportedChains();
+  const tokens = supportedTokens();
+
+  const [chainFrom, setChainFrom] = useState<Chain>(chains[0]);
+  const [tokenFrom, setTokenFrom] = useState<Token>(tokens[0]);
+
+  const [chainTo, setChainTo] = useState<Chain>(chains[1]);
+  const [tokenTo, setTokenTo] = useState<Token>(tokens[0]);
+
+  const swapFromTo = () => {
+    setFrom(to);
+    setChainFrom(chainTo);
+    setTokenFrom(tokenTo);
+
+    setTo(from);
+    setChainTo(chainFrom);
+    setTokenTo(tokenFrom);
+
+    setSwap(!swap);
+  };
 
   return (
     <Layout
@@ -33,10 +56,12 @@ const Bridge = () => {
                 <span className="token-amount">From:</span>
                 <div className="select-token" onClick={() => setShowFromModal(true)}>
                   <span className="blockchanin-label send-from">
-                    <img src="/img/ethereum.svg" alt="Ethereum Logo" /> Ethereum
+                    <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />
+                    {` ${chainFrom.name}`}
                   </span>
                   <span className="token-label">
-                    <img src="/img/usdt.svg" alt="USDT Logo" /> USDT
+                    <img className="chain-icon-sm" src={`/img/${tokenFrom.identifier}.svg`} alt={tokenFrom.name} />
+                    {` ${tokenFrom.symbol}`}
                   </span>
                   <i className="fa-light fa-chevron-down"></i>
                 </div>
@@ -49,17 +74,19 @@ const Bridge = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFrom(parseInt(e.target.value))}
                 />
               </div>
-              <span className="change-token">
+              <span className={`change-token ${swap ? 'swap' : ''}`} onClick={swapFromTo}>
                 <i className="fa-regular fa-arrow-up-arrow-down"></i>
               </span>
               <div className="form-group form-block">
                 <span className="token-amount">To:</span>
                 <div className="select-token" onClick={() => setShowToModal(true)}>
                   <span className="blockchanin-label send-to">
-                    <img src="/img/avalanche.svg" alt="Avalanche Logo" /> Avalanche
+                    <img className="chain-icon-sm" src={`/img/${chainTo.identifier}.svg`} alt={chainTo.name} />
+                    {` ${chainTo.name}`}
                   </span>
                   <span className="token-label">
-                    <img src="/img/usdt.svg" alt="USDT Logo" /> USDT
+                    <img className="chain-icon-sm" src={`/img/${tokenTo.identifier}.svg`} alt={tokenTo.name} />
+                    {` ${tokenTo.symbol}`}
                   </span>
                   <i className="fa-light fa-chevron-down"></i>
                 </div>
@@ -75,7 +102,7 @@ const Bridge = () => {
                 />
               </div>
 
-              <FeesAlert />
+              <FeeEstimate token={tokenFrom} validatorsFee={0.3} liquidityFee={0.2} />
 
               <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
                 <i className="fa-regular fa-shuffle"></i> Transfer
@@ -86,8 +113,48 @@ const Bridge = () => {
         </div>
       </div>
 
-      <SelectChainTokenModal title="From" show={showFromModal} close={() => setShowFromModal(false)} />
-      <SelectChainTokenModal title="To" show={showToModal} close={() => setShowToModal(false)} />
+      <SelectChainTokenModal
+        key={`from:${chainFrom.identifier}:${tokenFrom.identifier}`}
+        title="From"
+        initialChain={chainFrom}
+        initialToken={tokenFrom}
+        show={showFromModal}
+        close={() => setShowFromModal(false)}
+        select={(chain: Chain, token: Token) => {
+          // Avoid selecting same from and to chains
+          if (chainTo.identifier == chain.identifier) {
+            setChainTo(chainFrom);
+          }
+
+          setChainFrom(chain);
+          setTokenFrom(token);
+
+          // Currently we support transferring only same tokens on both chains
+          setTokenTo(token);
+        }}
+      />
+
+      <SelectChainTokenModal
+        key={`to:${chainTo.identifier}:${tokenTo.identifier}`}
+        title="To"
+        initialChain={chainTo}
+        initialToken={tokenTo}
+        show={showToModal}
+        close={() => setShowToModal(false)}
+        select={(chain: Chain, token: Token) => {
+          // Avoid selecting same from and to chains
+          if (chainFrom.identifier == chain.identifier) {
+            setChainFrom(chainTo);
+          }
+
+          setChainTo(chain);
+          setTokenTo(token);
+
+          // Currently we support transferring only same tokens on both chains
+          setTokenFrom(token);
+        }}
+      />
+
       <OptionsModal show={showOptionsModal} close={() => setShowOptionsModal(false)} />
       <TransferModal show={showTransferModal} close={() => setShowTransferModal(false)} />
     </Layout>
