@@ -55,13 +55,13 @@ const Navbar = ({ module }: NavbarProps) => {
                 <a className="nav-link">Liquidity</a>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/">
+            <li className={`nav-item ${module === 'analytics' ? 'active' : ''}`}>
+              <Link href="/analytics">
                 <a className="nav-link">Analytics</a>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/">
+            <li className={`nav-item ${module === 'apps' ? 'active' : ''}`}>
+              <Link href="/apps">
                 <a className="nav-link">Apps</a>
               </Link>
             </li>
