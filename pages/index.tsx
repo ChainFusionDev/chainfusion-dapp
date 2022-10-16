@@ -42,7 +42,7 @@ const Bridge = () => {
                 </div>
                 <input
                   type="number"
-                  className="form-control roundedInput"
+                  className="form-control"
                   id="from-amount"
                   placeholder="0.0000"
                   value={from === 0.0 ? '' : from}
@@ -65,7 +65,7 @@ const Bridge = () => {
                 </div>
                 <input
                   type="number"
-                  className="form-control roundedInput"
+                  className="form-control"
                   id="to-amount"
                   value={to === 0.0 ? '' : to}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,7 +9,7 @@ interface SelectChainTokenModalProps {
 
 const SelectChainTokenModal = ({ show, title, close }: SelectChainTokenModalProps) => {
   return (
-    <Modal show={show} onHide={close}>
+    <Modal show={show} size="sm" onHide={close}>
       <ModalTitle close={close}>
         <span>
           Select <strong>{title}</strong>
