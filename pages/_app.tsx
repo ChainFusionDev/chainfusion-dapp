@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'animate.css';
-import '@styles/fontawesome.css';
-import '@styles/fonts.css';
 import '@styles/global.css';
 import '@styles/responsive.css';
+import '@styles/fontawesome.css';
+import '@styles/fonts.css';
 
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';

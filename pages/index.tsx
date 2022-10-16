@@ -26,7 +26,7 @@ const Bridge = () => {
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             <div className="form-bridge">
               <i className="fa-light fa-gear setting-receiver" onClick={() => setShowOptionsModal(true)}></i>
-              <div style={{ position: 'relative', height: 50 }} className=" mx-auto logo">
+              <div className="mx-auto logo">
                 <img src="/img/logo.svg" alt="ChainFusion logo" className="img-fluid d-block d-sm-block" />
               </div>
               <div className="form-group form-block">

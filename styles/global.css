@@ -214,7 +214,7 @@ main,
   position: relative;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
   padding: 15px 25px;
   font-style: normal;
   font-weight: 500;
@@ -223,7 +223,7 @@ input[type="text"] {
   background: rgb(231 238 245 / 52%);
   height: 76px;
   border: 1px solid transparent;
-  /*border-color: transparent;*/
+  border-color: transparent;
   border-radius: 50px;
   box-shadow: none;
   box-sizing: border-box;
@@ -294,7 +294,7 @@ input[type="text"]:focus {
 
 label {
   display: block;
-  color: var(--silver);
+  color: var(--gray-two);
   font-size: 13px;
   margin-bottom: 0.1rem;
   font-weight: 500;
@@ -369,7 +369,7 @@ label {
   border: 1px solid var(--light);
 }
 
-.select-token .fa-chevron-down {
+.select-token .fa-regular, .select-token .fa-light {
   position: absolute;
   color: var(--gray);
   top: 23px;
