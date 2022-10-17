@@ -1,6 +1,6 @@
 import Layout from '@components/Layout';
 import FeeEstimate from '@components/FeeEstimate';
-import TransactionHistory from 'pages/bridge/Transaction/TransactionHistory';
+import TransactionHistory from '@components/Bridge/TransactionHistory';
 import React, { useState } from 'react';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';

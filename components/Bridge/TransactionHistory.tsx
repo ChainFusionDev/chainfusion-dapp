@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import transactionHistory from '@data/transaction-history.json';
-import TransactionItem, { TransactionItemProps } from 'pages/bridge/Transaction/TransactionItem';
+import TransactionItem, { TransactionItemProps } from '@components/Bridge/TransactionItem';
 
 const TransactionHistory = () => {
   const [transactions, setTransactions] = React.useState(transactionHistory);

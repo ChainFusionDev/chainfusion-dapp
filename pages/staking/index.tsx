@@ -1,7 +1,7 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import React from 'react';
-import { StakingHeader, StakingItem } from './components/StakingTable';
+import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import stakingMock from '@data/staking-mock.json';
 
 interface StakingItemData {
