@@ -51,7 +51,7 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
             <i className={`fa-regular ${open ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
-            <span className="blockchain-fees ml-2">
+            <span className="blockchain-fees">
               <img src={`/img/${from.blockchain.img}.svg`} alt={`${from.blockchain.name} Logo`} />
               &nbsp;
               {from.blockchain.name}: <strong>{from.amount}</strong>&nbsp;

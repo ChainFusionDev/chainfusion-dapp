@@ -2,7 +2,7 @@
  * Responsive CSS
  */
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   .form-bridge {
     margin-top: 100px;
     padding: 30px;
@@ -199,7 +199,7 @@
   }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 991px) {
   .section-page {
     padding-top: 100px;
   }

@@ -13,7 +13,7 @@ const Navbar = ({ module }: NavbarProps) => {
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
         <Link href="/">
-          <a className="logo-nav">
+          <a className={`logo-nav ${module === 'bridge' ? 'd-none' : ''}`}>
             <img src="/img/logo.svg" alt="ChainFusion Logo" className="img-fluid" />
           </a>
         </Link>

@@ -1164,6 +1164,10 @@ label {
   color: var(--dark);
 }
 
+.transfer-block .blockchain-fees {
+  margin-left: 8px;
+}
+
 .transfer-block .success-status {
   display: block;
   font-style: normal;
