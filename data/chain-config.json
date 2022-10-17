@@ -1,55 +1,87 @@
 {
-    "chains": [
-        {
-            "identifier": "ethereum",
-            "name": "Ethereum"
-        },
-        {
-            "identifier": "bsc",
-            "name": "BSC"
-        },
-        {
-            "identifier": "q",
-            "name": "Q"
-        },
-        {
-            "identifier": "polygon",
-            "name": "Polygon"
-        },
-        {
-            "identifier": "avalanche",
-            "name": "Avalanche"
-        },
-        {
-            "identifier": "fantom",
-            "name": "Fantom"
-        }
-    ],
-    "tokens": [
-        {
-            "identifier": "usdt",
-            "symbol": "USDT",
-            "name": "Tether"
-        },
-        {
-            "identifier": "usdc",
-            "symbol": "USDC",
-            "name": "USD Coin"
-        },
-        {
-            "identifier": "busd",
-            "symbol": "BUSD",
-            "name": "Binance USD"
-        },
-        {
-            "identifier": "dai",
-            "symbol": "DAI",
-            "name": "Dai"
-        },
-        {
-            "identifier": "eth",
-            "symbol": "ETH",
-            "name": "Ether"
-        }
-    ]
+  "chainfusion": {
+    "identifier": "chainfusion",
+    "name": "ChainFusion",
+    "rpc": "https://rpc.chainfusion.org",
+    "explorer": "https://explorer.chainfusion.org"
+  },
+  "systemContracts": {
+    "staking": "0x5E85B5Ab4ABfBf7178B1E92AB9df0C1188e839D1"
+  },
+  "chains": [
+    {
+      "identifier": "ethereum",
+      "name": "Ethereum",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "bsc",
+      "name": "BSC",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "q",
+      "name": "Q",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "polygon",
+      "name": "Polygon",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "avalanche",
+      "name": "Avalanche",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "fantom",
+      "name": "Fantom",
+      "rpc": "",
+      "explorer": ""
+    },
+    {
+      "identifier": "chainfusion",
+      "name": "ChainFusion",
+      "rpc": "",
+      "explorer": ""
+    }
+  ],
+  "tokens": [
+    {
+      "identifier": "usdt",
+      "symbol": "USDT",
+      "name": "Tether"
+    },
+    {
+      "identifier": "usdc",
+      "symbol": "USDC",
+      "name": "USD Coin"
+    },
+    {
+      "identifier": "busd",
+      "symbol": "BUSD",
+      "name": "Binance USD"
+    },
+    {
+      "identifier": "dai",
+      "symbol": "DAI",
+      "name": "Dai"
+    },
+    {
+      "identifier": "eth",
+      "symbol": "ETH",
+      "name": "Ether"
+    },
+    {
+      "identifier": "cfn",
+      "symbol": "CFN",
+      "name": "ChainFusion"
+    }
+  ]
 }

@@ -9,7 +9,7 @@ interface SlashingProposalModalProps {
 const SlashingProposalModal = ({ show, close }: SlashingProposalModalProps) => {
   return (
     <Modal show={show} onHide={close}>
-      <ModalTitle close={close}>Creating a Proposal</ModalTitle>
+      <ModalTitle close={close}>Create a Proposal</ModalTitle>
       <ModalBody>
         <div className="form-group">
           <label>Reason:</label>

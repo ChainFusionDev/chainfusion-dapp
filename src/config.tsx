@@ -3,6 +3,8 @@ import chainConfig from '@data/chain-config.json';
 export interface Chain {
   identifier: string;
   name: string;
+  rpc: string;
+  explorer: string;
 }
 
 export interface Token {
@@ -12,11 +14,16 @@ export interface Token {
 }
 
 interface ChainConfig {
+  chainfusion: Chain;
   chains: Chain[];
   tokens: Token[];
 }
 
 const config: ChainConfig = chainConfig;
+
+export function chainfusionChain(): Chain {
+  return config.chainfusion;
+}
 
 export function supportedTokens(): Token[] {
   return config.tokens;

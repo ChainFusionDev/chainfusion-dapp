@@ -1,10 +1,22 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import React from 'react';
+import { StakingHeader, StakingItem } from './components/StakingTable';
+import stakingMock from '@data/staking-mock.json';
+
+interface StakingItemData {
+  address: string;
+  stake: number;
+}
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = React.useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = React.useState(false);
+
+  const stakingItems: StakingItemData[] = stakingMock;
+  stakingItems.sort((a: StakingItemData, b: StakingItemData) => {
+    return b.stake - a.stake;
+  });
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -59,227 +71,12 @@ const Staking = () => {
 
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
               <div className="table-block">
-                <div className="staking-table-title d-flex">
-                  <div className="rank pr-2">Rank</div>
-                  <div className="wallet pl-4 flex-grow-1">Account</div>
-                  <div className="amount pl-5 pr-4">Stake</div>
-                </div>
+                <StakingHeader />
+                {stakingItems.map((item, i) => {
+                  const rank = i + 1;
 
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>1
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    550
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>2
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    523
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>3
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    476
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>4
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    359
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>5
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    322
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>6
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    301
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>7
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    205
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>8
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    184
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>9
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    173
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    10
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    168
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    11
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    167
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    12
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    140
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    13
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    135
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    14
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    131
-                  </div>
-                </div>
-
-                <div className="staking-table-tr d-flex">
-                  <div className="rank pr-md-3">
-                    <p className="d-block d-sm-block d-md-none">Rank:</p>
-                    15
-                  </div>
-                  <div className="wallet pl-md-4 flex-grow-1">
-                    <p className="d-block d-sm-block d-md-none">Account:</p>
-                    0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
-                  </div>
-                  <div className="amount pl-md-4 pr-md-6">
-                    <p className="d-block d-sm-block d-md-none">Stake:</p>
-                    109
-                  </div>
-                </div>
+                  return <StakingItem key={rank} rank={rank} address={item.address} stake={item.stake} />;
+                })}
 
                 <div className="pagination-block d-flex justify-content-between">
                   <ul className="pagination-nav">

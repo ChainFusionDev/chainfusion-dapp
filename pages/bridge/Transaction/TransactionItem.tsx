@@ -1,19 +1,5 @@
+import { Blockchain, Fee, Token } from '@src/types';
 import React, { useState } from 'react';
-
-interface Token {
-  name: string;
-  img: string;
-}
-
-interface Blockchain {
-  name: string;
-  img: string;
-}
-
-interface Fee {
-  token: Token;
-  amount: number;
-}
 
 export interface TransactionItemProps {
   from: {
