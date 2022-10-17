@@ -35,7 +35,7 @@ const FeeEstimate = ({ token, validatorsFee, liquidityFee }: FeeEstimateProps) =
         <div className="card">
           <div className="card-body">
             <span className="fees-details">
-              Validators refund: <strong>{validatorsFee}</strong>{' '}
+              Validators Refund: <strong>{validatorsFee}</strong>{' '}
               <span className="token-fees">
                 <img className="chain-icon-sm" src={`/img/${token.identifier}.svg`} alt={token.name} />
                 {` ${token.symbol}`}

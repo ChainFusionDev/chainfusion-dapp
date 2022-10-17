@@ -37,7 +37,7 @@ const Staking = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="current-stake-block">
-                      <div className="title-validator">Current stake</div>
+                      <div className="title-validator">Current Stake</div>
                       <div className="number-block">156</div>
                     </div>
                   </div>

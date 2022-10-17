@@ -2,7 +2,7 @@ export const StakingHeader = () => {
   return (
     <div className="staking-table-title d-flex">
       <div className="rank pr-2">Rank</div>
-      <div className="wallet pl-4 flex-grow-1">Address</div>
+      <div className="wallet pl-4 flex-grow-1">Validator</div>
       <div className="amount pl-5 pr-4">Stake</div>
     </div>
   );
@@ -22,7 +22,7 @@ export const StakingItem = ({ rank, address, stake }: StakingItemProps) => {
         {rank}
       </div>
       <div className="wallet pl-md-4 flex-grow-1">
-        <p className="d-block d-sm-block d-md-none">Address:</p>
+        <p className="d-block d-sm-block d-md-none">Validator:</p>
         {address}
       </div>
       <div className="amount pl-md-4 pr-md-6">

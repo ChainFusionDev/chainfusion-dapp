@@ -72,7 +72,7 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
               Receiver: <strong>{receiver}</strong>
             </span>
             <span className="fees-details">
-              Validators refund: <strong>{validatorFee.amount}</strong>&nbsp;
+              Validators Refund: <strong>{validatorFee.amount}</strong>&nbsp;
               <span className="token-fees">
                 <img src={`/img/${validatorFee.token.img}.svg`} alt={`${validatorFee.token.name} Logo`} />
                 &nbsp;
