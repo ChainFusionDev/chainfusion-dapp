@@ -2,14 +2,26 @@
  * Responsive CSS
  */
 
+@media only screen and (max-width: 400px) {
+  .footer-link {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .footer-link li {
+    margin-right: 0 !important;
+    line-height: 2.3;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .form-bridge {
     margin-top: 100px;
     padding: 30px;
   }
 
-  input[type="number"],
-  input[type="text"] {
+  input[type='number'],
+  input[type='text'] {
     font-size: 19px;
     height: 55px;
     padding-right: 43px;
@@ -133,7 +145,7 @@
   .staking-table-tr .rank p,
   .staking-table-tr .wallet p,
   .staking-table-tr .amount p {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 3px;
@@ -196,6 +208,34 @@
 
   .modal-liquidity {
     width: auto !important;
+  }
+
+  footer {
+    height: auto !important;
+    padding: 15px 0 15px 0 !important;
+    flex-direction: column;
+  }
+
+  .footer-block {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-bottom: 15px;
+  }
+  footer .copyright {
+    display: flex;
+    justify-content: center !important;
+    margin: 0px 0px 10px 0px;
+  }
+  .footer-link,
+  .footer-social-icon {
+    display: flex;
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .footer-social-icon {
+    margin-top: 10px !important;
   }
 }
 
