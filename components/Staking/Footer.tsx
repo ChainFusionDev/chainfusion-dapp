@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const Footer = () => {
   return (
     <footer className="d-flex mt-auto align-items-center">
@@ -9,37 +11,37 @@ export const Footer = () => {
             </div>
             <ul className="footer-link d-flex justify-content-between mr-auto">
               <li>
-                <a href="https://chainfusion.org">Home</a>
+                <Link href="https://chainfusion.org">Home</Link>
               </li>
               <li>
-                <a href="https://explorer.chainfusion.org">Explorer</a>
+                <Link href="https://explorer.chainfusion.org">Explorer</Link>
               </li>
               <li>
-                <a href="https://docs.chainfusion.org">Documentation</a>
+                <Link href="https://docs.chainfusion.org">Documentation</Link>
               </li>
               <li>
-                <a href="#">Data Privacy</a>
+                <Link href="/">Data privacy</Link>
               </li>
             </ul>
             <ul className="footer-social-icon d-flex ml-auto">
               <li>
                 <a href="https://twitter.com/chain_fusion" target="_blank" rel="noreferrer">
-                  <img src="img/social/twitter.svg" alt="Twitter" />
+                  <img src="/img/social/twitter.svg" alt="Twitter" />
                 </a>
               </li>
               <li>
                 <a href="#" target="_blank" rel="noreferrer">
-                  <img src="img/social/telegram.svg" alt="Telegram" />
+                  <img src="/img/social/telegram.svg" alt="Telegram" />
                 </a>
               </li>
               <li>
                 <a href="#" target="_blank" rel="noreferrer">
-                  <img src="img/social/medium.svg" alt="Medium" />
+                  <img src="/img/social/medium.svg" alt="Medium" />
                 </a>
               </li>
               <li>
                 <a href="https://www.linkedin.com/company/chainfusion" target="_blank" rel="noreferrer">
-                  <img src="img/social/linkedin.svg" alt="Linkedin" />
+                  <img src="/img/social/linkedin.svg" alt="Linkedin" />
                 </a>
               </li>
             </ul>

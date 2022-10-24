@@ -1,5 +1,6 @@
 import { Blockchain, Fee, Token } from '@src/types';
 import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 
 export interface TransactionItemProps {
   from: {
@@ -47,8 +48,8 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
-            <i className="fa-light fa-arrows-repeat d-block d-lg-none"></i>
-            <i className="fa-light fa-arrow-right-long d-none d-lg-block"></i>
+            <i className="fa-light fa-arrows-repeat d-block d-xl-none"></i>
+            <i className="fa-light fa-arrow-right-long d-none d-xl-block"></i>
           </span>
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
@@ -67,9 +68,11 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
           <div className="card-body">
             <span className="transaction-details">
               Sender: <strong>{sender}</strong>
+              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver: <strong>{receiver}</strong>
+              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="fees-details">
               Validators Refund: <strong>{validatorFee.amount}</strong>&nbsp;
@@ -93,6 +96,16 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
           </div>
         </div>
       </div>
+      <ReactTooltip
+        id="transaction-copy"
+        className="standart-tooltip"
+        type="light"
+        effect="solid"
+        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        border={true}
+      >
+        Copy to clipboard
+      </ReactTooltip>
     </div>
   );
 };

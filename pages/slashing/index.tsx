@@ -1,5 +1,6 @@
 import Layout from '@components/Layout';
 import SlashingProposalModal from '@components/Modals/SlashingProposalModal';
+import ReactTooltip from 'react-tooltip';
 import React from 'react';
 
 const Slashing = () => {
@@ -36,6 +37,7 @@ const Slashing = () => {
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
                     <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
                     <strong>Votes:</strong> <span>4 / 15</span>
@@ -69,6 +71,7 @@ const Slashing = () => {
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
                     <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
                     <strong>Votes:</strong> <span>10 / 15</span>
@@ -102,6 +105,7 @@ const Slashing = () => {
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
                     <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
                     <strong>Votes:</strong> <span>3 / 15</span>
@@ -132,6 +136,7 @@ const Slashing = () => {
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
                     <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
                     <strong>Votes:</strong> <span>4 / 15</span>
@@ -165,6 +170,7 @@ const Slashing = () => {
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
                     <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
                     <strong>Votes:</strong> <span>3 / 15</span>
@@ -206,6 +212,17 @@ const Slashing = () => {
       </section>
 
       <SlashingProposalModal show={showSlashingProposalModal} close={() => setShowSlashingProposalModal(false)} />
+
+      <ReactTooltip
+        id="transaction-copy"
+        className="standart-tooltip"
+        type="light"
+        effect="solid"
+        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        border={true}
+      >
+        Copy to clipboard
+      </ReactTooltip>
     </Layout>
   );
 };

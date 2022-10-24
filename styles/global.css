@@ -53,6 +53,11 @@ main,
   max-width: 200px;
 }
 
+.cfn-token-icon {
+  width: 15px;
+  margin-left: 3px;
+}
+
 /* navbar */
 
 .navbar-toggler {
@@ -1225,6 +1230,31 @@ label {
   color: var(--dark);
 }
 
+.transaction-details strong {
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--dark);
+  font-family: 'Noto Sans Mono', monospace;
+}
+
+.copy-token-icon:after {
+  cursor: pointer;
+  font-family: 'Font Awesome 6 Pro' !important;
+  font-weight: 300;
+  content: '\f24d';
+  font-size: 12px;
+  color: var(--gray-two);
+  border: none;
+  margin-left: 5px;
+  transition: all .03s ease-in-out;
+}
+
+.copy-token-icon:active:after {
+  font-weight: 400;
+  color: var(--hover-color);
+}
+
 .loadmore-btn {
   padding: 10px 15px;
   border: 1px solid var(--main-color);
@@ -1455,6 +1485,7 @@ label {
 .staking-table-tr .wallet {
   font-family: 'Noto Sans Mono', monospace;
 }
+
 
 /* Pagination */
 
@@ -1698,6 +1729,7 @@ label {
 }
 
 .slashing-adress p {
+  cursor: pointer;
   display: inline-block;
   margin: 0;
   font-family: 'Noto Sans Mono', monospace;
@@ -2137,7 +2169,7 @@ label {
   color: var(--dark);
 }
 
-.maxsum-liquidity {
+.maxsum-input {
   cursor: pointer;
   position: absolute;
   top: 30px;
@@ -2156,12 +2188,13 @@ label {
   transition: all ease-out 0.1s;
 }
 
-.maxsum-liquidity:hover {
+.maxsum-input:hover {
   opacity: 0.9;
 }
 
 .hover-tooltip {
   padding: 2px 4px !important;
+  border-radius: 50px !important;
 }
 
 .hover-tooltip.place-top::before {
@@ -2169,6 +2202,22 @@ label {
 }
 
 .hover-tooltip.border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.standart-tooltip {
+  padding: 1px 6px !important;
+  font-size: 11px !important;
+  background: rgba(255, 255, 255, 0.70) !important;
+  border-radius: 50px !important;
+  color: var(--gray) !important;
+}
+
+.standart-tooltip.place-top::before {
+  border-top: 8px solid #dee2e6 !important;
+}
+
+.standart-tooltip.border {
   border: 1px solid #dee2e6 !important;
 }
 
