@@ -18,7 +18,10 @@ const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close 
       <ModalTitle close={close}>{title}</ModalTitle>
       <ModalBody>
         <div className="form-group">
-          <label>Amount: (CFN)</label>
+          <label>Amount:</label>
+          <span className="maxsum-input" onClick={() => setAmount(maxValue)}>
+            Max
+          </span>
           <input
             type="number"
             step="any"
@@ -31,6 +34,8 @@ const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close 
         </div>
         <div className="amount-afterform">
           {maxValueText}: <span onClick={() => setAmount(maxValue)}>{maxValue}</span>
+          <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
+          &nbsp;CFN
         </div>
       </ModalBody>
       <ModalFooter>

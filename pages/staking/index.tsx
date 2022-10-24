@@ -1,5 +1,6 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
+import ReactTooltip from 'react-tooltip';
 import React from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import stakingMock from '@data/staking-mock.json';
@@ -119,6 +120,17 @@ const Staking = () => {
         buttonText="Announce"
         close={() => setShowAnnounceWithdrawalModal(false)}
       />
+
+      <ReactTooltip
+        id="transaction-copy"
+        className="standart-tooltip"
+        type="light"
+        effect="solid"
+        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        border={true}
+      >
+        Copy to clipboard
+      </ReactTooltip>
     </Layout>
   );
 };

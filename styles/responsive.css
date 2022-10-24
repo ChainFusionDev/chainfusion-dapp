@@ -279,36 +279,6 @@
     margin-right: auto;
   }
 
-  .transaction-info {
-    padding: 3px 15px !important;
-    display: flex !important;
-    align-items: flex-start !important;
-    flex-direction: column;
-  }
-
-  .transfer-block .fa-regular {
-    position: absolute;
-    right: 30px;
-    margin-top: 13px;
-  }
-
-  .transaction-arrow {
-    left: 34px !important;
-    right: unset !important;
-  }
-
-  .transaction-arrow .fa-arrows-repeat {
-    position: relative;
-    color: var(--silver);
-    transform: rotateZ(90deg);
-    top: 18px;
-  }
-
-  .from-transaction,
-  .to-transaction {
-    margin-left: 20px;
-  }
-
   .logo-nav {
     position: static;
   }
@@ -344,5 +314,36 @@
   .liquidity-card-token {
     margin-top: 0;
     max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .transaction-info {
+    padding: 3px 15px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    flex-direction: column;
+  }
+
+  .transfer-block .fa-regular {
+    position: absolute;
+    right: 30px;
+    margin-top: 13px;
+  }
+
+  .transaction-arrow {
+    left: 34px !important;
+    right: unset !important;
+  }
+
+  .transaction-arrow .fa-arrows-repeat {
+    position: relative;
+    color: var(--silver);
+    transform: rotateZ(90deg);
+    top: 18px;
+  }
+  .from-transaction,
+  .to-transaction {
+    margin-left: 20px;
   }
 }

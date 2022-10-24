@@ -24,6 +24,7 @@ export const StakingItem = ({ rank, address, stake }: StakingItemProps) => {
       <div className="wallet pl-md-4 flex-grow-1">
         <p className="d-block d-sm-block d-md-none">Validator:</p>
         {address}
+        <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
       </div>
       <div className="amount pl-md-4 pr-md-6">
         <p className="d-block d-sm-block d-md-none">Stake:</p>

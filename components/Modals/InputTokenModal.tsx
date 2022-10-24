@@ -28,7 +28,7 @@ const InputTokenModal = ({
       <ModalBody>
         <div className="form-group">
           <label>Amount:</label>
-          <span className="maxsum-liquidity" onClick={() => setAmount(maxValue)}>
+          <span className="maxsum-input" onClick={() => setAmount(maxValue)}>
             Max
           </span>
           <input
