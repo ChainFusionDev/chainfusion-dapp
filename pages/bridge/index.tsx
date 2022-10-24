@@ -67,6 +67,7 @@ const Bridge = () => {
                 </div>
                 <input
                   type="number"
+                  autoComplete="off"
                   className="form-control"
                   id="from-amount"
                   placeholder="0.0000"
@@ -92,6 +93,7 @@ const Bridge = () => {
                 </div>
                 <input
                   type="number"
+                  autoComplete="off"
                   className="form-control"
                   id="to-amount"
                   value={to === 0.0 ? '' : to}
