@@ -1230,7 +1230,7 @@ label {
   color: var(--dark);
 }
 
-.transaction-details strong {
+.transaction-details a {
   cursor: pointer;
   font-weight: 400;
   font-size: 13px;
