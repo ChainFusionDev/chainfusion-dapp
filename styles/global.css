@@ -1236,6 +1236,11 @@ label {
   font-size: 13px;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
+}
+
+.transaction-details a:hover {
+  color: var(--hover-color);
 }
 
 .copy-token-icon:after {
