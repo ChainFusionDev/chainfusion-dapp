@@ -23,7 +23,9 @@ export const StakingItem = ({ rank, address, stake }: StakingItemProps) => {
       </div>
       <div className="wallet pl-md-4 flex-grow-1">
         <p className="d-block d-sm-block d-md-none">Validator:</p>
-        {address}
+        <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+          {address}
+        </a>
         <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
       </div>
       <div className="amount pl-md-4 pr-md-6">

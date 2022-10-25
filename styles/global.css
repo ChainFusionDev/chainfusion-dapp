@@ -1487,10 +1487,17 @@ label {
   border-right: 1px solid #e4edf8;
 }
 
-.staking-table-tr .wallet {
+.staking-table-tr .wallet a {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
 }
 
+.staking-table-tr .wallet a:hover {
+  color: var(--hover-color);
+}
 
 /* Pagination */
 
