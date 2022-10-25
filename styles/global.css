@@ -1255,10 +1255,12 @@ label {
   transition: all .03s ease-in-out;
 }
 
+.copy-token-icon:hover:after,
 .copy-token-icon:active:after {
-  font-weight: 400;
+  font-weight: 300;
   color: var(--hover-color);
 }
+
 
 .loadmore-btn {
   padding: 10px 15px;
