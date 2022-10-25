@@ -36,7 +36,9 @@ const Slashing = () => {
                   </div>
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
-                    <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                      0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
+                    </a>
                     <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
@@ -70,7 +72,9 @@ const Slashing = () => {
                   </div>
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
-                    <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                      0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
+                    </a>
                     <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
@@ -104,7 +108,9 @@ const Slashing = () => {
                   </div>
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
-                    <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                      0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
+                    </a>
                     <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
@@ -135,7 +141,9 @@ const Slashing = () => {
                   </div>
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
-                    <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                      0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
+                    </a>
                     <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">
@@ -169,7 +177,9 @@ const Slashing = () => {
                   </div>
                   <div className="slashing-adress text-break">
                     <strong>Address:&nbsp;</strong>
-                    <p>0x0661F0297bC6234d8b31782Cd1926EC101dF2d27</p>
+                    <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                      0x0661F0297bC6234d8b31782Cd1926EC101dF2d27
+                    </a>
                     <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
                   </div>
                   <div className="slashing-votes">

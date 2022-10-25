@@ -1740,11 +1740,17 @@ label {
   color: var(--dark);
 }
 
-.slashing-adress p {
+.slashing-adress a {
   cursor: pointer;
-  display: inline-block;
-  margin: 0;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
+}
+
+.slashing-adress a:hover {
+  color: var(--hover-color);
 }
 
 .slashing-votes span {
