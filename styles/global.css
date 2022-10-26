@@ -1230,12 +1230,17 @@ label {
   color: var(--dark);
 }
 
-.transaction-details strong {
+.transaction-details a {
   cursor: pointer;
   font-weight: 400;
   font-size: 13px;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
+}
+
+.transaction-details a:hover {
+  color: var(--hover-color);
 }
 
 .copy-token-icon:after {
@@ -1250,10 +1255,12 @@ label {
   transition: all .03s ease-in-out;
 }
 
+.copy-token-icon:hover:after,
 .copy-token-icon:active:after {
-  font-weight: 400;
+  font-weight: 300;
   color: var(--hover-color);
 }
+
 
 .loadmore-btn {
   padding: 10px 15px;
@@ -1482,10 +1489,17 @@ label {
   border-right: 1px solid #e4edf8;
 }
 
-.staking-table-tr .wallet {
+.staking-table-tr .wallet a {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
 }
 
+.staking-table-tr .wallet a:hover {
+  color: var(--hover-color);
+}
 
 /* Pagination */
 
@@ -1728,11 +1742,17 @@ label {
   color: var(--dark);
 }
 
-.slashing-adress p {
+.slashing-adress a {
   cursor: pointer;
-  display: inline-block;
-  margin: 0;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
+  transition: all .03s ease-in-out;
+}
+
+.slashing-adress a:hover {
+  color: var(--hover-color);
 }
 
 .slashing-votes span {

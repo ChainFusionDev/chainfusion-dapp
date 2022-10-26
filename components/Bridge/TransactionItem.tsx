@@ -67,11 +67,24 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
         <div className="card">
           <div className="card-body">
             <span className="transaction-details">
-              Sender: <strong>{sender}</strong>
+              TxHash:{' '}
+              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                0xb11F22089TU6N79TZ....C807F038V4685YNIX35
+              </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
-              Receiver: <strong>{receiver}</strong>
+              Sender:{' '}
+              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                {sender}
+              </a>
+              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
+            </span>
+            <span className="transaction-details">
+              Receiver:{' '}
+              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+                {receiver}
+              </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="fees-details">
