@@ -2423,8 +2423,8 @@ footer .copyright {
   min-height: 80px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #e6eef7;
-  -webkit-backdrop-filter: blur(9px);
-  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-radius: 100px;
 }
 
