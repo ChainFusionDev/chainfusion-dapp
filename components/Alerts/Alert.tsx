@@ -1,17 +1,16 @@
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 type AlertProps = {
-  typeAlerts: string;
+  alertType: string;
   icon: string;
   title: string;
   message: string;
 };
 
-const Alerts = ({ typeAlerts, icon, title, message }: AlertProps) => {
+const Alert = ({ alertType, icon, title, message }: AlertProps) => {
   return (
-    <div className={`alertMsg ${typeAlerts}`}>
+    <div className={`alertMsg ${alertType}`}>
       <div className="icon">
         <i className={`fa-regular ${icon}`}></i>
       </div>
@@ -23,16 +22,4 @@ const Alerts = ({ typeAlerts, icon, title, message }: AlertProps) => {
   );
 };
 
-<ToastContainer
-  position="top-right"
-  autoClose={4000}
-  hideProgressBar
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-/>;
-
-export default Alerts;
+export default Alert;

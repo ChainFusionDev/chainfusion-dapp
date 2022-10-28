@@ -1,90 +1,45 @@
+import Alert from '@components/Alerts/Alert';
+import AlertContainer from '@components/Alerts/AlertContainer';
 import Layout from '@components/Layout';
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-/* Alerts */
 const MsgSuccess = () => (
-  <div className="alertMsg success">
-    <div className="icon">
-      <i className="fa-regular fa-circle-check"></i>
-    </div>
-    <div className="alertMsgContent">
-      <div className="titleAlert">Success</div>
-      <p>You have successfully increased liquidity</p>
-    </div>
-  </div>
+  <Alert
+    alertType="success"
+    icon="fa-circle-check"
+    title="Success"
+    message="You have successfully increased liquidity"
+  />
 );
 
 const MsgInfo = () => (
-  <div className="alertMsg info">
-    <div className="icon">
-      <i className="fa-regular fa-circle-info"></i>
-    </div>
-    <div className="alertMsgContent">
-      <div className="titleAlert">Info</div>
-      <p>You do not have enough tokens to increase liquidity</p>
-    </div>
-  </div>
+  <Alert
+    alertType="info"
+    icon="fa-circle-info"
+    title="Info"
+    message="You do not have enough tokens to increase liquidity"
+  />
 );
 
 const MsgWarning = () => (
-  <div className="alertMsg warning">
-    <div className="icon">
-      <i className="fa-regular fa-circle-exclamation"></i>
-    </div>
-    <div className="alertMsgContent">
-      <div className="titleAlert">Warning</div>
-      <p>You have a limit on increasing liquidity</p>
-    </div>
-  </div>
+  <Alert
+    alertType="warning"
+    icon="fa-circle-exclamation"
+    title="Warning"
+    message="You have a limit on increasing liquidity"
+  />
 );
 
 const MsgError = () => (
-  <div className="alertMsg error">
-    <div className="icon">
-      <i className="fa-regular fa-circle-xmark"></i>
-    </div>
-    <div className="alertMsgContent">
-      <div className="titleAlert">Error</div>
-      <p>There was an error adding liquidity</p>
-    </div>
-  </div>
+  <Alert alertType="error" icon="fa-circle-xmark" title="Error" message="There was an error adding liquidity" />
 );
 
 const MsgDeleted = () => (
-  <div className="alertMsg deleted">
-    <div className="icon">
-      <i className="fa-regular fa-circle-trash"></i>
-    </div>
-    <div className="alertMsgContent">
-      <div className="titleAlert">Deleted</div>
-      <p>You have successfully removed liquidity</p>
-    </div>
-  </div>
+  <Alert alertType="deleted" icon="fa-circle-trash" title="Deleted" message="You have successfully removed liquidity" />
 );
 
 const Analytics = () => {
-  const alertSuccess = () => {
-    toast(<MsgSuccess />);
-  };
-
-  const alertInfo = () => {
-    toast(<MsgInfo />);
-  };
-
-  const alertWarning = () => {
-    toast(<MsgWarning />);
-  };
-
-  const alertError = () => {
-    toast(<MsgError />);
-  };
-
-  const alertDeleted = () => {
-    toast(<MsgDeleted />);
-  };
-
   return (
     <Layout module="analytics" title="Analytics" description="Bridge stats and analytics">
       <section className="section-page">
@@ -97,27 +52,27 @@ const Analytics = () => {
 
           <div className="row">
             <div className="col-12 col-sm-6 col-md-3 d-block mx-auto">
-              <button onClick={alertSuccess} className="btn-success-light mt-1 mb-2">
+              <button onClick={() => toast(<MsgSuccess />)} className="btn-success-light mt-1 mb-2">
                 Success
               </button>
             </div>
             <div className="col-12 col-sm-6 col-md-3 d-block mx-auto">
-              <button onClick={alertInfo} className="btn-info-light mt-1 mb-2">
+              <button onClick={() => toast(<MsgInfo />)} className="btn-info-light mt-1 mb-2">
                 Info
               </button>
             </div>
             <div className="col-12 col-sm-6 col-md-3 d-block mx-auto">
-              <button onClick={alertWarning} className="btn-warning-light mt-1 mb-2">
+              <button onClick={() => toast(<MsgWarning />)} className="btn-warning-light mt-1 mb-2">
                 Warning
               </button>
             </div>
             <div className="col-12 col-sm-6 col-md-3 d-block mx-auto">
-              <button onClick={alertError} className="btn-error-light mt-1 mb-2">
+              <button onClick={() => toast(<MsgError />)} className="btn-error-light mt-1 mb-2">
                 Error
               </button>
             </div>
             <div className="col-12 col-sm-6 col-md-3 d-block mx-sm-none">
-              <button onClick={alertDeleted} className="btn-info-light mt-1 mb-2">
+              <button onClick={() => toast(<MsgDeleted />)} className="btn-info-light mt-1 mb-2">
                 Deleted
               </button>
             </div>
@@ -125,17 +80,7 @@ const Analytics = () => {
         </div>
       </section>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={4000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <AlertContainer />
     </Layout>
   );
 };
