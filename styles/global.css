@@ -13,6 +13,14 @@
   --dark: #122439;
   --gray: #88919c;
   --gray-two: #8694a5;
+  --success: #29c195;
+  --info: #0d7ee7;
+  --warning: #ffae00;
+  --error: #fc574d;
+  --success-light: #dff6ef;
+  --info-light: #e7f2fd;
+  --warning-light: #fff7e6;
+  --error-light: #fdf4f6;
 }
 
 html,
@@ -362,6 +370,86 @@ label {
 .btn-blue-light:hover {
   background: var(--light);
   color: var(--main-color);
+}
+
+.btn-success-light {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--success-light);
+  color: var(--success);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 50px;
+  border: none;
+  outline: none !important;
+  transition: all ease-out 0.3s;
+}
+
+.btn-success-light:hover {
+  background: var(--success);
+  color: var(--white);
+}
+
+.btn-warning-light {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--warning-light);
+  color: var(--warning);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 50px;
+  border: none;
+  outline: none !important;
+  transition: all ease-out 0.3s;
+}
+
+.btn-warning-light:hover {
+  background: var(--warning);
+  color: var(--white);
+}
+
+.btn-info-light {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--info-light);
+  color: var(--info);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 50px;
+  border: none;
+  outline: none !important;
+  transition: all ease-out 0.3s;
+}
+
+.btn-info-light:hover {
+  background: var(--info);
+  color: var(--white);
+}
+
+.btn-error-light {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--error-light);
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 50px;
+  border: none;
+  outline: none !important;
+  transition: all ease-out 0.3s;
+}
+
+.btn-error-light:hover {
+  background: var(--error);
+  color: var(--white);
 }
 
 .btn-blue i,
@@ -1077,7 +1165,7 @@ label {
 
 .progress-transfer-list li .fa-circle-check {
   position: absolute;
-  color: #29c195;
+  color: var(--success);
   font-size: 16px;
   margin-top: 4px;
 }
@@ -1183,7 +1271,7 @@ label {
 }
 
 .transfer-block .success-status strong {
-  color: #29c195;
+  color: var(--success);
 }
 
 .transfer-block .blockchain-fees img,
@@ -1236,7 +1324,7 @@ label {
   font-size: 13px;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
-  transition: all .03s ease-in-out;
+  transition: all 0.03s ease-in-out;
 }
 
 .transaction-details a:hover {
@@ -1252,7 +1340,7 @@ label {
   color: var(--gray-two);
   border: none;
   margin-left: 5px;
-  transition: all .03s ease-in-out;
+  transition: all 0.03s ease-in-out;
 }
 
 .copy-token-icon:hover:after,
@@ -1260,7 +1348,6 @@ label {
   font-weight: 300;
   color: var(--hover-color);
 }
-
 
 .loadmore-btn {
   padding: 10px 15px;
@@ -1316,7 +1403,7 @@ label {
 
 .status-validator.active-validator span {
   background: #dff6ef;
-  color: #29c195;
+  color: var(--success);
 }
 
 .current-stake-block {
@@ -1494,7 +1581,7 @@ label {
   font-size: 13px;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
-  transition: all .03s ease-in-out;
+  transition: all 0.03s ease-in-out;
 }
 
 .staking-table-tr .wallet a:hover {
@@ -1691,20 +1778,20 @@ label {
 
 .slashing-status.status-pending {
   background: #fff7e6;
-  border: 1px solid #ffae00;
-  color: #ffae00;
+  border: 1px solid var(--warning);
+  color: var(--warning);
 }
 
 .slashing-status.status-executed {
   background: #dff6ef;
-  border: 1px solid #29c195;
-  color: #29c195;
+  border: 1px solid var(--success);
+  color: var(--success);
 }
 
 .slashing-status.status-expired {
   background: #fdf4f6;
-  border: 1px solid #fc574d;
-  color: #fc574d;
+  border: 1px solid var(--error);
+  color: var(--error);
 }
 
 .slashing-text,
@@ -1748,7 +1835,7 @@ label {
   font-size: 13px;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
-  transition: all .03s ease-in-out;
+  transition: all 0.03s ease-in-out;
 }
 
 .slashing-adress a:hover {
@@ -2228,7 +2315,7 @@ label {
 .standart-tooltip {
   padding: 1px 6px !important;
   font-size: 11px !important;
-  background: rgba(255, 255, 255, 0.70) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 50px !important;
   color: var(--gray) !important;
 }
@@ -2299,4 +2386,130 @@ footer .copyright {
 .footer-link li:last-child,
 .footer-social-icon li:last-child {
   margin-right: 0px;
+}
+
+/* Alerts */
+
+.Toastify__toast-theme--light {
+  background: none !important;
+}
+
+.Toastify__toast {
+  padding: 0 !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 100px !important;
+  box-shadow: 0px 10px 28px rgba(57, 76, 98, 0.11) !important;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+
+.Toastify__close-button {
+  display: none !important;
+}
+
+.Toastify__toast-body {
+  padding: 0 !important;
+}
+
+.Toastify__toast-container {
+  width: 385px !important;
+}
+
+.alertMsg {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: auto;
+  min-height: 80px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e6eef7;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+}
+
+.alertMsgContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+  line-height: 1.6;
+}
+
+.titleAlert {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--dark);
+}
+
+.alertMsg .icon {
+  display: flex;
+  flex: 0 0 60px;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+
+.alertMsg .icon i {
+  font-weight: 400;
+  font-size: 28px;
+}
+
+.alertMsg p {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--gray-two);
+  margin: 0;
+}
+
+.titleAlert,
+.alertMsg {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.alertMsg.success .icon {
+  background: var(--success-light);
+}
+
+.alertMsg.success .icon i {
+  color: var(--success);
+}
+
+.alertMsg.info .icon {
+  background: var(--info-light);
+}
+
+.alertMsg.info .icon i {
+  color: var(--info);
+}
+
+.alertMsg.warning .icon {
+  background: var(--warning-light);
+}
+
+.alertMsg.warning .icon i {
+  color: var(--warning);
+}
+
+.alertMsg.error .icon {
+  background: var(--error-light);
+}
+
+.alertMsg.error .icon i {
+  color: var(--error);
+}
+
+.alertMsg.deleted .icon {
+  background: var(--info-light);
+}
+
+.alertMsg.deleted .icon i {
+  color: var(--info);
 }
