@@ -28,7 +28,7 @@
 
   input[type='number'],
   input[type='text'] {
-    font-size: 19px;
+    font-size: 1.1875rem;
     height: 55px;
     padding-right: 43px;
   }
@@ -76,7 +76,7 @@
     position: absolute;
     left: 13px;
     top: 8px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     width: 35px;
   }
 
@@ -96,14 +96,14 @@
   }
 
   .setting-receiver {
-    font-size: 18px;
+    font-size: 1.125rem;
     top: 20px;
     right: 16px;
   }
 
   .progress-transfer-list li {
     padding: 11px;
-    font-size: 12px;
+    font-size: 0.75rem;
     min-height: 45px;
   }
 
@@ -136,12 +136,12 @@
 
   .staking-table-tr .wallet {
     display: block;
-    font-size: 12px;
+    font-size: 0.75rem;
     min-width: 100%;
   }
 
   .staking-table-tr .wallet p {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 
   .staking-table-tr .rank {
@@ -184,7 +184,7 @@
   }
 
   .slashing-adress p {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   .slashing-vote-label {
@@ -205,7 +205,7 @@
   .successCreateProposal p {
     font-weight: 400;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .modal-liquidity {
@@ -258,13 +258,13 @@
   }
 
   .titleAlert {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   .alertMsg p {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .alertMsg .icon i {
-    font-size: 23px;
+    font-size: 1.4375rem;
   }
 }
 

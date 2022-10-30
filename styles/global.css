@@ -147,7 +147,7 @@ main,
   min-width: 100px;
   text-align: center;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 19px;
   color: var(--gray-two);
   transition: all ease-out 0.3s;
@@ -174,7 +174,7 @@ main,
 
 .connect-wallet-btn {
   line-height: 16px !important;
-  font-size: 15px !important;
+  font-size: .9375rem !important;
   color: var(--white) !important;
   background: var(--main-color);
   transition: all ease-out 0.3s;
@@ -243,7 +243,7 @@ input[type='number'] {
   padding: 15px 205px 15px 25px;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
   height: 76px;
@@ -272,7 +272,7 @@ textarea {
   margin-bottom: -10px;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px !important;
+  font-size: .875rem !important;
   color: var(--dark);
   border: 1px solid var(--light) !important;
   background: var(--white) !important;
@@ -326,7 +326,7 @@ textarea:-ms-input-placeholder {
 label {
   display: block;
   color: var(--gray-two);
-  font-size: 13px;
+  font-size: .8125rem;
   margin-bottom: 0.1rem;
   font-weight: 500;
   margin-left: 15px;
@@ -340,7 +340,7 @@ label {
   padding: 10px 20px;
   background: var(--main-color);
   color: var(--white);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
@@ -361,7 +361,7 @@ label {
   padding: 10px 20px;
   background: #e8f1fb;
   color: var(--main-color);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -381,7 +381,7 @@ label {
   padding: 10px 20px;
   background: var(--success-light);
   color: var(--success);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -401,7 +401,7 @@ label {
   padding: 10px 20px;
   background: var(--warning-light);
   color: var(--warning);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -421,7 +421,7 @@ label {
   padding: 10px 20px;
   background: var(--info-light);
   color: var(--info);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -441,7 +441,7 @@ label {
   padding: 10px 20px;
   background: var(--error-light);
   color: var(--error);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -499,7 +499,7 @@ label {
   top: 5px;
   left: 16px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--dark);
 }
 
@@ -508,7 +508,7 @@ label {
   top: 28px;
   left: 16px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--gray);
 }
 
@@ -523,7 +523,7 @@ label {
   right: 165px;
   top: 26px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--silver);
   z-index: 2;
 }
@@ -541,7 +541,7 @@ label {
   font-weight: 400;
   width: 33px;
   height: 33px;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--main-color);
   text-align: center;
   border-radius: 50px;
@@ -564,7 +564,7 @@ label {
   padding: 5px 15px;
   height: 58px;
   color: var(--white);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   text-align: center;
   background: var(--main-color);
@@ -606,7 +606,7 @@ label {
   z-index: 2;
   display: block;
   width: 2.675rem;
-  font-size: 14px;
+  font-size: .875rem;
   height: 2.375rem;
   line-height: 3rem;
   text-align: center;
@@ -628,7 +628,7 @@ label {
   padding: 15px 15px 15px 30px;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
   background: var(--light-2);
   height: 35px;
@@ -671,7 +671,7 @@ label {
 
 .token-icon h6,
 .blockchain-icon h6 {
-  font-size: 14px;
+  font-size: .875rem;
   margin-top: 2px;
 }
 
@@ -695,7 +695,7 @@ label {
 
 .modal-dialog .close .fa-xmark-large {
   color: var(--silver);
-  font-size: 14px;
+  font-size: .875rem;
   transition: all ease-out 0.3s;
 }
 
@@ -705,7 +705,7 @@ label {
 
 .modal-dialog .modal-title {
   color: var(--dark);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
@@ -739,7 +739,7 @@ label {
   min-height: 45px;
   background: rgba(13, 126, 231, 0.1);
   color: var(--main-color);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -759,7 +759,7 @@ label {
   min-height: 45px;
   background: var(--main-color);
   color: var(--white);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -796,7 +796,7 @@ label {
   border: 1px solid var(--light);
   color: var(--dark);
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -862,7 +862,7 @@ label {
   color: var(--gray);
   right: 29px;
   margin-top: 5px;
-  font-size: 14px;
+  font-size: .875rem;
   transition: all ease-out 0.1s;
 }
 
@@ -882,7 +882,7 @@ label {
 
 .title-page {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: var(--dark);
   margin-bottom: 25px;
   line-height: 1.3;
@@ -906,7 +906,7 @@ label {
   align-items: center;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
   padding-right: 0.3rem;
 }
@@ -930,7 +930,7 @@ label {
 
 .breadcrumbs-link:after {
   float: left;
-  font-size: 11px;
+  font-size: .6875rem;
   padding: 0 0.5rem 0 0.5rem;
   color: #c8cfd8;
   content: '\f054';
@@ -971,20 +971,20 @@ label {
 
 .title-panel {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .title-panel strong {
   font-weight: 700;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--main-color);
 }
 
 .token-fees {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
@@ -997,7 +997,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1016,7 +1016,7 @@ label {
   cursor: pointer;
   position: absolute;
   color: var(--main-color);
-  font-size: 21px;
+  font-size: 1.3125rem;
   top: 23px;
   right: 20px;
 }
@@ -1029,7 +1029,7 @@ label {
   background: var(--white) !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
 }
 
 .input-standart:hover {
@@ -1068,7 +1068,7 @@ label {
   padding: 8px 16px;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--dark);
   list-style-type: none;
   border: 1px solid var(--light);
@@ -1156,7 +1156,7 @@ label {
   padding: 10px 15px;
   font-style: normal;
   font-weight: 600;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   list-style-type: none;
   border: 1px solid var(--light);
@@ -1169,7 +1169,7 @@ label {
 .progress-transfer-list li .fa-circle-check {
   position: absolute;
   color: var(--success);
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 4px;
 }
 
@@ -1183,7 +1183,7 @@ label {
 
 .progress-active .fa-spinner-third {
   position: absolute;
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 4px;
   color: var(--main-color);
   -webkit-animation: rotating-progress 0.6s linear infinite;
@@ -1208,7 +1208,7 @@ label {
   margin: 30px 0 15px 0;
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 34px;
   color: var(--dark);
 }
@@ -1242,21 +1242,21 @@ label {
 
 .transfer-block .title-panel {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .transfer-block .title-panel strong {
   font-weight: 700;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--main-color);
 }
 
 .transfer-block .blockchain-fees,
 .transfer-block .token-fees {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
@@ -1268,7 +1268,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1287,7 +1287,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1315,14 +1315,14 @@ label {
   display: block;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
 .transaction-details a {
   cursor: pointer;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1337,7 +1337,7 @@ label {
   font-family: 'Font Awesome 6 Pro' !important;
   font-weight: 300;
   content: '\f24d';
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
   border: none;
   margin-left: 5px;
@@ -1355,7 +1355,7 @@ label {
   border: 1px solid var(--main-color);
   color: var(--main-color);
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   border-radius: 50px;
   text-decoration: none !important;
   transition: all ease-out 0.3s;
@@ -1397,7 +1397,7 @@ label {
   background: var(--light-3);
   border-radius: 100px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
@@ -1417,7 +1417,7 @@ label {
 .current-stake-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1426,7 +1426,7 @@ label {
 
 .current-stake-block .number-block {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 29px;
   text-align: center;
   color: var(--main-color);
@@ -1446,7 +1446,7 @@ label {
 .announced-withdrawal-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1455,7 +1455,7 @@ label {
 
 .announced-withdrawal-block .number-block {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 29px;
   text-align: center;
   color: var(--dark);
@@ -1475,7 +1475,7 @@ label {
 .withdrawal-time-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1492,7 +1492,7 @@ label {
   background: var(--light-3);
   border-radius: 50px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
 }
 
 .staking-table-title {
@@ -1508,7 +1508,7 @@ label {
 .staking-table-title .amount {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1543,7 +1543,7 @@ label {
 .staking-table-tr .amount {
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1571,7 +1571,7 @@ label {
 
 .staking-table-tr .wallet a {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1667,7 +1667,7 @@ label {
 
 .count-page-pagination {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
   align-items: center;
 }
@@ -1687,7 +1687,7 @@ label {
 .amount-afterform {
   display: flex;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
   margin: -5px 15px 5px 0px;
 }
@@ -1735,7 +1735,7 @@ label {
   width: 43px;
   height: 43px;
   border-radius: 100px;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--main-color);
   background-color: var(--light);
   transition: all ease-out 0.1s;
@@ -1762,7 +1762,7 @@ label {
   height: 22px;
   text-align: center;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: .75rem;
   font-weight: 500;
   margin-bottom: 6px;
 }
@@ -1804,7 +1804,7 @@ label {
 
 .slashing-text {
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1816,14 +1816,14 @@ label {
 
 .slashing-adress {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
 .slashing-adress a {
   cursor: pointer;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1837,7 +1837,7 @@ label {
   padding: 3px 7px;
   background: var(--light-3);
   font-weight: 600;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
   border: 1px solid var(--light-1);
   border-radius: 6px;
@@ -1846,7 +1846,7 @@ label {
 .slashing-date,
 .slashing-timer {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1859,7 +1859,7 @@ label {
   background: var(--light-3);
   border-radius: 50px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   text-align: center;
   color: var(--gray-two);
 }
@@ -1881,7 +1881,7 @@ label {
   cursor: pointer;
   padding: 8px 10px;
   font-family: 'Noto Sans Mono', monospace;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   border: 1px solid var(--light-2);
   margin: 0px 0px 5px 0px;
@@ -1920,7 +1920,7 @@ label {
 .successCreateProposal p {
   font-weight: 400;
   text-align: center;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 140%;
   color: var(--dark);
   max-width: 220px;
@@ -1947,7 +1947,7 @@ label {
 .liquidity-title-pool {
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--dark);
 }
 
@@ -1971,7 +1971,7 @@ label {
 .liquidity-tokens span {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
@@ -2000,14 +2000,14 @@ label {
 .liquidity-tvl span {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
 .liquidity-tvl .liquidity-sum {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   margin-top: -1px;
 }
@@ -2027,7 +2027,7 @@ label {
   font-weight: 600 !important;
   height: 17px;
   border-radius: 50px;
-  font-size: 10px !important;
+  font-size: .625rem !important;
   text-align: center;
   color: var(--gray-two) !important;
 }
@@ -2107,7 +2107,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--dark);
 }
 
@@ -2124,7 +2124,7 @@ label {
   justify-content: center;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2132,14 +2132,14 @@ label {
 .liquidity-card-left .liquidity-sum span {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
 .liquidity-card-left .liquidity-sum span > strong {
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: .625rem;
   color: var(--dark);
 }
 
@@ -2155,7 +2155,7 @@ label {
 .liquidity-card-right .liquidity-rewards {
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2166,7 +2166,7 @@ label {
 
 .liquidity-card-right .liquidity-provided span {
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
   margin-right: 5px;
 }
@@ -2179,7 +2179,7 @@ label {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  font-size: 10px !important;
+  font-size: .625rem !important;
   color: var(--main-color);
   background: var(--light-3);
   border: 1px solid var(--light-1);
@@ -2200,7 +2200,7 @@ label {
 
 .liquidity-card-right .liquidity-rewards span {
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
 }
 
@@ -2210,7 +2210,7 @@ label {
   cursor: pointer;
   padding: 1px 10px;
   font-weight: 500;
-  font-size: 11px;
+  font-size: .6875rem;
   line-height: 140%;
   color: var(--white);
   background: var(--main-color);
@@ -2256,7 +2256,7 @@ label {
 
 .token-liquidity-amount span {
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
@@ -2269,7 +2269,7 @@ label {
   top: 30px;
   right: 22px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
   text-align: center;
   width: 40px;
   height: 40px;
@@ -2298,7 +2298,7 @@ label {
 
 .standart-tooltip {
   padding: 1px 6px !important;
-  font-size: 11px !important;
+  font-size: .6875rem !important;
   background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 50px !important;
   color: var(--gray) !important;
@@ -2334,7 +2334,7 @@ footer {
 footer .copyright {
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
   margin-right: 28px;
 }
@@ -2346,7 +2346,7 @@ footer .copyright {
 .footer-link li > a {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: #52657a;
 }
 
@@ -2421,7 +2421,7 @@ footer .copyright {
 
 .titleAlert {
   font-weight: 600;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--dark);
 }
 
@@ -2437,12 +2437,12 @@ footer .copyright {
 
 .alertMsg .icon i {
   font-weight: 400;
-  font-size: 28px;
+  font-size: 1.75rem;
 }
 
 .alertMsg p {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   color: var(--gray-two);
   margin: 0;
