@@ -16,8 +16,7 @@
     left: 0 !important;
     right: 0 !important;
     width: auto !important;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    margin: 0 10px !important;
   }
 }
 
@@ -120,7 +119,7 @@
   .staking-table-tr {
     flex-direction: column;
     align-items: flex-start;
-    border-bottom: 3px solid #e4edf8;
+    border-bottom: 3px solid var(--light);
   }
 
   .staking-table-tr .rank,
@@ -153,9 +152,7 @@
   .staking-table-tr .wallet p,
   .staking-table-tr .amount p {
     font-family: 'Inter', sans-serif;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 3px;
+    margin: auto 0px auto 3px;
     color: var(--dark);
     font-weight: 700;
   }
@@ -176,11 +173,9 @@
   .slashing-info {
     width: 100%;
     border-left: none;
-    border-bottom: 1px solid #e4edf8;
-    margin-left: 0px;
-    padding-left: 0px;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+    border-bottom: 1px solid var(--light);
+    margin: 0px 0px 15px 0px;
+    padding: 0px 0px 15px 0px;
   }
 
   .vote-block {
@@ -237,8 +232,7 @@
   .footer-social-icon {
     display: flex;
     justify-content: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin: 0 auto !important;
   }
 
   .footer-social-icon {
@@ -310,8 +304,7 @@
 
   .connect-wallet-btn {
     max-width: 210px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 
   .logo-nav {
@@ -330,8 +323,8 @@
     flex-direction: row;
     justify-content: space-between;
     border-left: none;
-    border-top: 1px solid #e4edf8;
-    border-bottom: 1px solid #e4edf8;
+    border-top: 1px solid var(--light);
+    border-bottom: 1px solid var(--light);
     padding: 10px 0px 10px 0px;
     margin: 10px 0px 10px 0px;
   }

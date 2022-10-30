@@ -17,10 +17,16 @@
   --info: #0d7ee7;
   --warning: #ffae00;
   --error: #fc574d;
-  --success-light: #dff6ef;
+  --success-light: var(--light-5);
   --info-light: #e7f2fd;
   --warning-light: #fff7e6;
   --error-light: #fdf4f6;
+  --light-1: #e6eef7;
+  --light-2: #f1f3f5;
+  --light-3: #f5f8fc;
+  --light-4: #e4edf8;
+  --light-5: #dff6ef;
+  --light-6: #dee2e6;
 }
 
 html,
@@ -70,7 +76,7 @@ main,
 
 .navbar-toggler {
   padding: 0.25rem 1.05rem;
-  background: #e6eef7;
+  background: var(--light-1);
   height: 50px;
   width: 50px;
   border-radius: 50px;
@@ -132,6 +138,7 @@ main,
 }
 
 .navbarMenu {
+  display: block;
   margin-top: 25px;
 }
 
@@ -139,7 +146,6 @@ main,
   padding: 13px 15px;
   min-width: 100px;
   text-align: center;
-  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
@@ -154,9 +160,8 @@ main,
 
 .navbar-nav .nav-item.active a {
   max-width: 150px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #e6eef7;
+  margin: 0 auto 0 auto;
+  background: var(--light-1);
   color: var(--main-color) !important;
   border-radius: 50px;
   transition: all ease-out 0.3s;
@@ -199,9 +204,8 @@ main,
 }
 
 .logo {
-  width: 270px;
-  margin-top: 0px;
-  margin-bottom: 20px;
+  width: 260px;
+  margin: 0 0 20px 0;
 }
 
 .logo-mobile {
@@ -236,8 +240,7 @@ main,
 
 input[type='text'],
 input[type='number'] {
-  padding: 15px 25px;
-  padding-right: 205px;
+  padding: 15px 205px 15px 25px;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -542,7 +545,7 @@ label {
   color: var(--main-color);
   text-align: center;
   border-radius: 50px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--white);
   box-shadow: 0px 0px 21px rgba(128, 131, 133, 0.08);
   z-index: 2;
 }
@@ -563,6 +566,7 @@ label {
   color: var(--white);
   font-size: 16px;
   font-weight: 500;
+  text-align: center;
   background: var(--main-color);
   border: 0 none;
   border-radius: 50px;
@@ -611,7 +615,7 @@ label {
 }
 
 .modal-header {
-  border-bottom: 1px solid #dee2e669;
+  border-bottom: 1px solid var(--light-6) 69;
 }
 
 .search-form {
@@ -626,7 +630,7 @@ label {
   font-weight: 500;
   font-size: 14px;
   color: var(--dark);
-  background: #f1f3f5;
+  background: var(--light-2);
   height: 35px;
   border: 1px solid;
   border-color: transparent;
@@ -643,9 +647,8 @@ label {
   padding: 6px 10px;
   height: 33px;
   color: var(--dark);
-  border: 1px solid #f1f3f5;
-  margin-right: 0px;
-  margin-bottom: 5px;
+  border: 1px solid var(--light-2);
+  margin: 0px 0px 5px 0px;
   border-radius: 12px;
 }
 
@@ -738,6 +741,7 @@ label {
   color: var(--main-color);
   font-size: 14px;
   font-weight: 500;
+  text-align: center;
   border-radius: 50px;
   border: none;
   outline: none !important;
@@ -757,6 +761,7 @@ label {
   color: var(--white);
   font-size: 14px;
   font-weight: 500;
+  text-align: center;
   border-radius: 50px;
   border: none;
   outline: none !important;
@@ -855,7 +860,6 @@ label {
 .select-custom .fa-chevron-down {
   position: absolute;
   color: var(--gray);
-  /* top: 59px; */
   right: 29px;
   margin-top: 5px;
   font-size: 14px;
@@ -917,8 +921,8 @@ label {
 
 .breadcrumbs-link.active {
   padding: 0px 15px;
-  background: #f5f8fc;
-  border: 1px solid #e6eef7;
+  background: var(--light-3);
+  border: 1px solid var(--light-1);
   border-radius: 50px;
   color: var(--main-color);
   height: 30px;
@@ -927,8 +931,7 @@ label {
 .breadcrumbs-link:after {
   float: left;
   font-size: 11px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
   color: #c8cfd8;
   content: '\f054';
 }
@@ -1202,8 +1205,7 @@ label {
 /* Previous Transfers  */
 
 .title-block {
-  margin-top: 25px;
-  margin-bottom: 10px;
+  margin: 30px 0 15px 0;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -1304,8 +1306,7 @@ label {
 
 .transfer-block .transaction-arrow {
   position: absolute;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   left: 0;
   right: 0;
 }
@@ -1370,8 +1371,7 @@ label {
 /* Section and other style */
 
 .section-page {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding: 60px 0;
 }
 
 /* Staking */
@@ -1379,7 +1379,7 @@ label {
 .validator-info {
   padding: 25px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1394,7 +1394,7 @@ label {
 
 .status-validator span {
   padding: 7px 20px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 100px;
   font-weight: 600;
   font-size: 12px;
@@ -1402,17 +1402,16 @@ label {
 }
 
 .status-validator.active-validator span {
-  background: #dff6ef;
+  background: var(--light-5);
   color: var(--success);
 }
 
 .current-stake-block {
   padding: 12px 0px;
   padding-top: 15px;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
-  margin-top: 15px;
-  margin-bottom: 7px;
+  margin: 15px 0px 7px 0px;
 }
 
 .current-stake-block .title-validator {
@@ -1421,10 +1420,8 @@ label {
   font-size: 13px;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .current-stake-block .number-block {
@@ -1432,12 +1429,12 @@ label {
   font-size: 24px;
   line-height: 29px;
   text-align: center;
-  color: #0d7ee7;
+  color: var(--main-color);
 }
 
 .announced-withdrawal-block {
   display: flex;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   height: 85px;
   padding-top: 2px;
@@ -1452,10 +1449,8 @@ label {
   font-size: 13px;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .announced-withdrawal-block .number-block {
@@ -1468,7 +1463,7 @@ label {
 
 .withdrawal-time-block {
   display: flex;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   height: 85px;
   padding-top: 1px;
@@ -1483,10 +1478,8 @@ label {
   font-size: 13px;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .withdrawal-time-block .time-withdrawal {
@@ -1496,7 +1489,7 @@ label {
 
 .time-withdrawal span {
   padding: 5px 8px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 50px;
   font-weight: 600;
   font-size: 12px;
@@ -1505,7 +1498,7 @@ label {
 .staking-table-title {
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1533,14 +1526,14 @@ label {
 
 .staking-table-title .rank,
 .staking-table-title .wallet {
-  border-right: 1px solid #e4edf8;
+  border-right: 1px solid var(--light);
 }
 
 .staking-table-tr {
   margin-top: 5px;
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1573,7 +1566,7 @@ label {
 
 .staking-table-tr .rank,
 .staking-table-tr .wallet {
-  border-right: 1px solid #e4edf8;
+  border-right: 1px solid var(--light);
 }
 
 .staking-table-tr .wallet a {
@@ -1610,7 +1603,7 @@ label {
 .pagination-nav .next-btn {
   cursor: pointer;
   background: #ffffff;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   box-shadow: 0px 10px 20px rgba(75, 105, 139, 0.03);
   border-radius: 8px;
   color: var(--dark);
@@ -1665,8 +1658,8 @@ label {
 }
 
 .pagination-nav .pagintaion-dot:hover {
-  background: #ffffff;
-  border: 1px solid #e4edf8;
+  background: var(--white);
+  border: 1px solid var(--light);
   box-shadow: 0px 10px 20px rgba(75, 105, 139, 0.03);
   border-radius: 8px;
   color: var(--dark);
@@ -1696,9 +1689,7 @@ label {
   font-weight: 500;
   font-size: 13px;
   color: var(--gray-two);
-  margin-top: -5px;
-  margin-bottom: 5px;
-  margin-left: 15px;
+  margin: -5px 15px 5px 0px;
 }
 
 .amount-afterform span {
@@ -1715,7 +1706,7 @@ label {
   margin-bottom: 10px;
   padding: 15px 18px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
   -ms-flex-order: 1;
@@ -1760,7 +1751,7 @@ label {
 }
 
 .slashing-info {
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   margin-left: 18px;
   padding-left: 18px;
 }
@@ -1777,19 +1768,19 @@ label {
 }
 
 .slashing-status.status-pending {
-  background: #fff7e6;
+  background: var(--warning-light);
   border: 1px solid var(--warning);
   color: var(--warning);
 }
 
 .slashing-status.status-executed {
-  background: #dff6ef;
+  background: var(--light-5);
   border: 1px solid var(--success);
   color: var(--success);
 }
 
 .slashing-status.status-expired {
-  background: #fdf4f6;
+  background: var(--error-light);
   border: 1px solid var(--error);
   color: var(--error);
 }
@@ -1814,7 +1805,7 @@ label {
 .slashing-text {
   font-weight: 500;
   font-size: 13px;
-  color: #8694a5;
+  color: var(--gray-two);
 }
 
 .slashing-text p {
@@ -1844,11 +1835,11 @@ label {
 
 .slashing-votes span {
   padding: 3px 7px;
-  background: #f5f8fc;
+  background: var(--light-3);
   font-weight: 600;
   font-size: 13px;
   color: var(--main-color);
-  border: 1px solid #e6eef7;
+  border: 1px solid var(--light-1);
   border-radius: 6px;
 }
 
@@ -1856,7 +1847,7 @@ label {
 .slashing-timer {
   font-weight: 400;
   font-size: 13px;
-  color: #8694a5;
+  color: var(--gray-two);
 }
 
 .slashing-vote-label {
@@ -1865,7 +1856,7 @@ label {
   right: 15px;
   width: 126px;
   height: 22px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 50px;
   font-weight: 500;
   font-size: 12px;
@@ -1892,9 +1883,8 @@ label {
   font-family: 'Noto Sans Mono', monospace;
   font-size: 13px;
   color: var(--dark);
-  border: 1px solid #f1f3f5;
-  margin-right: 0px;
-  margin-bottom: 5px;
+  border: 1px solid var(--light-2);
+  margin: 0px 0px 5px 0px;
   border-radius: 12px;
 }
 
@@ -1924,8 +1914,7 @@ label {
 
 .successCreateProposal img {
   width: 88px;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin: 10px 0px 15px 0px;
 }
 
 .successCreateProposal p {
@@ -1935,9 +1924,7 @@ label {
   line-height: 140%;
   color: var(--dark);
   max-width: 220px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
+  margin: 0px auto 30px auto;
 }
 
 /* Liquidity */
@@ -1966,15 +1953,13 @@ label {
 
 .liquidity-title-pool img {
   width: 20px;
-  margin-top: -5px;
-  margin-right: 1px;
+  margin: -5px 0px 0px 1px;
 }
 
 .liquidity-info {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin: 10px 0px 5px 0px;
 }
 
 .liquidity-tokens {
@@ -1997,8 +1982,7 @@ label {
 .liquidity-tokens-list {
   display: flex;
   align-items: center;
-  margin-top: -5px;
-  margin-left: 0;
+  margin: -5px 0px 0px 0px;
   padding-left: 0;
 }
 
@@ -2008,7 +1992,7 @@ label {
 }
 
 .liquidity-tvl {
-  border: 1px dashed #e6eef7;
+  border: 1px dashed var(--light-1);
   border-radius: 10px;
   margin-left: 5px;
 }
@@ -2037,7 +2021,7 @@ label {
 
 .liquidity-tokens-tooltip {
   display: block;
-  background: #f5f8fc;
+  background: var(--light-3);
   margin-top: 2px;
   width: 17px;
   font-weight: 600 !important;
@@ -2130,7 +2114,7 @@ label {
 .liquidity-card-left {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   padding-left: 20px;
 }
 
@@ -2163,7 +2147,7 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   padding-left: 20px;
 }
 
@@ -2197,8 +2181,8 @@ label {
   height: 20px;
   font-size: 10px !important;
   color: var(--main-color);
-  background: #f5f8fc;
-  border: 1px solid #e6eef7;
+  background: var(--light-3);
+  border: 1px solid var(--light-1);
   border-radius: 26px;
   margin-right: 2px !important;
   transition: all ease-out 0.1s;
@@ -2221,13 +2205,13 @@ label {
 }
 
 .liquidity-card-right .liquidity-rewards .liquidity-collect {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   padding: 1px 10px;
   font-weight: 500;
   font-size: 11px;
   line-height: 140%;
-  display: flex;
-  align-items: center;
   color: var(--white);
   background: var(--main-color);
   border-radius: 50px;
@@ -2244,7 +2228,7 @@ label {
 .liquidity-collect.disabled-collect:active,
 .liquidity-collect.disabled-collect:focus {
   color: var(--gray-two) !important;
-  background: #e6eef7 !important;
+  background: var(--light-1) !important;
 }
 
 .liquidity-sum:nth-child(1) {
@@ -2277,13 +2261,13 @@ label {
 }
 
 .maxsum-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   position: absolute;
   top: 30px;
   right: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 600;
   font-size: 12px;
   text-align: center;
@@ -2305,11 +2289,11 @@ label {
 }
 
 .hover-tooltip.place-top::before {
-  border-top: 8px solid #dee2e6 !important;
+  border-top: 8px solid var(--light-6) !important;
 }
 
 .hover-tooltip.border {
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid var(--light-6) !important;
 }
 
 .standart-tooltip {
@@ -2321,18 +2305,18 @@ label {
 }
 
 .standart-tooltip.place-top::before {
-  border-top: 8px solid #dee2e6 !important;
+  border-top: 8px solid var(--light-6) !important;
 }
 
 .standart-tooltip.border {
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid var(--light-6) !important;
 }
 
 /* Footer */
 
 footer {
   background-color: var(--white);
-  border-top: 1px solid #e6eef7;
+  border-top: 1px solid var(--light-1);
   min-height: 58px;
 }
 
@@ -2422,7 +2406,7 @@ footer .copyright {
   height: auto;
   min-height: 80px;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e6eef7;
+  border: 1px solid var(--light-1);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-radius: 100px;
