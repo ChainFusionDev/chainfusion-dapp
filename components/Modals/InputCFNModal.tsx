@@ -34,8 +34,10 @@ const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close 
         </div>
         <div className="amount-afterform">
           {maxValueText}: <span onClick={() => setAmount(maxValue)}>{maxValue}</span>
-          <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
-          &nbsp;CFN
+          <div className="token-liquidity-amount">
+            <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
+            <span>CFN</span>
+          </div>
         </div>
       </ModalBody>
       <ModalFooter>

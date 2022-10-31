@@ -1,3 +1,4 @@
+import '@styles/reset.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'animate.css';
 import '@styles/global.css';

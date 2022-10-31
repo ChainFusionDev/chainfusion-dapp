@@ -21,6 +21,12 @@
   --info-light: #e7f2fd;
   --warning-light: #fff7e6;
   --error-light: #fdf4f6;
+  --light-1: #e6eef7;
+  --light-2: #f1f3f5;
+  --light-3: #f5f8fc;
+  --light-4: #e4edf8;
+  --light-5: #dff6ef;
+  --light-6: #dee2e6;
 }
 
 html,
@@ -70,7 +76,7 @@ main,
 
 .navbar-toggler {
   padding: 0.25rem 1.05rem;
-  background: #e6eef7;
+  background: var(--light-1);
   height: 50px;
   width: 50px;
   border-radius: 50px;
@@ -132,6 +138,7 @@ main,
 }
 
 .navbarMenu {
+  display: block;
   margin-top: 25px;
 }
 
@@ -139,9 +146,8 @@ main,
   padding: 13px 15px;
   min-width: 100px;
   text-align: center;
-  font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 19px;
   color: var(--gray-two);
   transition: all ease-out 0.3s;
@@ -154,9 +160,8 @@ main,
 
 .navbar-nav .nav-item.active a {
   max-width: 150px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #e6eef7;
+  margin: 0 auto 0 auto;
+  background: var(--light-1);
   color: var(--main-color) !important;
   border-radius: 50px;
   transition: all ease-out 0.3s;
@@ -169,7 +174,7 @@ main,
 
 .connect-wallet-btn {
   line-height: 16px !important;
-  font-size: 15px !important;
+  font-size: .9375rem !important;
   color: var(--white) !important;
   background: var(--main-color);
   transition: all ease-out 0.3s;
@@ -199,9 +204,8 @@ main,
 }
 
 .logo {
-  width: 270px;
-  margin-top: 0px;
-  margin-bottom: 20px;
+  width: 260px;
+  margin: 0 0 20px 0;
 }
 
 .logo-mobile {
@@ -236,11 +240,10 @@ main,
 
 input[type='text'],
 input[type='number'] {
-  padding: 15px 25px;
-  padding-right: 205px;
+  padding: 15px 205px 15px 25px;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
   height: 76px;
@@ -269,7 +272,7 @@ textarea {
   margin-bottom: -10px;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px !important;
+  font-size: .875rem !important;
   color: var(--dark);
   border: 1px solid var(--light) !important;
   background: var(--white) !important;
@@ -323,7 +326,7 @@ textarea:-ms-input-placeholder {
 label {
   display: block;
   color: var(--gray-two);
-  font-size: 13px;
+  font-size: .8125rem;
   margin-bottom: 0.1rem;
   font-weight: 500;
   margin-left: 15px;
@@ -337,7 +340,7 @@ label {
   padding: 10px 20px;
   background: var(--main-color);
   color: var(--white);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
@@ -358,7 +361,7 @@ label {
   padding: 10px 20px;
   background: #e8f1fb;
   color: var(--main-color);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -378,7 +381,7 @@ label {
   padding: 10px 20px;
   background: var(--success-light);
   color: var(--success);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -398,7 +401,7 @@ label {
   padding: 10px 20px;
   background: var(--warning-light);
   color: var(--warning);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -418,7 +421,7 @@ label {
   padding: 10px 20px;
   background: var(--info-light);
   color: var(--info);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -438,7 +441,7 @@ label {
   padding: 10px 20px;
   background: var(--error-light);
   color: var(--error);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -496,7 +499,7 @@ label {
   top: 5px;
   left: 16px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--dark);
 }
 
@@ -505,7 +508,7 @@ label {
   top: 28px;
   left: 16px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--gray);
 }
 
@@ -520,7 +523,7 @@ label {
   right: 165px;
   top: 26px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--silver);
   z-index: 2;
 }
@@ -538,11 +541,11 @@ label {
   font-weight: 400;
   width: 33px;
   height: 33px;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--main-color);
   text-align: center;
   border-radius: 50px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--white);
   box-shadow: 0px 0px 21px rgba(128, 131, 133, 0.08);
   z-index: 2;
 }
@@ -561,8 +564,9 @@ label {
   padding: 5px 15px;
   height: 58px;
   color: var(--white);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
+  text-align: center;
   background: var(--main-color);
   border: 0 none;
   border-radius: 50px;
@@ -602,7 +606,7 @@ label {
   z-index: 2;
   display: block;
   width: 2.675rem;
-  font-size: 14px;
+  font-size: .875rem;
   height: 2.375rem;
   line-height: 3rem;
   text-align: center;
@@ -611,7 +615,7 @@ label {
 }
 
 .modal-header {
-  border-bottom: 1px solid #dee2e669;
+  border-bottom: 1px solid var(--light-6) 69;
 }
 
 .search-form {
@@ -624,9 +628,9 @@ label {
   padding: 15px 15px 15px 30px;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
-  background: #f1f3f5;
+  background: var(--light-2);
   height: 35px;
   border: 1px solid;
   border-color: transparent;
@@ -643,9 +647,8 @@ label {
   padding: 6px 10px;
   height: 33px;
   color: var(--dark);
-  border: 1px solid #f1f3f5;
-  margin-right: 0px;
-  margin-bottom: 5px;
+  border: 1px solid var(--light-2);
+  margin: 0px 0px 5px 0px;
   border-radius: 12px;
 }
 
@@ -668,7 +671,7 @@ label {
 
 .token-icon h6,
 .blockchain-icon h6 {
-  font-size: 14px;
+  font-size: .875rem;
   margin-top: 2px;
 }
 
@@ -692,7 +695,7 @@ label {
 
 .modal-dialog .close .fa-xmark-large {
   color: var(--silver);
-  font-size: 14px;
+  font-size: .875rem;
   transition: all ease-out 0.3s;
 }
 
@@ -702,7 +705,7 @@ label {
 
 .modal-dialog .modal-title {
   color: var(--dark);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
@@ -736,8 +739,9 @@ label {
   min-height: 45px;
   background: rgba(13, 126, 231, 0.1);
   color: var(--main-color);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
+  text-align: center;
   border-radius: 50px;
   border: none;
   outline: none !important;
@@ -755,8 +759,9 @@ label {
   min-height: 45px;
   background: var(--main-color);
   color: var(--white);
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
+  text-align: center;
   border-radius: 50px;
   border: none;
   outline: none !important;
@@ -791,7 +796,7 @@ label {
   border: 1px solid var(--light);
   color: var(--dark);
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -855,10 +860,9 @@ label {
 .select-custom .fa-chevron-down {
   position: absolute;
   color: var(--gray);
-  /* top: 59px; */
   right: 29px;
   margin-top: 5px;
-  font-size: 14px;
+  font-size: .875rem;
   transition: all ease-out 0.1s;
 }
 
@@ -878,7 +882,7 @@ label {
 
 .title-page {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: var(--dark);
   margin-bottom: 25px;
   line-height: 1.3;
@@ -902,7 +906,7 @@ label {
   align-items: center;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
   padding-right: 0.3rem;
 }
@@ -917,8 +921,8 @@ label {
 
 .breadcrumbs-link.active {
   padding: 0px 15px;
-  background: #f5f8fc;
-  border: 1px solid #e6eef7;
+  background: var(--light-3);
+  border: 1px solid var(--light-1);
   border-radius: 50px;
   color: var(--main-color);
   height: 30px;
@@ -926,9 +930,8 @@ label {
 
 .breadcrumbs-link:after {
   float: left;
-  font-size: 11px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  font-size: .6875rem;
+  padding: 0 0.5rem 0 0.5rem;
   color: #c8cfd8;
   content: '\f054';
 }
@@ -968,20 +971,20 @@ label {
 
 .title-panel {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .title-panel strong {
   font-weight: 700;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--main-color);
 }
 
 .token-fees {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
@@ -994,7 +997,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1013,7 +1016,7 @@ label {
   cursor: pointer;
   position: absolute;
   color: var(--main-color);
-  font-size: 21px;
+  font-size: 1.3125rem;
   top: 23px;
   right: 20px;
 }
@@ -1026,7 +1029,7 @@ label {
   background: var(--white) !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
 }
 
 .input-standart:hover {
@@ -1065,7 +1068,7 @@ label {
   padding: 8px 16px;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--dark);
   list-style-type: none;
   border: 1px solid var(--light);
@@ -1153,7 +1156,7 @@ label {
   padding: 10px 15px;
   font-style: normal;
   font-weight: 600;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   list-style-type: none;
   border: 1px solid var(--light);
@@ -1166,7 +1169,7 @@ label {
 .progress-transfer-list li .fa-circle-check {
   position: absolute;
   color: var(--success);
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 4px;
 }
 
@@ -1180,7 +1183,7 @@ label {
 
 .progress-active .fa-spinner-third {
   position: absolute;
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 4px;
   color: var(--main-color);
   -webkit-animation: rotating-progress 0.6s linear infinite;
@@ -1202,11 +1205,10 @@ label {
 /* Previous Transfers  */
 
 .title-block {
-  margin-top: 25px;
-  margin-bottom: 10px;
+  margin: 30px 0 15px 0;
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 34px;
   color: var(--dark);
 }
@@ -1240,21 +1242,21 @@ label {
 
 .transfer-block .title-panel {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .transfer-block .title-panel strong {
   font-weight: 700;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--main-color);
 }
 
 .transfer-block .blockchain-fees,
 .transfer-block .token-fees {
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
@@ -1266,7 +1268,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1285,7 +1287,7 @@ label {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
 }
 
@@ -1304,8 +1306,7 @@ label {
 
 .transfer-block .transaction-arrow {
   position: absolute;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   left: 0;
   right: 0;
 }
@@ -1314,14 +1315,14 @@ label {
   display: block;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   color: var(--dark);
 }
 
 .transaction-details a {
   cursor: pointer;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1336,7 +1337,7 @@ label {
   font-family: 'Font Awesome 6 Pro' !important;
   font-weight: 300;
   content: '\f24d';
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
   border: none;
   margin-left: 5px;
@@ -1354,7 +1355,7 @@ label {
   border: 1px solid var(--main-color);
   color: var(--main-color);
   font-weight: 500;
-  font-size: 14px;
+  font-size: .875rem;
   border-radius: 50px;
   text-decoration: none !important;
   transition: all ease-out 0.3s;
@@ -1370,8 +1371,7 @@ label {
 /* Section and other style */
 
 .section-page {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding: 60px 0;
 }
 
 /* Staking */
@@ -1379,7 +1379,7 @@ label {
 .validator-info {
   padding: 25px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1394,50 +1394,47 @@ label {
 
 .status-validator span {
   padding: 7px 20px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 100px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
 .status-validator.active-validator span {
-  background: #dff6ef;
+  background: var(--light-5);
   color: var(--success);
 }
 
 .current-stake-block {
   padding: 12px 0px;
   padding-top: 15px;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
-  margin-top: 15px;
-  margin-bottom: 7px;
+  margin: 15px 0px 7px 0px;
 }
 
 .current-stake-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .current-stake-block .number-block {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 29px;
   text-align: center;
-  color: #0d7ee7;
+  color: var(--main-color);
 }
 
 .announced-withdrawal-block {
   display: flex;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   height: 85px;
   padding-top: 2px;
@@ -1449,18 +1446,16 @@ label {
 .announced-withdrawal-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .announced-withdrawal-block .number-block {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 29px;
   text-align: center;
   color: var(--dark);
@@ -1468,7 +1463,7 @@ label {
 
 .withdrawal-time-block {
   display: flex;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   height: 85px;
   padding-top: 1px;
@@ -1480,13 +1475,11 @@ label {
 .withdrawal-time-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0px auto 5px auto;
   color: var(--gray-two);
-  margin-bottom: 5px;
 }
 
 .withdrawal-time-block .time-withdrawal {
@@ -1496,16 +1489,16 @@ label {
 
 .time-withdrawal span {
   padding: 5px 8px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 50px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
 }
 
 .staking-table-title {
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1515,7 +1508,7 @@ label {
 .staking-table-title .amount {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1533,14 +1526,14 @@ label {
 
 .staking-table-title .rank,
 .staking-table-title .wallet {
-  border-right: 1px solid #e4edf8;
+  border-right: 1px solid var(--light);
 }
 
 .staking-table-tr {
   margin-top: 5px;
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
@@ -1550,7 +1543,7 @@ label {
 .staking-table-tr .amount {
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1573,12 +1566,12 @@ label {
 
 .staking-table-tr .rank,
 .staking-table-tr .wallet {
-  border-right: 1px solid #e4edf8;
+  border-right: 1px solid var(--light);
 }
 
 .staking-table-tr .wallet a {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1610,7 +1603,7 @@ label {
 .pagination-nav .next-btn {
   cursor: pointer;
   background: #ffffff;
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   box-shadow: 0px 10px 20px rgba(75, 105, 139, 0.03);
   border-radius: 8px;
   color: var(--dark);
@@ -1665,8 +1658,8 @@ label {
 }
 
 .pagination-nav .pagintaion-dot:hover {
-  background: #ffffff;
-  border: 1px solid #e4edf8;
+  background: var(--white);
+  border: 1px solid var(--light);
   box-shadow: 0px 10px 20px rgba(75, 105, 139, 0.03);
   border-radius: 8px;
   color: var(--dark);
@@ -1674,7 +1667,7 @@ label {
 
 .count-page-pagination {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
   align-items: center;
 }
@@ -1694,11 +1687,9 @@ label {
 .amount-afterform {
   display: flex;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--gray-two);
-  margin-top: -5px;
-  margin-bottom: 5px;
-  margin-left: 15px;
+  margin: -5px 15px 5px 0px;
 }
 
 .amount-afterform span {
@@ -1715,7 +1706,7 @@ label {
   margin-bottom: 10px;
   padding: 15px 18px;
   background-color: var(--white);
-  border: 1px solid #e4edf8;
+  border: 1px solid var(--light);
   border-radius: 15px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
   -ms-flex-order: 1;
@@ -1744,7 +1735,7 @@ label {
   width: 43px;
   height: 43px;
   border-radius: 100px;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--main-color);
   background-color: var(--light);
   transition: all ease-out 0.1s;
@@ -1760,7 +1751,7 @@ label {
 }
 
 .slashing-info {
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   margin-left: 18px;
   padding-left: 18px;
 }
@@ -1771,25 +1762,25 @@ label {
   height: 22px;
   text-align: center;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: .75rem;
   font-weight: 500;
   margin-bottom: 6px;
 }
 
 .slashing-status.status-pending {
-  background: #fff7e6;
+  background: var(--warning-light);
   border: 1px solid var(--warning);
   color: var(--warning);
 }
 
 .slashing-status.status-executed {
-  background: #dff6ef;
+  background: var(--light-5);
   border: 1px solid var(--success);
   color: var(--success);
 }
 
 .slashing-status.status-expired {
-  background: #fdf4f6;
+  background: var(--error-light);
   border: 1px solid var(--error);
   color: var(--error);
 }
@@ -1813,8 +1804,8 @@ label {
 
 .slashing-text {
   font-weight: 500;
-  font-size: 13px;
-  color: #8694a5;
+  font-size: .8125rem;
+  color: var(--gray-two);
 }
 
 .slashing-text p {
@@ -1825,14 +1816,14 @@ label {
 
 .slashing-adress {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
 .slashing-adress a {
   cursor: pointer;
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1844,19 +1835,19 @@ label {
 
 .slashing-votes span {
   padding: 3px 7px;
-  background: #f5f8fc;
+  background: var(--light-3);
   font-weight: 600;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
-  border: 1px solid #e6eef7;
+  border: 1px solid var(--light-1);
   border-radius: 6px;
 }
 
 .slashing-date,
 .slashing-timer {
   font-weight: 400;
-  font-size: 13px;
-  color: #8694a5;
+  font-size: .8125rem;
+  color: var(--gray-two);
 }
 
 .slashing-vote-label {
@@ -1865,10 +1856,10 @@ label {
   right: 15px;
   width: 126px;
   height: 22px;
-  background: #f5f8fc;
+  background: var(--light-3);
   border-radius: 50px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   text-align: center;
   color: var(--gray-two);
 }
@@ -1890,11 +1881,10 @@ label {
   cursor: pointer;
   padding: 8px 10px;
   font-family: 'Noto Sans Mono', monospace;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
-  border: 1px solid #f1f3f5;
-  margin-right: 0px;
-  margin-bottom: 5px;
+  border: 1px solid var(--light-2);
+  margin: 0px 0px 5px 0px;
   border-radius: 12px;
 }
 
@@ -1924,20 +1914,17 @@ label {
 
 .successCreateProposal img {
   width: 88px;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin: 10px 0px 15px 0px;
 }
 
 .successCreateProposal p {
   font-weight: 400;
   text-align: center;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 140%;
   color: var(--dark);
   max-width: 220px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
+  margin: 0px auto 30px auto;
 }
 
 /* Liquidity */
@@ -1960,21 +1947,19 @@ label {
 .liquidity-title-pool {
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--dark);
 }
 
 .liquidity-title-pool img {
   width: 20px;
-  margin-top: -5px;
-  margin-right: 1px;
+  margin: -5px 0px 0px 1px;
 }
 
 .liquidity-info {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin: 10px 0px 5px 0px;
 }
 
 .liquidity-tokens {
@@ -1986,7 +1971,7 @@ label {
 .liquidity-tokens span {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
@@ -1997,8 +1982,7 @@ label {
 .liquidity-tokens-list {
   display: flex;
   align-items: center;
-  margin-top: -5px;
-  margin-left: 0;
+  margin: -5px 0px 0px 0px;
   padding-left: 0;
 }
 
@@ -2008,7 +1992,7 @@ label {
 }
 
 .liquidity-tvl {
-  border: 1px dashed #e6eef7;
+  border: 1px dashed var(--light-1);
   border-radius: 10px;
   margin-left: 5px;
 }
@@ -2016,14 +2000,14 @@ label {
 .liquidity-tvl span {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
 }
 
 .liquidity-tvl .liquidity-sum {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
   margin-top: -1px;
 }
@@ -2037,13 +2021,13 @@ label {
 
 .liquidity-tokens-tooltip {
   display: block;
-  background: #f5f8fc;
+  background: var(--light-3);
   margin-top: 2px;
   width: 17px;
   font-weight: 600 !important;
   height: 17px;
   border-radius: 50px;
-  font-size: 10px !important;
+  font-size: .625rem !important;
   text-align: center;
   color: var(--gray-two) !important;
 }
@@ -2123,14 +2107,14 @@ label {
   display: block;
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--dark);
 }
 
 .liquidity-card-left {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   padding-left: 20px;
 }
 
@@ -2140,7 +2124,7 @@ label {
   justify-content: center;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2148,14 +2132,14 @@ label {
 .liquidity-card-left .liquidity-sum span {
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
 .liquidity-card-left .liquidity-sum span > strong {
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: .625rem;
   color: var(--dark);
 }
 
@@ -2163,7 +2147,7 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-left: 1px solid #e4edf8;
+  border-left: 1px solid var(--light);
   padding-left: 20px;
 }
 
@@ -2171,7 +2155,7 @@ label {
 .liquidity-card-right .liquidity-rewards {
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2182,7 +2166,7 @@ label {
 
 .liquidity-card-right .liquidity-provided span {
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
   margin-right: 5px;
 }
@@ -2195,10 +2179,10 @@ label {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  font-size: 10px !important;
+  font-size: .625rem !important;
   color: var(--main-color);
-  background: #f5f8fc;
-  border: 1px solid #e6eef7;
+  background: var(--light-3);
+  border: 1px solid var(--light-1);
   border-radius: 26px;
   margin-right: 2px !important;
   transition: all ease-out 0.1s;
@@ -2216,18 +2200,18 @@ label {
 
 .liquidity-card-right .liquidity-rewards span {
   font-weight: 700;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--main-color);
 }
 
 .liquidity-card-right .liquidity-rewards .liquidity-collect {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   padding: 1px 10px;
   font-weight: 500;
-  font-size: 11px;
+  font-size: .6875rem;
   line-height: 140%;
-  display: flex;
-  align-items: center;
   color: var(--white);
   background: var(--main-color);
   border-radius: 50px;
@@ -2244,7 +2228,7 @@ label {
 .liquidity-collect.disabled-collect:active,
 .liquidity-collect.disabled-collect:focus {
   color: var(--gray-two) !important;
-  background: #e6eef7 !important;
+  background: var(--light-1) !important;
 }
 
 .liquidity-sum:nth-child(1) {
@@ -2272,20 +2256,20 @@ label {
 
 .token-liquidity-amount span {
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8125rem;
   color: var(--dark);
 }
 
 .maxsum-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   position: absolute;
   top: 30px;
   right: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 600;
-  font-size: 12px;
+  font-size: .75rem;
   text-align: center;
   width: 40px;
   height: 40px;
@@ -2305,34 +2289,34 @@ label {
 }
 
 .hover-tooltip.place-top::before {
-  border-top: 8px solid #dee2e6 !important;
+  border-top: 8px solid var(--light-6) !important;
 }
 
 .hover-tooltip.border {
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid var(--light-6) !important;
 }
 
 .standart-tooltip {
   padding: 1px 6px !important;
-  font-size: 11px !important;
+  font-size: .6875rem !important;
   background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 50px !important;
   color: var(--gray) !important;
 }
 
 .standart-tooltip.place-top::before {
-  border-top: 8px solid #dee2e6 !important;
+  border-top: 8px solid var(--light-6) !important;
 }
 
 .standart-tooltip.border {
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid var(--light-6) !important;
 }
 
 /* Footer */
 
 footer {
   background-color: var(--white);
-  border-top: 1px solid #e6eef7;
+  border-top: 1px solid var(--light-1);
   min-height: 58px;
 }
 
@@ -2350,7 +2334,7 @@ footer {
 footer .copyright {
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: .75rem;
   color: var(--gray-two);
   margin-right: 28px;
 }
@@ -2362,7 +2346,7 @@ footer .copyright {
 .footer-link li > a {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: .75rem;
   color: #52657a;
 }
 
@@ -2422,7 +2406,7 @@ footer .copyright {
   height: auto;
   min-height: 80px;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e6eef7;
+  border: 1px solid var(--light-1);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-radius: 100px;
@@ -2437,7 +2421,7 @@ footer .copyright {
 
 .titleAlert {
   font-weight: 600;
-  font-size: 15px;
+  font-size: .9375rem;
   color: var(--dark);
 }
 
@@ -2453,12 +2437,12 @@ footer .copyright {
 
 .alertMsg .icon i {
   font-weight: 400;
-  font-size: 28px;
+  font-size: 1.75rem;
 }
 
 .alertMsg p {
   font-weight: 400;
-  font-size: 13px;
+  font-size: .8125rem;
   line-height: 16px;
   color: var(--gray-two);
   margin: 0;
