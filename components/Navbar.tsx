@@ -13,7 +13,7 @@ const Navbar = ({ module }: NavbarProps) => {
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
         <Link href="/">
-          <a className={`logo-nav ${module === 'bridge' ? 'd-none' : ''}`}>
+          <a className={`logo-nav ${module === 'bridge' && 'd-none'}`}>
             <img src="/img/logo.svg" alt="ChainFusion Logo" className="img-fluid" />
           </a>
         </Link>
@@ -35,32 +35,32 @@ const Navbar = ({ module }: NavbarProps) => {
             <li className="nav-item"></li>
           </ul>
           <ul className="navbar-nav w-100 justify-content-center">
-            <li className={`nav-item ${module === 'bridge' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'bridge' && 'active'}`}>
               <Link href="/">
                 <a className="nav-link">Bridge</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'staking' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'staking' && 'active'}`}>
               <Link href="/staking">
                 <a className="nav-link">Staking</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'slashing' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'slashing' && 'active'}`}>
               <Link href="/slashing">
                 <a className="nav-link">Slashing</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'liquidity' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'liquidity' && 'active'}`}>
               <Link href="/liquidity">
                 <a className="nav-link">Liquidity</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'analytics' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'analytics' && 'active'}`}>
               <Link href="/analytics">
                 <a className="nav-link">Analytics</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'apps' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'apps' && 'active'}`}>
               <Link href="/apps">
                 <a className="nav-link">Apps</a>
               </Link>

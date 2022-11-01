@@ -82,7 +82,7 @@ const SelectChainTokenModal = ({
                     return (
                       <li
                         key={chain.identifier}
-                        className={`blockchain-icon ${chain.identifier === selectedChain.identifier ? 'active' : ''}`}
+                        className={`blockchain-icon ${chain.identifier === selectedChain.identifier && 'active'}`}
                         onClick={() => {
                           resetFilter();
                           setSelectedChain(chain);

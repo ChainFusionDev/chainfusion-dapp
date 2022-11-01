@@ -75,7 +75,7 @@ const Bridge = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFrom(parseInt(e.target.value))}
                 />
               </div>
-              <span className={`change-token ${swap ? 'swap' : ''}`} onClick={swapFromTo}>
+              <span className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
                 <i className="fa-regular fa-arrow-up-arrow-down"></i>
               </span>
               <div className="form-group form-block">
