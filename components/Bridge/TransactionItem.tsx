@@ -1,5 +1,5 @@
 import { Blockchain, Fee, Token } from '@src/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 export interface TransactionItemProps {
@@ -22,6 +22,11 @@ export interface TransactionItemProps {
 
 const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFee, status }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <div className="transfer-block mb-2">
@@ -109,16 +114,18 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
           </div>
         </div>
       </div>
-      <ReactTooltip
-        id="transaction-copy"
-        className="standart-tooltip"
-        type="light"
-        effect="solid"
-        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
-        border={true}
-      >
-        Copy to clipboard
-      </ReactTooltip>
+      {isMounted && (
+        <ReactTooltip
+          id="transaction-copy"
+          className="standart-tooltip"
+          type="light"
+          effect="solid"
+          offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          border={true}
+        >
+          Copy to clipboard
+        </ReactTooltip>
+      )}
     </div>
   );
 };

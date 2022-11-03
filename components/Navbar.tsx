@@ -1,3 +1,4 @@
+import { useWeb3Context, WalletType } from '@src/context/Web3ContextProvider';
 import Link from 'next/link';
 import React from 'react';
 import ConnectWalletModal from './Modals/ConnectWalletModal';
@@ -8,6 +9,14 @@ type NavbarProps = {
 
 const Navbar = ({ module }: NavbarProps) => {
   const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
+  const web3Context = useWeb3Context();
+
+  const connection = web3Context.connection;
+
+  const selectWallet = async (walletType: WalletType) => {
+    setShowConnectWalletModal(false);
+    await web3Context.connectWallet(walletType);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
@@ -69,14 +78,18 @@ const Navbar = ({ module }: NavbarProps) => {
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
               <span className="nav-link connect-wallet-btn" onClick={() => setShowConnectWalletModal(true)}>
-                <i className="fa-regular fa-wallet"></i> Connect Wallet
+                <i className="fa-regular fa-wallet"></i> {connection ? 'Connected' : 'Connect Wallet'}
               </span>
             </li>
           </ul>
         </div>
       </div>
 
-      <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
+      <ConnectWalletModal
+        show={showConnectWalletModal}
+        select={selectWallet}
+        close={() => setShowConnectWalletModal(false)}
+      />
     </nav>
   );
 };

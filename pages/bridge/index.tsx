@@ -1,11 +1,13 @@
 import Layout from '@components/Layout';
 import FeeEstimate from '@components/FeeEstimate';
 import TransactionHistory from '@components/Bridge/TransactionHistory';
-import React, { useState } from 'react';
+import React from 'react';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
 import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
+import { useWeb3Context, WalletType } from '@src/context/Web3ContextProvider';
+import { useLocalStorage } from '@src/hooks/useLocalStorage';
 
 const Bridge = () => {
   const [showFromModal, setShowFromModal] = React.useState(false);
@@ -20,11 +22,20 @@ const Bridge = () => {
   const chains = supportedChains();
   const tokens = supportedTokens();
 
-  const [chainFrom, setChainFrom] = useState<Chain>(chains[0]);
-  const [tokenFrom, setTokenFrom] = useState<Token>(tokens[0]);
+  const [chainFromLocal, setChainFrom] = useLocalStorage<Chain>('chain-from');
+  const [tokenFromLocal, setTokenFrom] = useLocalStorage<Token>('token-from');
 
-  const [chainTo, setChainTo] = useState<Chain>(chains[1]);
-  const [tokenTo, setTokenTo] = useState<Token>(tokens[0]);
+  const [chainToLocal, setChainTo] = useLocalStorage<Chain>('chain-to');
+  const [tokenToLocal, setTokenTo] = useLocalStorage<Token>('token-to');
+
+  const chainFrom = chainFromLocal ?? chains[0];
+  const tokenFrom = tokenFromLocal ?? tokens[0];
+
+  const chainTo = chainToLocal ?? chains[1];
+  const tokenTo = tokenToLocal ?? tokens[0];
+
+  const web3Context = useWeb3Context();
+  const connection = web3Context.connection;
 
   const swapFromTo = () => {
     setFrom(to);
@@ -37,6 +48,30 @@ const Bridge = () => {
 
     setSwap(!swap);
   };
+
+  let transferButton = (
+    <button className="transfer-button" onClick={() => web3Context.connectWallet(WalletType.METAMASK)}>
+      <i className="fa-regular fa-wallet"></i> Connect Wallet
+    </button>
+  );
+
+  if (connection !== undefined) {
+    if (connection.network.chainId !== chainFrom.chainId) {
+      transferButton = (
+        <button className="transfer-button" onClick={() => web3Context.switchNetwork(chainFrom)}>
+          <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
+          <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
+          {chainFrom.name}
+        </button>
+      );
+    } else {
+      transferButton = (
+        <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
+          <i className="fa-solid fa-paper-plane-top"></i> Transfer
+        </button>
+      );
+    }
+  }
 
   return (
     <Layout
@@ -106,9 +141,7 @@ const Bridge = () => {
 
               <FeeEstimate token={tokenFrom} validatorsFee={0.3} liquidityFee={0.2} />
 
-              <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
-                <i className="fa-regular fa-shuffle"></i> Transfer
-              </button>
+              {transferButton}
             </div>
           </div>
           <TransactionHistory />
@@ -124,7 +157,7 @@ const Bridge = () => {
         close={() => setShowFromModal(false)}
         select={(chain: Chain, token: Token) => {
           // Avoid selecting same from and to chains
-          if (chainTo.identifier == chain.identifier) {
+          if (chainTo.chainId == chain.chainId) {
             setChainTo(chainFrom);
           }
 
@@ -145,7 +178,7 @@ const Bridge = () => {
         close={() => setShowToModal(false)}
         select={(chain: Chain, token: Token) => {
           // Avoid selecting same from and to chains
-          if (chainFrom.identifier == chain.identifier) {
+          if (chainFrom.chainId == chain.chainId) {
             setChainFrom(chainTo);
           }
 

@@ -1,9 +1,15 @@
 import Layout from '@components/Layout';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 const Liquidity = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <Layout module="liquidity" title="Liquidity" description="Manage bridge liquidity in blockchais per token">
       <section className="section-page">
@@ -314,17 +320,19 @@ const Liquidity = () => {
           </div>
         </div>
       </section>
-      <ReactTooltip
-        id="liquidity-tokens-tooltip"
-        className="hover-tooltip"
-        type="light"
-        effect="solid"
-        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
-        border={true}
-      >
-        <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/ethereum.svg" />
-        <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/dai.svg" />
-      </ReactTooltip>
+      {isMounted && (
+        <ReactTooltip
+          id="liquidity-tokens-tooltip"
+          className="hover-tooltip"
+          type="light"
+          effect="solid"
+          offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          border={true}
+        >
+          <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/ethereum.svg" />
+          <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/dai.svg" />
+        </ReactTooltip>
+      )}
     </Layout>
   );
 };

@@ -6,15 +6,10 @@ import '@styles/responsive.css';
 import '@styles/fontawesome.css';
 import '@styles/fonts.css';
 
-import { initializeConnector, Web3ReactHooks, Web3ReactProvider } from '@web3-react/core';
-import { MetaMask } from '@web3-react/metamask';
-import type { Connector } from '@web3-react/types';
+import { Web3ReactProvider } from '@web3-react/core';
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
-
-export const [metaMask, metaMaskHooks] = initializeConnector<MetaMask>((actions) => new MetaMask({ actions }));
-
-const connectors: [Connector, Web3ReactHooks][] = [[metaMask, metaMaskHooks]];
+import { getConnectors, Web3ContextProvider } from '@src/context/Web3ContextProvider';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -22,8 +17,10 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
   }, []);
 
   return (
-    <Web3ReactProvider connectors={connectors}>
-      <Component {...pageProps} />
+    <Web3ReactProvider connectors={getConnectors()}>
+      <Web3ContextProvider>
+        <Component {...pageProps} />
+      </Web3ContextProvider>
     </Web3ReactProvider>
   );
 }

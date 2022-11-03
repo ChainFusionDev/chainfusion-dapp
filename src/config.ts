@@ -6,11 +6,19 @@ interface ChainConfig {
   tokens: Token[];
 }
 
+export interface NativeCurrency {
+  name: string;
+  symbol: string;
+  decimals: number;
+}
+
 export interface Chain {
+  chainId: number;
   identifier: string;
   name: string;
   rpc: string;
   explorer: string;
+  nativeCurrency: NativeCurrency;
 }
 
 export interface Token {

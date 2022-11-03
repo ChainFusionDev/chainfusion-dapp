@@ -1,10 +1,15 @@
 import Layout from '@components/Layout';
 import SlashingProposalModal from '@components/Modals/SlashingProposalModal';
 import ReactTooltip from 'react-tooltip';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Slashing = () => {
   const [showSlashingProposalModal, setShowSlashingProposalModal] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <Layout module="slashing" title="Slashing" description="Create, view and vote for validator slashing">
@@ -223,16 +228,18 @@ const Slashing = () => {
 
       <SlashingProposalModal show={showSlashingProposalModal} close={() => setShowSlashingProposalModal(false)} />
 
-      <ReactTooltip
-        id="transaction-copy"
-        className="standart-tooltip"
-        type="light"
-        effect="solid"
-        offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
-        border={true}
-      >
-        Copy to clipboard
-      </ReactTooltip>
+      {isMounted && (
+        <ReactTooltip
+          id="transaction-copy"
+          className="standart-tooltip"
+          type="light"
+          effect="solid"
+          offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          border={true}
+        >
+          Copy to clipboard
+        </ReactTooltip>
+      )}
     </Layout>
   );
 };
