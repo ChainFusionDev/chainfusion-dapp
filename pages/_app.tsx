@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { Web3ReactProvider } from '@web3-react/core';
 import { getConnectors } from '@src/connectors/connectors';
+import { ChainContextProvider } from '@src/context/ChainContext';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -18,7 +19,9 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <Web3ReactProvider connectors={getConnectors()}>
-      <Component {...pageProps} />
+      <ChainContextProvider>
+        <Component {...pageProps} />
+      </ChainContextProvider>
     </Web3ReactProvider>
   );
 }

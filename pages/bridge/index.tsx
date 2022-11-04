@@ -8,6 +8,7 @@ import TransferModal from '@components/Modals/TransferModal';
 import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useWeb3React } from '@web3-react/core';
+import { useChainContext } from '@src/context/ChainContext';
 
 const Bridge = () => {
   const [showFromModal, setShowFromModal] = React.useState(false);
@@ -35,6 +36,7 @@ const Bridge = () => {
   const tokenTo = tokenToLocal ?? tokens[0];
 
   const { connector, isActive, chainId } = useWeb3React();
+  const { showConnectWalletDialog } = useChainContext();
 
   const swapFromTo = () => {
     setFrom(to);
@@ -61,7 +63,7 @@ const Bridge = () => {
   };
 
   let transferButton = (
-    <button className="transfer-button" onClick={() => null}>
+    <button className="transfer-button" onClick={showConnectWalletDialog}>
       <i className="fa-regular fa-wallet"></i> Connect Wallet
     </button>
   );

@@ -1,4 +1,5 @@
 import { coinbaseWallet, metaMask } from '@src/connectors/connectors';
+import { useChainContext } from '@src/context/ChainContext';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import { useWeb3React } from '@web3-react/core';
 import { MetaMask } from '@web3-react/metamask';
@@ -6,15 +7,14 @@ import { Connector } from '@web3-react/types';
 import { WalletConnect } from '@web3-react/walletconnect';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import ConnectWalletModal from './Modals/ConnectWalletModal';
 
 type NavbarProps = {
   module: string;
 };
 
 const Navbar = ({ module }: NavbarProps) => {
-  const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
   const { connector, isActive } = useWeb3React();
+  const { showConnectWalletDialog } = useChainContext();
 
   useEffect(() => {
     metaMask.connectEagerly().catch(() => null);
@@ -87,7 +87,7 @@ const Navbar = ({ module }: NavbarProps) => {
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <span className="nav-link connect-wallet-btn" onClick={() => setShowConnectWalletModal(true)}>
+              <span className="nav-link connect-wallet-btn" onClick={showConnectWalletDialog}>
                 <i className="fa-regular fa-wallet"></i>{' '}
                 {isActive ? `${getConnectorName(connector)} Connected` : 'Connect Wallet'}
               </span>
@@ -95,8 +95,6 @@ const Navbar = ({ module }: NavbarProps) => {
           </ul>
         </div>
       </div>
-
-      <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
     </nav>
   );
 };
