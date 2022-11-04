@@ -1,5 +1,5 @@
-import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
+import { useState } from 'react';
 
 interface InputTokenModalProps {
   show: boolean;
@@ -20,7 +20,7 @@ const InputTokenModal = ({
   buttonIcon,
   close,
 }: InputTokenModalProps) => {
-  const [amount, setAmount] = React.useState<number>(0.0);
+  const [amount, setAmount] = useState<number>(0.0);
 
   return (
     <Modal show={show} onHide={close}>

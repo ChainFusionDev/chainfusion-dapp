@@ -1,5 +1,5 @@
 import { Token } from '@src/config';
-import React from 'react';
+import { useState } from 'react';
 
 interface FeeEstimateProps {
   token: Token;
@@ -8,7 +8,7 @@ interface FeeEstimateProps {
 }
 
 const FeeEstimate = ({ token, validatorsFee, liquidityFee }: FeeEstimateProps) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="fees-alert mb-2">

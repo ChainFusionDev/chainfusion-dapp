@@ -6,14 +6,24 @@ import '@styles/responsive.css';
 import '@styles/fontawesome.css';
 import '@styles/fonts.css';
 
-import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
+import { AppProps } from 'next/app';
+import { Web3ReactProvider } from '@web3-react/core';
+import { getConnectors } from '@src/connectors/connectors';
+import { ChainContextProvider } from '@src/context/ChainContext';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
     require('bootstrap/dist/js/bootstrap');
   }, []);
-  return <Component {...pageProps} />;
+
+  return (
+    <Web3ReactProvider connectors={getConnectors()}>
+      <ChainContextProvider>
+        <Component {...pageProps} />
+      </ChainContextProvider>
+    </Web3ReactProvider>
+  );
 }
 
 export default App;

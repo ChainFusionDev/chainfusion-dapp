@@ -1,19 +1,38 @@
+import { coinbaseWallet, metaMask } from '@src/connectors/connectors';
+import { useChainContext } from '@src/context/ChainContext';
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+import { useWeb3React } from '@web3-react/core';
+import { MetaMask } from '@web3-react/metamask';
+import { Connector } from '@web3-react/types';
+import { WalletConnect } from '@web3-react/walletconnect';
 import Link from 'next/link';
-import React from 'react';
-import ConnectWalletModal from './Modals/ConnectWalletModal';
+import React, { useEffect } from 'react';
 
 type NavbarProps = {
   module: string;
 };
 
 const Navbar = ({ module }: NavbarProps) => {
-  const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
+  const { connector, isActive } = useWeb3React();
+  const { showConnectWalletDialog } = useChainContext();
+
+  useEffect(() => {
+    metaMask.connectEagerly().catch(() => null);
+    coinbaseWallet.connectEagerly().catch(() => null);
+  }, []);
+
+  const getConnectorName = (connector: Connector): string => {
+    if (connector instanceof MetaMask) return 'MetaMask';
+    if (connector instanceof WalletConnect) return 'WalletConnect';
+    if (connector instanceof CoinbaseWallet) return 'Coinbase Wallet';
+    return 'Unknown';
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
         <Link href="/">
-          <a className={`logo-nav ${module === 'bridge' ? 'd-none' : ''}`}>
+          <a className={`logo-nav ${module === 'bridge' && 'd-none'}`}>
             <img src="/img/logo.svg" alt="ChainFusion Logo" className="img-fluid" />
           </a>
         </Link>
@@ -35,32 +54,32 @@ const Navbar = ({ module }: NavbarProps) => {
             <li className="nav-item"></li>
           </ul>
           <ul className="navbar-nav w-100 justify-content-center">
-            <li className={`nav-item ${module === 'bridge' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'bridge' && 'active'}`}>
               <Link href="/">
                 <a className="nav-link">Bridge</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'staking' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'staking' && 'active'}`}>
               <Link href="/staking">
                 <a className="nav-link">Staking</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'slashing' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'slashing' && 'active'}`}>
               <Link href="/slashing">
                 <a className="nav-link">Slashing</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'liquidity' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'liquidity' && 'active'}`}>
               <Link href="/liquidity">
                 <a className="nav-link">Liquidity</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'analytics' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'analytics' && 'active'}`}>
               <Link href="/analytics">
                 <a className="nav-link">Analytics</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'apps' ? 'active' : ''}`}>
+            <li className={`nav-item ${module === 'apps' && 'active'}`}>
               <Link href="/apps">
                 <a className="nav-link">Apps</a>
               </Link>
@@ -68,15 +87,14 @@ const Navbar = ({ module }: NavbarProps) => {
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <span className="nav-link connect-wallet-btn" onClick={() => setShowConnectWalletModal(true)}>
-                <i className="fa-regular fa-wallet"></i> Connect Wallet
+              <span className="nav-link connect-wallet-btn" onClick={showConnectWalletDialog}>
+                <i className="fa-regular fa-wallet"></i>{' '}
+                {isActive ? `${getConnectorName(connector)} Connected` : 'Connect Wallet'}
               </span>
             </li>
           </ul>
         </div>
       </div>
-
-      <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
     </nav>
   );
 };

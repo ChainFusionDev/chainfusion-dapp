@@ -1,30 +1,42 @@
 import Layout from '@components/Layout';
 import FeeEstimate from '@components/FeeEstimate';
 import TransactionHistory from '@components/Bridge/TransactionHistory';
-import React, { useState } from 'react';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
 import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
+import { useLocalStorage } from '@src/hooks/useLocalStorage';
+import { useWeb3React } from '@web3-react/core';
+import { useChainContext } from '@src/context/ChainContext';
+import { useState } from 'react';
 
 const Bridge = () => {
-  const [showFromModal, setShowFromModal] = React.useState(false);
-  const [showToModal, setShowToModal] = React.useState(false);
-  const [showOptionsModal, setShowOptionsModal] = React.useState(false);
-  const [showTransferModal, setShowTransferModal] = React.useState(false);
+  const [showFromModal, setShowFromModal] = useState(false);
+  const [showToModal, setShowToModal] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
+  const [showTransferModal, setShowTransferModal] = useState(false);
 
-  const [from, setFrom] = React.useState<number>(0.0);
-  const [to, setTo] = React.useState<number>(0.0);
-  const [swap, setSwap] = React.useState(false);
+  const [from, setFrom] = useState<number>(0.0);
+  const [to, setTo] = useState<number>(0.0);
+  const [swap, setSwap] = useState(false);
 
   const chains = supportedChains();
   const tokens = supportedTokens();
 
-  const [chainFrom, setChainFrom] = useState<Chain>(chains[0]);
-  const [tokenFrom, setTokenFrom] = useState<Token>(tokens[0]);
+  const [chainFromLocal, setChainFrom] = useLocalStorage<Chain>('chain-from');
+  const [tokenFromLocal, setTokenFrom] = useLocalStorage<Token>('token-from');
 
-  const [chainTo, setChainTo] = useState<Chain>(chains[1]);
-  const [tokenTo, setTokenTo] = useState<Token>(tokens[0]);
+  const [chainToLocal, setChainTo] = useLocalStorage<Chain>('chain-to');
+  const [tokenToLocal, setTokenTo] = useLocalStorage<Token>('token-to');
+
+  const chainFrom = chainFromLocal ?? chains[0];
+  const tokenFrom = tokenFromLocal ?? tokens[0];
+
+  const chainTo = chainToLocal ?? chains[1];
+  const tokenTo = tokenToLocal ?? tokens[0];
+
+  const { connector, isActive, chainId } = useWeb3React();
+  const { showConnectWalletDialog } = useChainContext();
 
   const swapFromTo = () => {
     setFrom(to);
@@ -37,6 +49,42 @@ const Bridge = () => {
 
     setSwap(!swap);
   };
+
+  const switchNetwork = async (chain: Chain) => {
+    const chainParams = {
+      chainId: chain.chainId.toString(16),
+      chainName: chain.name,
+      nativeCurrency: chain.nativeCurrency,
+      rpcUrls: [chain.rpc],
+      blockExplorerUrls: [chain.explorer],
+    };
+
+    await connector.activate(chainParams);
+  };
+
+  let transferButton = (
+    <button className="transfer-button" onClick={showConnectWalletDialog}>
+      <i className="fa-regular fa-wallet"></i> Connect Wallet
+    </button>
+  );
+
+  if (isActive) {
+    if (chainId !== chainFrom.chainId) {
+      transferButton = (
+        <button className="transfer-button" onClick={() => switchNetwork(chainFrom)}>
+          <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
+          <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
+          {chainFrom.name}
+        </button>
+      );
+    } else {
+      transferButton = (
+        <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
+          <i className="fa-solid fa-paper-plane-top"></i> Transfer
+        </button>
+      );
+    }
+  }
 
   return (
     <Layout
@@ -75,7 +123,7 @@ const Bridge = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFrom(parseInt(e.target.value))}
                 />
               </div>
-              <span className={`change-token ${swap ? 'swap' : ''}`} onClick={swapFromTo}>
+              <span className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
                 <i className="fa-regular fa-arrow-up-arrow-down"></i>
               </span>
               <div className="form-group form-block">
@@ -106,9 +154,7 @@ const Bridge = () => {
 
               <FeeEstimate token={tokenFrom} validatorsFee={0.3} liquidityFee={0.2} />
 
-              <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
-                <i className="fa-regular fa-shuffle"></i> Transfer
-              </button>
+              {transferButton}
             </div>
           </div>
           <TransactionHistory />
@@ -124,7 +170,7 @@ const Bridge = () => {
         close={() => setShowFromModal(false)}
         select={(chain: Chain, token: Token) => {
           // Avoid selecting same from and to chains
-          if (chainTo.identifier == chain.identifier) {
+          if (chainTo.chainId == chain.chainId) {
             setChainTo(chainFrom);
           }
 
@@ -145,7 +191,7 @@ const Bridge = () => {
         close={() => setShowToModal(false)}
         select={(chain: Chain, token: Token) => {
           // Avoid selecting same from and to chains
-          if (chainFrom.identifier == chain.identifier) {
+          if (chainFrom.chainId == chain.chainId) {
             setChainFrom(chainTo);
           }
 

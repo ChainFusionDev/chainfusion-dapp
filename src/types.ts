@@ -1,3 +1,9 @@
+export enum WalletType {
+  METAMASK,
+  COINBASE_WALLET,
+  WALLET_CONNECT,
+}
+
 export interface Token {
   name: string;
   img: string;
