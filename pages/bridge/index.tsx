@@ -6,8 +6,8 @@ import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
 import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
-import { useWeb3Context, WalletType } from '@src/context/Web3ContextProvider';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
+import { useWeb3React } from '@web3-react/core';
 
 const Bridge = () => {
   const [showFromModal, setShowFromModal] = React.useState(false);
@@ -34,8 +34,7 @@ const Bridge = () => {
   const chainTo = chainToLocal ?? chains[1];
   const tokenTo = tokenToLocal ?? tokens[0];
 
-  const web3Context = useWeb3Context();
-  const connection = web3Context.connection;
+  const { connector, isActive, chainId } = useWeb3React();
 
   const swapFromTo = () => {
     setFrom(to);
@@ -49,16 +48,28 @@ const Bridge = () => {
     setSwap(!swap);
   };
 
+  const switchNetwork = async (chain: Chain) => {
+    const chainParams = {
+      chainId: chain.chainId.toString(16),
+      chainName: chain.name,
+      nativeCurrency: chain.nativeCurrency,
+      rpcUrls: [chain.rpc],
+      blockExplorerUrls: [chain.explorer],
+    };
+
+    await connector.activate(chainParams);
+  };
+
   let transferButton = (
-    <button className="transfer-button" onClick={() => web3Context.connectWallet(WalletType.METAMASK)}>
+    <button className="transfer-button" onClick={() => null}>
       <i className="fa-regular fa-wallet"></i> Connect Wallet
     </button>
   );
 
-  if (connection !== undefined) {
-    if (connection.network.chainId !== chainFrom.chainId) {
+  if (isActive) {
+    if (chainId !== chainFrom.chainId) {
       transferButton = (
-        <button className="transfer-button" onClick={() => web3Context.switchNetwork(chainFrom)}>
+        <button className="transfer-button" onClick={() => switchNetwork(chainFrom)}>
           <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
           <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
           {chainFrom.name}

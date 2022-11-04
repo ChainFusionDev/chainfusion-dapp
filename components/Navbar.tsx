@@ -1,6 +1,11 @@
-import { useWeb3Context, WalletType } from '@src/context/Web3ContextProvider';
+import { coinbaseWallet, metaMask } from '@src/connectors/connectors';
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+import { useWeb3React } from '@web3-react/core';
+import { MetaMask } from '@web3-react/metamask';
+import { Connector } from '@web3-react/types';
+import { WalletConnect } from '@web3-react/walletconnect';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ConnectWalletModal from './Modals/ConnectWalletModal';
 
 type NavbarProps = {
@@ -9,13 +14,18 @@ type NavbarProps = {
 
 const Navbar = ({ module }: NavbarProps) => {
   const [showConnectWalletModal, setShowConnectWalletModal] = React.useState(false);
-  const web3Context = useWeb3Context();
+  const { connector, isActive } = useWeb3React();
 
-  const connection = web3Context.connection;
+  useEffect(() => {
+    metaMask.connectEagerly().catch(() => null);
+    coinbaseWallet.connectEagerly().catch(() => null);
+  }, []);
 
-  const selectWallet = async (walletType: WalletType) => {
-    setShowConnectWalletModal(false);
-    await web3Context.connectWallet(walletType);
+  const getConnectorName = (connector: Connector): string => {
+    if (connector instanceof MetaMask) return 'MetaMask';
+    if (connector instanceof WalletConnect) return 'WalletConnect';
+    if (connector instanceof CoinbaseWallet) return 'Coinbase Wallet';
+    return 'Unknown';
   };
 
   return (
@@ -78,18 +88,15 @@ const Navbar = ({ module }: NavbarProps) => {
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
               <span className="nav-link connect-wallet-btn" onClick={() => setShowConnectWalletModal(true)}>
-                <i className="fa-regular fa-wallet"></i> {connection ? 'Connected' : 'Connect Wallet'}
+                <i className="fa-regular fa-wallet"></i>{' '}
+                {isActive ? `${getConnectorName(connector)} Connected` : 'Connect Wallet'}
               </span>
             </li>
           </ul>
         </div>
       </div>
 
-      <ConnectWalletModal
-        show={showConnectWalletModal}
-        select={selectWallet}
-        close={() => setShowConnectWalletModal(false)}
-      />
+      <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
     </nav>
   );
 };

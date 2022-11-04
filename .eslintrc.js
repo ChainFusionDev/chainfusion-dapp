@@ -13,8 +13,10 @@ module.exports = {
     "import",
   ],
   extends: [
-    "next/core-web-vitals",
     "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:node/recommended",
     "plugin:import/typescript",
@@ -42,7 +44,7 @@ module.exports = {
     "@next/next/no-img-element": "off",
     "node/no-missing-import": "off",
     "import/no-unresolved": "error",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "max-len": [
       "error",
       { code: 120 },

@@ -24,7 +24,7 @@ export const useLocalStorage = <S>(
 const parse = (value: string) => {
   try {
     return JSON.parse(value);
-  } catch {
+  } catch (e) {
     return value;
   }
 };

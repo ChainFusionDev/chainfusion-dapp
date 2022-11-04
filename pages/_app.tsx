@@ -6,10 +6,10 @@ import '@styles/responsive.css';
 import '@styles/fontawesome.css';
 import '@styles/fonts.css';
 
-import { Web3ReactProvider } from '@web3-react/core';
-import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
-import { getConnectors, Web3ContextProvider } from '@src/context/Web3ContextProvider';
+import { AppProps } from 'next/app';
+import { Web3ReactProvider } from '@web3-react/core';
+import { getConnectors } from '@src/connectors/connectors';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -18,9 +18,7 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <Web3ReactProvider connectors={getConnectors()}>
-      <Web3ContextProvider>
-        <Component {...pageProps} />
-      </Web3ContextProvider>
+      <Component {...pageProps} />
     </Web3ReactProvider>
   );
 }
