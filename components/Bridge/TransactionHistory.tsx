@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import transactionHistory from '@data/transaction-history.json';
 import TransactionItem, { TransactionItemProps } from '@components/Bridge/TransactionItem';
 
 const TransactionHistory = () => {
-  const [transactions, setTransactions] = React.useState(transactionHistory);
+  const [transactions, setTransactions] = useState(transactionHistory);
   const [showAll, setShowAll] = useState(false);
   const [count, setCount] = useState(5);
 

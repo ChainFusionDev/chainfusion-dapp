@@ -1,11 +1,11 @@
 import Layout from '@components/Layout';
 import InputTokenModal from '@components/Modals/InputTokenModal';
 import Link from 'next/link';
-import React from 'react';
+import { useState } from 'react';
 
 const LiquidityManagement = () => {
-  const [showAddLiquidityModal, setShowAddLiquidityModal] = React.useState(false);
-  const [showRemoveLiquidityModal, setShowRemoveLiquidityModal] = React.useState(false);
+  const [showAddLiquidityModal, setShowAddLiquidityModal] = useState(false);
+  const [showRemoveLiquidityModal, setShowRemoveLiquidityModal] = useState(false);
 
   return (
     <Layout module="liquidity" title="Liquidity" description="Manage bridge liquidity in blockchais per token">

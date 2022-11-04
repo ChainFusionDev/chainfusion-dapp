@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 
 interface InputCFNModalProps {
@@ -11,7 +11,7 @@ interface InputCFNModalProps {
 }
 
 const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close }: InputCFNModalProps) => {
-  const [amount, setAmount] = React.useState<number>(0.0);
+  const [amount, setAmount] = useState<number>(0.0);
 
   return (
     <Modal show={show} onHide={close}>

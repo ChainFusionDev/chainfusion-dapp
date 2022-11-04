@@ -1,7 +1,7 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import stakingMock from '@data/staking-mock.json';
 
@@ -11,8 +11,8 @@ interface StakingItemData {
 }
 
 const Staking = () => {
-  const [showIncreaseStakeModal, setShowIncreaseStakeModal] = React.useState(false);
-  const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = React.useState(false);
+  const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
+  const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

@@ -1,10 +1,10 @@
 import Layout from '@components/Layout';
 import SlashingProposalModal from '@components/Modals/SlashingProposalModal';
 import ReactTooltip from 'react-tooltip';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Slashing = () => {
-  const [showSlashingProposalModal, setShowSlashingProposalModal] = React.useState(false);
+  const [showSlashingProposalModal, setShowSlashingProposalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

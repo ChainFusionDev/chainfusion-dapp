@@ -1,7 +1,6 @@
 import Layout from '@components/Layout';
 import FeeEstimate from '@components/FeeEstimate';
 import TransactionHistory from '@components/Bridge/TransactionHistory';
-import React from 'react';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
@@ -9,16 +8,17 @@ import { Chain, supportedChains, supportedTokens, Token } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useWeb3React } from '@web3-react/core';
 import { useChainContext } from '@src/context/ChainContext';
+import { useState } from 'react';
 
 const Bridge = () => {
-  const [showFromModal, setShowFromModal] = React.useState(false);
-  const [showToModal, setShowToModal] = React.useState(false);
-  const [showOptionsModal, setShowOptionsModal] = React.useState(false);
-  const [showTransferModal, setShowTransferModal] = React.useState(false);
+  const [showFromModal, setShowFromModal] = useState(false);
+  const [showToModal, setShowToModal] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
+  const [showTransferModal, setShowTransferModal] = useState(false);
 
-  const [from, setFrom] = React.useState<number>(0.0);
-  const [to, setTo] = React.useState<number>(0.0);
-  const [swap, setSwap] = React.useState(false);
+  const [from, setFrom] = useState<number>(0.0);
+  const [to, setTo] = useState<number>(0.0);
+  const [swap, setSwap] = useState(false);
 
   const chains = supportedChains();
   const tokens = supportedTokens();
