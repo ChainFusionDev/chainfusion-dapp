@@ -1,4 +1,3 @@
-import { coinbaseWallet, metaMask } from '@src/connectors/connectors';
 import { useChainContext } from '@src/context/ChainContext';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import { useWeb3React } from '@web3-react/core';
@@ -6,7 +5,6 @@ import { MetaMask } from '@web3-react/metamask';
 import { Connector } from '@web3-react/types';
 import { WalletConnect } from '@web3-react/walletconnect';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
 
 type NavbarProps = {
   module: string;
@@ -15,11 +13,6 @@ type NavbarProps = {
 const Navbar = ({ module }: NavbarProps) => {
   const { connector, isActive } = useWeb3React();
   const { showConnectWalletDialog } = useChainContext();
-
-  useEffect(() => {
-    metaMask.connectEagerly().catch(() => null);
-    coinbaseWallet.connectEagerly().catch(() => null);
-  }, []);
 
   const getConnectorName = (connector: Connector): string => {
     if (connector instanceof MetaMask) return 'MetaMask';
@@ -77,11 +70,6 @@ const Navbar = ({ module }: NavbarProps) => {
             <li className={`nav-item ${module === 'analytics' && 'active'}`}>
               <Link href="/analytics">
                 <a className="nav-link">Analytics</a>
-              </Link>
-            </li>
-            <li className={`nav-item ${module === 'apps' && 'active'}`}>
-              <Link href="/apps">
-                <a className="nav-link">Apps</a>
               </Link>
             </li>
           </ul>

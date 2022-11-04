@@ -1,5 +1,6 @@
 import ConnectWalletModal from '@components/Modals/ConnectWalletModal';
-import { createContext, ReactElement, useContext, useState } from 'react';
+import { coinbaseWallet, metaMask, walletConnect } from '@src/connectors/connectors';
+import { createContext, ReactElement, useContext, useEffect, useState } from 'react';
 
 export interface ChainContextData {
   showConnectWalletDialog: () => void;
@@ -14,6 +15,12 @@ export interface ChainContextProviderProps {
 
 export const ChainContextProvider = ({ children }: ChainContextProviderProps) => {
   const [showConnectWalletModal, setShowConnectWalletModal] = useState(false);
+
+  useEffect(() => {
+    metaMask.connectEagerly().catch(() => null);
+    coinbaseWallet.connectEagerly().catch(() => null);
+    walletConnect.connectEagerly().catch(() => null);
+  }, []);
 
   const showConnectWalletDialog = () => {
     setShowConnectWalletModal(true);
