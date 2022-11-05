@@ -7,6 +7,8 @@ import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useWeb3React } from '@web3-react/core';
 import { useChainContext } from '@src/context/ChainContext';
 import { useState } from 'react';
+import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
+import { ethers } from 'ethers';
 
 const BridgeWidget = () => {
   const [showFromModal, setShowFromModal] = useState(false);
@@ -23,18 +25,16 @@ const BridgeWidget = () => {
 
   const [chainFromLocal, setChainFrom] = useLocalStorage<string>('chain-from');
   const [tokenFromLocal, setTokenFrom] = useLocalStorage<string>('token-from');
-
-  const [chainToLocal, setChainTo] = useLocalStorage<string>('chain-to');
-  const [tokenToLocal, setTokenTo] = useLocalStorage<string>('token-to');
-
   const chainFrom = chainFromLocal ? getChain(chainFromLocal) : chains[0];
   const tokenFrom = tokenFromLocal ? getToken(tokenFromLocal) : tokens[0];
 
+  const [chainToLocal, setChainTo] = useLocalStorage<string>('chain-to');
+  const [tokenToLocal, setTokenTo] = useLocalStorage<string>('token-to');
   const chainTo = chainToLocal ? getChain(chainToLocal) : chains[1];
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
-  const { connector, isActive, chainId } = useWeb3React();
-  const { showConnectWalletDialog } = useChainContext();
+  const { connector, provider, isActive, account, chainId } = useWeb3React();
+  const { bridgeContracts, showConnectWalletDialog } = useChainContext();
 
   const swapFromTo = () => {
     setFrom(to);
@@ -60,6 +60,32 @@ const BridgeWidget = () => {
     await connector.activate(chainParams);
   };
 
+  const transfer = async () => {
+    const tokenAddress = tokenFrom.chains[chainFrom.identifier];
+    if (
+      provider === undefined ||
+      account === undefined ||
+      bridgeContracts === undefined ||
+      tokenAddress === undefined
+    ) {
+      return;
+    }
+
+    setShowTransferModal(true);
+
+    const { erc20Bridge } = bridgeContracts;
+
+    const mockTokenFactory = new MockToken__factory(provider.getSigner());
+    const mockToken = mockTokenFactory.attach(tokenAddress);
+
+    const amount = ethers.utils.parseEther(from.toString());
+
+    await (await mockToken.approve(erc20Bridge.address, amount)).wait();
+    await (await erc20Bridge.deposit(tokenAddress, 123, account, amount)).wait();
+
+    setShowTransferModal(false);
+  };
+
   let transferButton = (
     <button className="transfer-button" onClick={showConnectWalletDialog}>
       <i className="fa-regular fa-wallet"></i> Connect Wallet
@@ -77,7 +103,7 @@ const BridgeWidget = () => {
       );
     } else {
       transferButton = (
-        <button className="transfer-button" onClick={() => setShowTransferModal(true)}>
+        <button className="transfer-button" onClick={transfer}>
           <i className="fa-solid fa-paper-plane-top"></i> Transfer
         </button>
       );

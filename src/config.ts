@@ -19,12 +19,19 @@ export interface Chain {
   rpc: string;
   explorer: string;
   nativeCurrency: NativeCurrency;
+  erc20BridgeAddress?: string;
+}
+
+export interface ChainToAddress {
+  [identifier: string]: string;
 }
 
 export interface Token {
   identifier: string;
-  symbol: string;
   name: string;
+  symbol: string;
+  decimals: number;
+  chains: ChainToAddress;
 }
 
 const config: ChainConfig = chainConfig;
@@ -32,6 +39,11 @@ const config: ChainConfig = chainConfig;
 const chainMap: { [identifier: string]: Chain } = {};
 for (const chain of config.chains) {
   chainMap[chain.identifier] = chain;
+}
+
+const chainByIdMap: { [identifier: string]: Chain } = {};
+for (const chain of config.chains) {
+  chainByIdMap[chain.chainId] = chain;
 }
 
 const tokenMap: { [identifier: string]: Token } = {};
@@ -53,6 +65,10 @@ export function supportedTokens(): Token[] {
 
 export function getChain(identifier: string): Chain {
   return chainMap[identifier];
+}
+
+export function getChainById(chainId: number): Chain {
+  return chainByIdMap[chainId];
 }
 
 export function getToken(identifier: string): Token {
