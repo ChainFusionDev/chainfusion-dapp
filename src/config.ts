@@ -1,37 +1,11 @@
 import chainConfig from '@data/chain-config.json';
+import history from '@data/transaction-history.json';
+import { Chain, Token, TransactionHistoryItem } from '@src/types';
 
 interface ChainConfig {
   chainfusion: Chain;
   chains: Chain[];
   tokens: Token[];
-}
-
-export interface NativeCurrency {
-  name: string;
-  symbol: string;
-  decimals: number;
-}
-
-export interface Chain {
-  chainId: number;
-  identifier: string;
-  name: string;
-  rpc: string;
-  explorer: string;
-  nativeCurrency: NativeCurrency;
-  erc20BridgeAddress?: string;
-}
-
-export interface ChainToAddress {
-  [identifier: string]: string;
-}
-
-export interface Token {
-  identifier: string;
-  name: string;
-  symbol: string;
-  decimals: number;
-  chains: ChainToAddress;
 }
 
 const config: ChainConfig = chainConfig;
@@ -49,6 +23,10 @@ for (const chain of config.chains) {
 const tokenMap: { [identifier: string]: Token } = {};
 for (const token of config.tokens) {
   tokenMap[token.identifier] = token;
+}
+
+export function transactionHistory(): TransactionHistoryItem[] {
+  return history;
 }
 
 export function chainfusionChain(): Chain {

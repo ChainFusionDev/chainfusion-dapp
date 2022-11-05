@@ -1,4 +1,4 @@
-import { Token } from '@src/config';
+import { Token } from '@src/types';
 import { useState } from 'react';
 
 interface FeeEstimateProps {

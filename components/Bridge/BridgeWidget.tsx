@@ -1,14 +1,15 @@
-import FeeEstimate from '@components/FeeEstimate';
+import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
-import { Chain, getChain, getToken, supportedChains, supportedTokens, Token } from '@src/config';
+import { getChain, getToken, supportedChains, supportedTokens } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useWeb3React } from '@web3-react/core';
-import { useChainContext } from '@src/context/ChainContext';
+import { BridgeContracts, useChainContext } from '@src/context/ChainContext';
 import { useState } from 'react';
 import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { ethers } from 'ethers';
+import { Chain, Token } from '@src/types';
 
 const BridgeWidget = () => {
   const [showFromModal, setShowFromModal] = useState(false);
@@ -33,8 +34,9 @@ const BridgeWidget = () => {
   const chainTo = chainToLocal ? getChain(chainToLocal) : chains[1];
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
-  const { connector, provider, isActive, account, chainId } = useWeb3React();
-  const { bridgeContracts, showConnectWalletDialog } = useChainContext();
+  const { provider, isActive, account, chainId } = useWeb3React();
+  const { bridgeContracts, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const tokenAddress = tokenFrom.chains[chainFrom.identifier];
 
   const swapFromTo = () => {
     setFrom(to);
@@ -48,40 +50,27 @@ const BridgeWidget = () => {
     setSwap(!swap);
   };
 
-  const switchNetwork = async (chain: Chain) => {
-    const chainParams = {
-      chainId: chain.chainId.toString(16),
-      chainName: chain.name,
-      nativeCurrency: chain.nativeCurrency,
-      rpcUrls: [chain.rpc],
-      blockExplorerUrls: [chain.explorer],
-    };
-
-    await connector.activate(chainParams);
-  };
-
-  const transfer = async () => {
-    const tokenAddress = tokenFrom.chains[chainFrom.identifier];
-    if (
-      provider === undefined ||
-      account === undefined ||
-      bridgeContracts === undefined ||
-      tokenAddress === undefined
-    ) {
-      return;
-    }
-
+  const transfer = async (
+    bridgeContracts: BridgeContracts,
+    provider: ethers.providers.Web3Provider,
+    tokenAddress: string,
+    account: string
+  ) => {
     setShowTransferModal(true);
 
-    const { erc20Bridge } = bridgeContracts;
+    try {
+      const { erc20Bridge } = bridgeContracts;
 
-    const mockTokenFactory = new MockToken__factory(provider.getSigner());
-    const mockToken = mockTokenFactory.attach(tokenAddress);
+      const mockTokenFactory = new MockToken__factory(provider.getSigner());
+      const mockToken = mockTokenFactory.attach(tokenAddress);
 
-    const amount = ethers.utils.parseEther(from.toString());
+      const amount = ethers.utils.parseEther(from.toString());
 
-    await (await mockToken.approve(erc20Bridge.address, amount)).wait();
-    await (await erc20Bridge.deposit(tokenAddress, 123, account, amount)).wait();
+      await (await mockToken.approve(erc20Bridge.address, amount)).wait();
+      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, account, amount)).wait();
+    } catch (e) {
+      console.error(e);
+    }
 
     setShowTransferModal(false);
   };
@@ -101,10 +90,21 @@ const BridgeWidget = () => {
           {chainFrom.name}
         </button>
       );
+    } else if (
+      provider !== undefined &&
+      account !== undefined &&
+      bridgeContracts !== undefined &&
+      tokenAddress !== undefined
+    ) {
+      transferButton = (
+        <button className="transfer-button" onClick={() => transfer(bridgeContracts, provider, tokenAddress, account)}>
+          <i className="fa-solid fa-paper-plane-top"></i> Transfer
+        </button>
+      );
     } else {
       transferButton = (
-        <button className="transfer-button" onClick={transfer}>
-          <i className="fa-solid fa-paper-plane-top"></i> Transfer
+        <button disabled={true} className="transfer-button">
+          <i className="fa-solid fa-xmark"></i> Not Supported
         </button>
       );
     }
@@ -114,7 +114,7 @@ const BridgeWidget = () => {
     <div className="form-bridge">
       <i className="fa-light fa-gear setting-receiver" onClick={() => setShowOptionsModal(true)}></i>
       <div className="mx-auto logo">
-        <img src="/img/logo.svg" alt="ChainFusion logo" className="img-fluid d-block d-sm-block" />
+        <img src="/img/logo.svg" alt="ChainFusion Logo" className="img-fluid d-block d-sm-block" />
       </div>
       <div className="form-group form-block">
         <span className="token-amount">From:</span>
