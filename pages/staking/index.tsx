@@ -3,7 +3,7 @@ import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
 import { useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
-import stakingMock from '@data/staking-mock.json';
+import stakingValidatorsData from '@data/staking-validators.json';
 
 interface StakingItemData {
   address: string;
@@ -19,7 +19,7 @@ const Staking = () => {
     setIsMounted(true);
   }, []);
 
-  const stakingItems: StakingItemData[] = stakingMock;
+  const stakingItems: StakingItemData[] = stakingValidatorsData;
   stakingItems.sort((a: StakingItemData, b: StakingItemData) => {
     return b.stake - a.stake;
   });

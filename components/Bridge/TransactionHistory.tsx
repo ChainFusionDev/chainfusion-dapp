@@ -1,29 +1,20 @@
 import { useState } from 'react';
-import transactionHistory from '@data/transaction-history.json';
-import TransactionItem, { TransactionItemProps } from '@components/Bridge/TransactionItem';
+import TransactionItem from '@components/Bridge/TransactionItem';
+import { transactionHistory } from '@src/config';
+import { TransactionHistoryItem } from '@src/types';
 
 const TransactionHistory = () => {
-  const [transactions, setTransactions] = useState(transactionHistory);
-  const [showAll, setShowAll] = useState(false);
-  const [count, setCount] = useState(5);
+  const defaultItemsCount = 5;
+  const history = transactionHistory();
 
-  if (!transactions.length) {
+  const [showAll, setShowAll] = useState(false);
+
+  if (!history.length) {
     return <></>;
   }
 
-  const transactionItems = transactions.map((transaction: TransactionItemProps, index: number) =>
-    showAll || index < count ? (
-      <TransactionItem
-        key={index}
-        from={transaction.from}
-        to={transaction.to}
-        sender={transaction.sender}
-        receiver={transaction.receiver}
-        validatorFee={transaction.validatorFee}
-        liquidityFee={transaction.liquidityFee}
-        status={transaction.status}
-      />
-    ) : null
+  const transactionItems = history.map((item: TransactionHistoryItem, index: number) =>
+    showAll || index < defaultItemsCount ? <TransactionItem key={index} item={item} /> : null
   );
 
   return (

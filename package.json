@@ -10,7 +10,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@chainfusion/erc-20-bridge-contracts": "^0.0.1-rc.3",
     "@coinbase/wallet-sdk": "^3.5.4",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@walletconnect/ethereum-provider": "^2.1.0",
@@ -31,15 +33,18 @@
     "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5.7.2",
     "husky": "^8.0.1",
+    "i": "^0.3.7",
     "jquery": "^3.6.1",
     "next": "^12.3.0",
+    "npm": "^8.19.3",
     "popper.js": "^1.16.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-bootstrap": "^1.6.6",
     "react-dom": "^18.2.0",
     "react-toastify": "^9.0.8",
-    "react-tooltip": "^4.4.0"
+    "react-tooltip": "^4.4.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",

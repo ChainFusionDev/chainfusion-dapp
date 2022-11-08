@@ -1,32 +1,29 @@
-import { Blockchain, Fee, Token } from '@src/types';
+import { getChain, getToken } from '@src/config';
+import { TransactionHistoryItem } from '@src/types';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 export interface TransactionItemProps {
-  from: {
-    blockchain: Blockchain;
-    token: Token;
-    amount: number;
-  };
-  to: {
-    blockchain: Blockchain;
-    token: Token;
-    amount: number;
-  };
-  sender: string;
-  receiver: string;
-  validatorFee: Fee;
-  liquidityFee: Fee;
-  status: string;
+  item: TransactionHistoryItem;
 }
 
-const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFee, status }: TransactionItemProps) => {
+const TransactionItem = ({ item }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const fromChain = getChain(item.from.chain);
+  const fromToken = getToken(item.from.token);
+
+  const toChain = getChain(item.to.chain);
+  const toToken = getToken(item.to.token);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  if (fromChain === undefined || fromToken === undefined || toChain === undefined || toToken === undefined) {
+    return <></>;
+  }
 
   return (
     <div className="transfer-block mb-2">
@@ -34,7 +31,7 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
         data-toggle="collapse"
         role="button"
         aria-expanded={open}
-        aria-controls={sender}
+        aria-controls={item.sender}
         className="btn-block py-2 with-chevron"
         onClick={() => setOpen(!open)}
       >
@@ -44,12 +41,12 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
             <span className="blockchain-fees">
-              <img src={`/img/${from.blockchain.img}.svg`} alt={`${from.blockchain.name} Logo`} />
+              <img src={`/img/${fromChain.identifier}.svg`} alt={`${fromChain.name} Logo`} />
               &nbsp;
-              {from.blockchain.name}: <strong>{from.amount}</strong>&nbsp;
+              {fromChain.name}: <strong>{item.from.amount}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${from.token.img}.svg`} alt={`${from.token.name} Logo`} /> {from.token.name}
+              <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} /> {fromToken.name}
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
@@ -58,17 +55,17 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
           </span>
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
-              <img src={`/img/${to.blockchain.img}.svg`} alt={`${to.blockchain.name} Logo`} />
+              <img src={`/img/${toChain.identifier}.svg`} alt={`${toChain.name} Logo`} />
               &nbsp;
-              {to.blockchain.name}: <strong>{to.amount}</strong>&nbsp;
+              {toChain.name}: <strong>{item.to.amount}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${to.token.img}.svg`} alt={`${to.token.name} Logo`} /> {to.token.name}
+              <img src={`/img/${toToken.identifier}.svg`} alt={`${toToken.name} Logo`} /> {toToken.name}
             </span>
           </span>
         </p>
       </a>
-      <div id={sender} className={`collapse ${open && 'show'}`}>
+      <div id={item.sender} className={`collapse ${open && 'show'}`}>
         <div className="card">
           <div className="card-body">
             <span className="transaction-details">
@@ -81,35 +78,35 @@ const TransactionItem = ({ from, to, sender, receiver, validatorFee, liquidityFe
             <span className="transaction-details">
               Sender:{' '}
               <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
-                {sender}
+                {item.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
               <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
-                {receiver}
+                {item.receiver}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="fees-details">
-              Validators Refund: <strong>{validatorFee.amount}</strong>&nbsp;
+              Validators Refund: <strong>{item.validatorFee}</strong>&nbsp;
               <span className="token-fees">
-                <img src={`/img/${validatorFee.token.img}.svg`} alt={`${validatorFee.token.name} Logo`} />
+                <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} />
                 &nbsp;
-                {validatorFee.token.name}
+                {fromToken.name}
               </span>
             </span>
             <span className="fees-details">
-              Liquidity Fee: <strong>{liquidityFee.amount}</strong>&nbsp;
+              Liquidity Fee: <strong>{item.liquidityFee}</strong>&nbsp;
               <span className="token-fees">
-                <img src={`/img/${liquidityFee.token.img}.svg`} alt={`${liquidityFee.token.name} Logo`} />
+                <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} />
                 &nbsp;
-                {liquidityFee.token.name}
+                {fromToken.name}
               </span>
             </span>
             <span className="success-status">
-              Status: <strong>{status}</strong>
+              Status: <strong>{item.status}</strong>
             </span>
           </div>
         </div>

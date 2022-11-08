@@ -98,38 +98,89 @@
         "symbol": "CFN",
         "decimals": 18
       }
+    },
+    {
+      "chainId": 5001,
+      "identifier": "chainfusion-bg1",
+      "name": "Bridgenet 1",
+      "rpc": "https://bg1-rpc.chainfusion.org",
+      "explorer": "https://bg1-explorer.chainfusion.org",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+    },
+    {
+      "chainId": 5002,
+      "identifier": "chainfusion-bg2",
+      "name": "Bridgenet 2",
+      "rpc": "https://bg2-rpc.chainfusion.org",
+      "explorer": "https://bg2-explorer.chainfusion.org",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      }
+    },
+    {
+      "chainId": 5003,
+      "identifier": "chainfusion-bg3",
+      "name": "Bridgenet 3",
+      "rpc": "https://bg3-rpc.chainfusion.org",
+      "explorer": "https://bg3-explorer.chainfusion.org",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      }
     }
   ],
   "tokens": [
     {
       "identifier": "usdt",
+      "name": "Tether",
       "symbol": "USDT",
-      "name": "Tether"
+      "decimals": 18,
+      "chains": {
+        "chainfusion-bg1": "0x9A676e781A523b5d0C0e43731313A708CB607508"
+      }
     },
     {
       "identifier": "usdc",
+      "name": "USD Coin",
       "symbol": "USDC",
-      "name": "USD Coin"
+      "decimals": 18,
+      "chains": {}
     },
     {
       "identifier": "busd",
+      "name": "Binance USD",
       "symbol": "BUSD",
-      "name": "Binance USD"
+      "decimals": 18,
+      "chains": {}
     },
     {
       "identifier": "dai",
+      "name": "Dai",
       "symbol": "DAI",
-      "name": "Dai"
+      "decimals": 18,
+      "chains": {}
     },
     {
       "identifier": "eth",
+      "name": "Ether",
       "symbol": "ETH",
-      "name": "Ether"
+      "decimals": 18,
+      "chains": {}
     },
     {
       "identifier": "cfn",
+      "name": "ChainFusion",
       "symbol": "CFN",
-      "name": "ChainFusion"
+      "decimals": 18,
+      "chains": {}
     }
   ]
 }

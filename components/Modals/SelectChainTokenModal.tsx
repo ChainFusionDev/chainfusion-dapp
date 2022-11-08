@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
-import { supportedChains, Chain, supportedTokens, Token } from '@src/config';
+import { supportedChains, supportedTokens } from '@src/config';
+import { Chain, Token } from '@src/types';
 
 interface SelectChainTokenModalProps {
   show: boolean;
