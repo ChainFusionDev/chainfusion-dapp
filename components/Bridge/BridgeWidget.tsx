@@ -47,11 +47,9 @@ const BridgeWidget = () => {
   const tokenAddress = tokenFrom.chains[chainFrom.identifier];
 
   const swapFromTo = () => {
-    setFromString(toString);
     setChainFrom(chainTo.identifier);
     setTokenFrom(tokenTo.identifier);
 
-    setToString(fromString);
     setChainTo(chainFrom.identifier);
     setTokenTo(tokenFrom.identifier);
 
@@ -94,7 +92,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [from, approvalPending, tokenAddress, chainContainer]);
+  }, [from, chainFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
 
   const approve = async () => {
     if (chainContainer === undefined || tokenAddress === undefined) {
