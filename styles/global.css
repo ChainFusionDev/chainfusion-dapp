@@ -239,7 +239,9 @@ main,
 }
 
 input[type='text'],
-input[type='number'] {
+input[type='text']:disabled,
+input[type='number'],
+input[type='number']:disabled {
   padding: 15px 205px 15px 25px;
   font-style: normal;
   font-weight: 500;
@@ -256,10 +258,10 @@ input[type='number'] {
   transition: all ease-out 0.3s;
 }
 
-input[type='text']:hover,
-input[type='number']:hover,
-input[type='text']:focus,
-input[type='number']:focus {
+input[type='text']:not([disabled]):hover,
+input[type='number']:not([disabled]):hover,
+input[type='text']:not([disabled]):focus,
+input[type='number']:not([disabled]):focus {
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
   border: 1px solid;
@@ -559,6 +561,19 @@ label {
   transform: rotate(360deg);
 }
 
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.transfer-button .fa-spinner {
+  animation: rotating 1s linear infinite;
+}
+
 .transfer-button {
   width: 100%;
   padding: 5px 15px;
@@ -574,7 +589,12 @@ label {
   transition: all ease-out 0.3s;
 }
 
-.transfer-button:hover {
+.transfer-button:disabled {
+  background: var(--light-blue);
+  box-shadow: none;
+}
+
+.transfer-button:not([disabled]):hover {
   background: var(--hover-color);
   box-shadow: 0px 3px 30px rgba(21, 101, 192, 0.1);
 }

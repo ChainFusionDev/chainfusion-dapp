@@ -12,13 +12,16 @@ import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { createContext, ReactElement, useContext, useEffect, useState } from 'react';
 
-export interface BridgeContracts {
+export interface ChainContainer {
+  provider: ethers.providers.Web3Provider;
+  account: string;
+
   erc20Bridge: ERC20Bridge;
   tokenManager: TokenManager;
 }
 
 export interface ChainContextData {
-  bridgeContracts?: BridgeContracts;
+  chainContainer?: ChainContainer;
   switchNetwork: (chain: Chain) => Promise<void>;
   showConnectWalletDialog: () => void;
 }
@@ -32,8 +35,8 @@ export interface ChainContextProviderProps {
 
 export const ChainContextProvider = ({ children }: ChainContextProviderProps) => {
   const [showConnectWalletModal, setShowConnectWalletModal] = useState(false);
-  const [bridgeContracts, setBridgeContracts] = useState<BridgeContracts | undefined>(undefined);
-  const { chainId, provider, connector } = useWeb3React();
+  const [chainContainer, setChainContainer] = useState<ChainContainer | undefined>(undefined);
+  const { chainId, account, provider, connector } = useWeb3React();
 
   useEffect(() => {
     metaMask.connectEagerly().catch(() => null);
@@ -42,7 +45,13 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   }, []);
 
   useEffect(() => {
-    const loadContracts = async (erc20BridgeAddress: string, provider: ethers.providers.Web3Provider) => {
+    let pending = true;
+
+    const loadContracts = async (
+      erc20BridgeAddress: string,
+      provider: ethers.providers.Web3Provider,
+      account: string
+    ) => {
       const erc20BridgeFactory = new ERC20Bridge__factory(provider.getSigner());
       const erc20Bridge = erc20BridgeFactory.attach(erc20BridgeAddress);
 
@@ -50,24 +59,33 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
       const tokenManagerFactory = new TokenManager__factory(provider.getSigner());
       const tokenManager = tokenManagerFactory.attach(tokenManagerAddress);
 
-      setBridgeContracts({
-        erc20Bridge,
-        tokenManager,
-      });
+      if (pending) {
+        setChainContainer({
+          provider,
+          account,
+          erc20Bridge,
+          tokenManager,
+        });
+      }
     };
-    if (chainId === undefined || provider === undefined) {
-      setBridgeContracts(undefined);
+
+    if (chainId === undefined || provider === undefined || account === undefined) {
+      setChainContainer(undefined);
       return;
     }
 
     const chain = getChainById(chainId);
     if (chain.erc20BridgeAddress === undefined) {
-      setBridgeContracts(undefined);
+      setChainContainer(undefined);
       return;
     }
 
-    loadContracts(chain.erc20BridgeAddress, provider);
-  }, [chainId, provider]);
+    loadContracts(chain.erc20BridgeAddress, provider, account);
+
+    return () => {
+      pending = false;
+    };
+  }, [chainId, provider, account]);
 
   const switchNetwork = async (chain: Chain) => {
     const chainParams = {
@@ -86,7 +104,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   };
 
   return (
-    <ChainContext.Provider value={{ bridgeContracts, switchNetwork, showConnectWalletDialog }}>
+    <ChainContext.Provider value={{ chainContainer: chainContainer, switchNetwork, showConnectWalletDialog }}>
       {children}
       <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
     </ChainContext.Provider>

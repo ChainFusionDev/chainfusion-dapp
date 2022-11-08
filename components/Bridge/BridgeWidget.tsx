@@ -1,14 +1,14 @@
+import { useWeb3React } from '@web3-react/core';
+import { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
+import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
 import { getChain, getToken, supportedChains, supportedTokens } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
-import { useWeb3React } from '@web3-react/core';
-import { BridgeContracts, useChainContext } from '@src/context/ChainContext';
-import { useState } from 'react';
-import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
-import { ethers } from 'ethers';
+import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 
 const BridgeWidget = () => {
@@ -17,8 +17,15 @@ const BridgeWidget = () => {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [showTransferModal, setShowTransferModal] = useState(false);
 
-  const [from, setFrom] = useState<number>(0.0);
-  const [to, setTo] = useState<number>(0.0);
+  const [validationPending, setValidationPending] = useState(false);
+  const [approvalPending, setApprovalPending] = useState(false);
+  const [needsApproval, setNeedsApproval] = useState(true);
+
+  const [fromString, setFromString] = useState<string>('');
+  const [toString, setToString] = useState<string>('');
+  const parsedFrom = parseFloat(fromString);
+  const from = isNaN(parsedFrom) ? 0 : parsedFrom;
+
   const [swap, setSwap] = useState(false);
 
   const chains = supportedChains();
@@ -35,39 +42,90 @@ const BridgeWidget = () => {
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
   const { provider, isActive, account, chainId } = useWeb3React();
-  const { bridgeContracts, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { chainContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const tokenAddress = tokenFrom.chains[chainFrom.identifier];
 
   const swapFromTo = () => {
-    setFrom(to);
+    setFromString(toString);
     setChainFrom(chainTo.identifier);
     setTokenFrom(tokenTo.identifier);
 
-    setTo(from);
+    setToString(fromString);
     setChainTo(chainFrom.identifier);
     setTokenTo(tokenFrom.identifier);
 
     setSwap(!swap);
   };
 
-  const transfer = async (
-    bridgeContracts: BridgeContracts,
-    provider: ethers.providers.Web3Provider,
-    tokenAddress: string,
-    account: string
-  ) => {
-    setShowTransferModal(true);
+  useEffect(() => {
+    let pending = true;
+
+    setValidationPending(false);
+
+    const validate = async () => {
+      if (chainContainer === undefined || tokenAddress === undefined) {
+        return;
+      }
+
+      if (from === 0.0) {
+        if (pending) {
+          setNeedsApproval(false);
+          setValidationPending(true);
+        }
+        return;
+      }
+
+      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
+      const mockToken = mockTokenFactory.attach(tokenAddress);
+      const allowance = await mockToken.allowance(chainContainer.account, chainContainer.erc20Bridge.address);
+      const amount = ethers.utils.parseEther(from.toString());
+
+      if (pending) {
+        setNeedsApproval(allowance.lt(amount));
+        setValidationPending(true);
+      }
+    };
+
+    validate();
+
+    return () => {
+      pending = false;
+    };
+  }, [from, approvalPending, tokenAddress, provider, account, chainContainer]);
+
+  const approve = async () => {
+    if (chainContainer === undefined || tokenAddress === undefined) {
+      return;
+    }
+
+    setApprovalPending(true);
 
     try {
-      const { erc20Bridge } = bridgeContracts;
-
-      const mockTokenFactory = new MockToken__factory(provider.getSigner());
+      const { erc20Bridge } = chainContainer;
+      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenAddress);
-
       const amount = ethers.utils.parseEther(from.toString());
 
       await (await mockToken.approve(erc20Bridge.address, amount)).wait();
-      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, account, amount)).wait();
+    } catch (e) {
+      console.error(e);
+    }
+
+    setApprovalPending(false);
+  };
+
+  const transfer = async () => {
+    if (chainContainer === undefined || tokenAddress === undefined) {
+      return;
+    }
+
+    setShowTransferModal(true);
+
+    try {
+      const { erc20Bridge } = chainContainer;
+      const amount = ethers.utils.parseEther(from.toString());
+
+      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, chainContainer.account, amount)).wait();
     } catch (e) {
       console.error(e);
     }
@@ -75,40 +133,71 @@ const BridgeWidget = () => {
     setShowTransferModal(false);
   };
 
-  let transferButton = (
-    <button className="transfer-button" onClick={showConnectWalletDialog}>
-      <i className="fa-regular fa-wallet"></i> Connect Wallet
-    </button>
-  );
+  const transferButton = () => {
+    if (from === 0.0) {
+      return (
+        <button disabled={true} className="transfer-button">
+          Enter Amount
+        </button>
+      );
+    }
 
-  if (isActive) {
+    if (!isActive) {
+      return (
+        <button className="transfer-button" onClick={showConnectWalletDialog}>
+          <i className="fa-regular fa-wallet"></i> Connect Wallet
+        </button>
+      );
+    }
+
     if (chainId !== chainFrom.chainId) {
-      transferButton = (
+      return (
         <button className="transfer-button" onClick={() => switchNetwork(chainFrom)}>
           <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
           <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
           {chainFrom.name}
         </button>
       );
-    } else if (
-      provider !== undefined &&
-      account !== undefined &&
-      bridgeContracts !== undefined &&
-      tokenAddress !== undefined
-    ) {
-      transferButton = (
-        <button className="transfer-button" onClick={() => transfer(bridgeContracts, provider, tokenAddress, account)}>
-          <i className="fa-solid fa-paper-plane-top"></i> Transfer
-        </button>
-      );
-    } else {
-      transferButton = (
+    }
+
+    if (chainContainer === undefined) {
+      return (
         <button disabled={true} className="transfer-button">
-          <i className="fa-solid fa-xmark"></i> Not Supported
+          Not Supported
         </button>
       );
     }
-  }
+
+    if (!validationPending) {
+      return (
+        <button disabled={true} className="transfer-button">
+          <i className="fa-solid fa-spinner"></i> Calculating...
+        </button>
+      );
+    }
+
+    if (needsApproval) {
+      return (
+        <button className="transfer-button" onClick={() => approve()}>
+          <i className="fa-solid fa-check"></i> Approve
+        </button>
+      );
+    }
+
+    if (approvalPending) {
+      return (
+        <button disabled={true} className="transfer-button">
+          <i className="fa-solid fa-spinner"></i> Approving...
+        </button>
+      );
+    }
+
+    return (
+      <button className="transfer-button" onClick={() => transfer()}>
+        <i className="fa-solid fa-paper-plane-top"></i> Transfer
+      </button>
+    );
+  };
 
   return (
     <div className="form-bridge">
@@ -130,13 +219,13 @@ const BridgeWidget = () => {
           <i className="fa-light fa-chevron-down"></i>
         </div>
         <input
-          type="number"
+          type="text"
           autoComplete="off"
           className="form-control"
           id="from-amount"
           placeholder="0.0000"
-          value={from === 0.0 ? '' : from}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFrom(parseInt(e.target.value))}
+          value={fromString}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFromString(e.target.value)}
         />
       </div>
       <span className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
@@ -156,21 +245,19 @@ const BridgeWidget = () => {
           <i className="fa-light fa-chevron-down"></i>
         </div>
         <input
-          type="number"
+          disabled={true}
+          type="text"
           autoComplete="off"
           className="form-control"
           id="to-amount"
-          value={to === 0.0 ? '' : to}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setTo(parseInt(e.target.value));
-          }}
+          value={toString}
           placeholder="0.0000"
         />
       </div>
 
       <FeeEstimate token={tokenFrom} validatorsFee={0.3} liquidityFee={0.2} />
 
-      {transferButton}
+      {transferButton()}
       <SelectChainTokenModal
         key={`from:${chainFrom.identifier}:${tokenFrom.identifier}`}
         title="From"
