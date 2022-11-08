@@ -20,6 +20,7 @@ const BridgeWidget = () => {
   const [validationPending, setValidationPending] = useState(false);
   const [approvalPending, setApprovalPending] = useState(false);
   const [needsApproval, setNeedsApproval] = useState(true);
+  const [insufficientBalance, setInsufficientBalance] = useState(false);
 
   const [fromString, setFromString] = useState<string>('');
   const [toString, setToString] = useState<string>('');
@@ -41,7 +42,7 @@ const BridgeWidget = () => {
   const chainTo = chainToLocal ? getChain(chainToLocal) : chains[1];
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
-  const { provider, isActive, account, chainId } = useWeb3React();
+  const { isActive, chainId } = useWeb3React();
   const { chainContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const tokenAddress = tokenFrom.chains[chainFrom.identifier];
 
@@ -78,9 +79,11 @@ const BridgeWidget = () => {
       const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenAddress);
       const allowance = await mockToken.allowance(chainContainer.account, chainContainer.erc20Bridge.address);
+      const balance = await mockToken.balanceOf(chainContainer.account);
       const amount = ethers.utils.parseEther(from.toString());
 
       if (pending) {
+        setInsufficientBalance(balance.lt(amount));
         setNeedsApproval(allowance.lt(amount));
         setValidationPending(true);
       }
@@ -91,7 +94,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [from, approvalPending, tokenAddress, provider, account, chainContainer]);
+  }, [from, approvalPending, tokenAddress, chainContainer]);
 
   const approve = async () => {
     if (chainContainer === undefined || tokenAddress === undefined) {
@@ -130,6 +133,7 @@ const BridgeWidget = () => {
       console.error(e);
     }
 
+    setFromString('');
     setShowTransferModal(false);
   };
 
@@ -164,6 +168,14 @@ const BridgeWidget = () => {
       return (
         <button disabled={true} className="transfer-button">
           Not Supported
+        </button>
+      );
+    }
+
+    if (insufficientBalance) {
+      return (
+        <button disabled={true} className="transfer-button">
+          Insufficient Balance
         </button>
       );
     }
