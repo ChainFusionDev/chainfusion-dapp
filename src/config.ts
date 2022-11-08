@@ -3,7 +3,7 @@ import history from '@data/transaction-history.json';
 import { Chain, Token, TransactionHistoryItem } from '@src/types';
 
 interface ChainConfig {
-  chainfusion: Chain;
+  nativeChain: Chain;
   chains: Chain[];
   tokens: Token[];
 }
@@ -25,19 +25,19 @@ for (const token of config.tokens) {
   tokenMap[token.identifier] = token;
 }
 
-export function transactionHistory(): TransactionHistoryItem[] {
+export function getTransactionHistory(): TransactionHistoryItem[] {
   return history;
 }
 
-export function chainfusionChain(): Chain {
-  return config.chainfusion;
+export function getNativeChain(): Chain {
+  return config.nativeChain;
 }
 
-export function supportedChains(): Chain[] {
+export function getSupportedChains(): Chain[] {
   return config.chains;
 }
 
-export function supportedTokens(): Token[] {
+export function getSupportedTokens(): Token[] {
   return config.tokens;
 }
 
@@ -51,4 +51,14 @@ export function getChainById(chainId: number): Chain {
 
 export function getToken(identifier: string): Token {
   return tokenMap[identifier];
+}
+
+export function getChainParams(chain: Chain) {
+  return {
+    chainId: chain.chainId.toString(16),
+    chainName: chain.name,
+    nativeCurrency: chain.nativeCurrency,
+    rpcUrls: [chain.rpc],
+    blockExplorerUrls: [chain.explorer],
+  };
 }
