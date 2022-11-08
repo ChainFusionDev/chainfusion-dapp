@@ -1,3 +1,4 @@
+import { Staking, Staking__factory } from '@chainfusion/chainfusion-contracts';
 import {
   ERC20Bridge,
   ERC20Bridge__factory,
@@ -5,7 +6,7 @@ import {
   TokenManager__factory,
 } from '@chainfusion/erc-20-bridge-contracts';
 import ConnectWalletModal from '@components/Modals/ConnectWalletModal';
-import { getChainById, getChainParams, getNativeChain } from '@src/config';
+import { getChainById, getChainParams, getNativeChain, getNativeContracts } from '@src/config';
 import { coinbaseWallet, metaMask, walletConnect } from '@src/connectors/connectors';
 import { Chain } from '@src/types';
 import { useWeb3React } from '@web3-react/core';
@@ -14,6 +15,8 @@ import { createContext, ReactElement, useContext, useEffect, useState } from 're
 
 export interface NativeContainer {
   provider: ethers.providers.JsonRpcProvider;
+
+  staking: Staking;
 }
 
 export interface ChainContainer {
@@ -51,10 +54,15 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
 
     try {
       const nativeChain = getNativeChain();
-      const nativeProvider = new ethers.providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
+      const nativeContracts = getNativeContracts();
+      const provider = new ethers.providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
+
+      const stakingFactory = new Staking__factory(provider.getSigner('0x0000000000000000000000000000000000000000'));
+      const staking = stakingFactory.attach(nativeContracts.staking);
 
       setNativeContainer({
-        provider: nativeProvider,
+        provider,
+        staking,
       });
     } catch (e) {
       setNativeContainer(undefined);

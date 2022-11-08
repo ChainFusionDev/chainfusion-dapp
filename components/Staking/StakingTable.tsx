@@ -11,7 +11,7 @@ export const StakingHeader = () => {
 interface StakingItemProps {
   rank: number;
   address: string;
-  stake: number;
+  stake: string;
 }
 
 export const StakingItem = ({ rank, address, stake }: StakingItemProps) => {

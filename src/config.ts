@@ -1,9 +1,10 @@
 import chainConfig from '@data/chain-config.json';
 import history from '@data/transaction-history.json';
-import { Chain, Token, TransactionHistoryItem } from '@src/types';
+import { Chain, NativeContracts, Token, TransactionHistoryItem } from '@src/types';
 
 interface ChainConfig {
   nativeChain: Chain;
+  nativeContracts: NativeContracts;
   chains: Chain[];
   tokens: Token[];
 }
@@ -31,6 +32,10 @@ export function getTransactionHistory(): TransactionHistoryItem[] {
 
 export function getNativeChain(): Chain {
   return config.nativeChain;
+}
+
+export function getNativeContracts(): NativeContracts {
+  return config.nativeContracts;
 }
 
 export function getSupportedChains(): Chain[] {

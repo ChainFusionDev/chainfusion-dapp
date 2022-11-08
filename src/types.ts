@@ -24,6 +24,10 @@ export interface ChainToAddress {
   [identifier: string]: string | undefined;
 }
 
+export interface NativeContracts {
+  staking: string;
+}
+
 export interface Token {
   identifier: string;
   name: string;

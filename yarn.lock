@@ -108,6 +108,14 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@chainfusion/chainfusion-contracts@^0.0.40":
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/@chainfusion/chainfusion-contracts/-/chainfusion-contracts-0.0.40.tgz#1d5f09d73b8f2870d6ef43b12afc51f505a87635"
+  integrity sha512-wP1xRlsjoFMeHZ3iJQhGCMHglShOcFDRmLKSuaI4PrCC1XExex9RIVU9a9GFhfaIjuSMHRNWrM8nwJESGpiZqw==
+  dependencies:
+    "@openzeppelin/contracts" "^4.5.0"
+    cpy-cli "^4.2.0"
+
 "@chainfusion/erc-20-bridge-contracts@^0.0.1-rc.3":
   version "0.0.1-rc.3"
   resolved "https://registry.yarnpkg.com/@chainfusion/erc-20-bridge-contracts/-/erc-20-bridge-contracts-0.0.1-rc.3.tgz#57c161d73e077f300db1cebb0f187ed0639144cb"
@@ -1560,6 +1568,11 @@
     node-gyp "^9.0.0"
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
+
+"@openzeppelin/contracts@^4.5.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.0.tgz#6854c37df205dd2c056bdfa1b853f5d732109109"
+  integrity sha512-AGuwhRRL+NaKx73WKRNzeCxOCOCxpaqF+kp8TJ89QzAipSwZy/NoflkWaL9bywXFRhIzXt8j38sfF7KBKCPWLw==
 
 "@pedrouid/environment@^1.0.1":
   version "1.0.1"

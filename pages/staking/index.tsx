@@ -3,26 +3,58 @@ import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
 import { useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
-import stakingValidatorsData from '@data/staking-validators.json';
+import { useChainContext } from '@src/context/ChainContext';
+import { utils } from 'ethers';
 
 interface StakingItemData {
   address: string;
-  stake: number;
+  stake: string;
 }
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [stakingItems, setStakingItems] = useState<StakingItemData[]>([]);
+
+  const { nativeContainer } = useChainContext();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const stakingItems: StakingItemData[] = stakingValidatorsData;
-  stakingItems.sort((a: StakingItemData, b: StakingItemData) => {
-    return b.stake - a.stake;
-  });
+  useEffect(() => {
+    let pending = true;
+
+    const loadValidators = async () => {
+      if (nativeContainer === undefined) {
+        return;
+      }
+
+      const { staking } = nativeContainer;
+
+      const stakingItems: StakingItemData[] = [];
+      const validators = await staking.getValidators();
+      for (const address of validators) {
+        const { stake } = await staking.stakes(address);
+
+        stakingItems.push({
+          address,
+          stake: utils.formatEther(stake),
+        });
+      }
+
+      if (pending) {
+        setStakingItems(stakingItems);
+      }
+    };
+
+    loadValidators();
+
+    return () => {
+      pending = false;
+    };
+  }, [nativeContainer]);
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -83,25 +115,6 @@ const Staking = () => {
 
                   return <StakingItem key={rank} rank={rank} address={item.address} stake={item.stake} />;
                 })}
-
-                <div className="pagination-block d-flex justify-content-between">
-                  <ul className="pagination-nav">
-                    <li className="prev-btn">
-                      <i className="fa-regular fa-chevron-left"></i>
-                    </li>
-                    <li className="pagintaion-number">1</li>
-                    <li className="pagintaion-number active">2</li>
-                    <li className="pagintaion-number">3</li>
-                    <li className="pagintaion-dot">...</li>
-                    <li className="pagintaion-number">18</li>
-                    <li className="next-btn">
-                      <i className="fa-regular fa-chevron-right"></i>
-                    </li>
-                  </ul>
-                  <div className="count-page-pagination d-flex float-right">
-                    Page <span>2</span> of <span>18</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
