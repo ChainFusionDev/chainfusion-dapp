@@ -2,6 +2,8 @@ import { Staking, Staking__factory } from '@chainfusion/chainfusion-contracts';
 import {
   ERC20Bridge,
   ERC20Bridge__factory,
+  FeeManager,
+  FeeManager__factory,
   TokenManager,
   TokenManager__factory,
 } from '@chainfusion/erc-20-bridge-contracts';
@@ -25,6 +27,7 @@ export interface ChainContainer {
 
   erc20Bridge: ERC20Bridge;
   tokenManager: TokenManager;
+  feeManager: FeeManager;
 }
 
 export interface ChainContextData {
@@ -84,12 +87,17 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
       const tokenManagerFactory = new TokenManager__factory(provider.getSigner());
       const tokenManager = tokenManagerFactory.attach(tokenManagerAddress);
 
+      const feeManagerAddress = await erc20Bridge.feeManager();
+      const feeManagerFactory = new FeeManager__factory(provider.getSigner());
+      const feeManager = feeManagerFactory.attach(feeManagerAddress);
+
       if (pending) {
         setChainContainer({
           provider,
           account,
           erc20Bridge,
           tokenManager,
+          feeManager,
         });
       }
     };

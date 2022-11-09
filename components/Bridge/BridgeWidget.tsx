@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
+import { BigNumber, ethers, utils } from 'ethers';
 import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
@@ -10,6 +10,11 @@ import { getChain, getToken, getSupportedChains, getSupportedTokens } from '@src
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
+
+interface FeeInfo {
+  validatorsFee: BigNumber;
+  liquidityFee: BigNumber;
+}
 
 const BridgeWidget = () => {
   const [showFromModal, setShowFromModal] = useState(false);
@@ -26,6 +31,11 @@ const BridgeWidget = () => {
   const [toString, setToString] = useState<string>('');
   const parsedFrom = parseFloat(fromString);
   const from = isNaN(parsedFrom) ? 0 : parsedFrom;
+
+  const [estimatedFee, setEstimatedFee] = useState<FeeInfo>({
+    validatorsFee: BigNumber.from(0),
+    liquidityFee: BigNumber.from(0),
+  });
 
   const [swap, setSwap] = useState(false);
 
@@ -59,7 +69,7 @@ const BridgeWidget = () => {
   useEffect(() => {
     let pending = true;
 
-    setValidationPending(false);
+    setValidationPending(true);
 
     const validate = async () => {
       if (chainContainer === undefined || tokenAddress === undefined) {
@@ -68,8 +78,15 @@ const BridgeWidget = () => {
 
       if (from === 0.0) {
         if (pending) {
+          setInsufficientBalance(false);
           setNeedsApproval(false);
-          setValidationPending(true);
+          setToString('');
+          setEstimatedFee({
+            validatorsFee: BigNumber.from(0),
+            liquidityFee: BigNumber.from(0),
+          });
+
+          setValidationPending(false);
         }
         return;
       }
@@ -78,12 +95,23 @@ const BridgeWidget = () => {
       const mockToken = mockTokenFactory.attach(tokenAddress);
       const allowance = await mockToken.allowance(chainContainer.account, chainContainer.erc20Bridge.address);
       const balance = await mockToken.balanceOf(chainContainer.account);
-      const amount = ethers.utils.parseEther(from.toString());
+      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
+
+      const validatorsFee = await chainContainer.feeManager.validatorRefundFee();
+      const estimatedFee = await chainContainer.feeManager.calculateFee(tokenAddress, amount);
+
+      const willReceive = amount.sub(estimatedFee);
 
       if (pending) {
         setInsufficientBalance(balance.lt(amount));
         setNeedsApproval(allowance.lt(amount));
-        setValidationPending(true);
+        setToString(utils.formatUnits(willReceive, tokenFrom.decimals));
+        setEstimatedFee({
+          validatorsFee: validatorsFee,
+          liquidityFee: estimatedFee.sub(validatorsFee),
+        });
+
+        setValidationPending(false);
       }
     };
 
@@ -92,7 +120,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [from, chainFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
+  }, [from, chainFrom, tokenFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
 
   const approve = async () => {
     if (chainContainer === undefined || tokenAddress === undefined) {
@@ -105,7 +133,7 @@ const BridgeWidget = () => {
       const { erc20Bridge } = chainContainer;
       const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenAddress);
-      const amount = ethers.utils.parseEther(from.toString());
+      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
       await (await mockToken.approve(erc20Bridge.address, amount)).wait();
     } catch (e) {
@@ -124,7 +152,7 @@ const BridgeWidget = () => {
 
     try {
       const { erc20Bridge } = chainContainer;
-      const amount = ethers.utils.parseEther(from.toString());
+      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
       await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, chainContainer.account, amount)).wait();
     } catch (e) {
@@ -178,7 +206,7 @@ const BridgeWidget = () => {
       );
     }
 
-    if (!validationPending) {
+    if (validationPending) {
       return (
         <button disabled={true} className="transfer-button">
           <i className="fa-solid fa-spinner"></i> Calculating...
@@ -265,7 +293,14 @@ const BridgeWidget = () => {
         />
       </div>
 
-      <FeeEstimate token={tokenFrom} validatorsFee={0.3} liquidityFee={0.2} />
+      {estimatedFee.validatorsFee.add(estimatedFee.liquidityFee).gt(0) && (
+        <FeeEstimate
+          token={tokenFrom}
+          validatorsFee={estimatedFee.validatorsFee}
+          liquidityFee={estimatedFee.liquidityFee}
+          isEstimating={validationPending}
+        />
+      )}
 
       {transferButton()}
       <SelectChainTokenModal

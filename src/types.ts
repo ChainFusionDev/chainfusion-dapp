@@ -38,11 +38,6 @@ export interface Token {
   chains: ChainToAddress;
 }
 
-export interface Fee {
-  token: Token;
-  amount: number;
-}
-
 export interface TransactionHistoryFee {
   token: string;
   amount: number;
