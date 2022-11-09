@@ -75,7 +75,7 @@ const Navbar = ({ module }: NavbarProps) => {
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <span className="nav-link connect-wallet-btn" onClick={showConnectWalletDialog}>
+              <span className="nav-link connect-wallet-btn" onClick={() => showConnectWalletDialog()}>
                 <i className="fa-regular fa-wallet"></i>{' '}
                 {isActive ? `${getConnectorName(connector)} Connected` : 'Connect Wallet'}
               </span>

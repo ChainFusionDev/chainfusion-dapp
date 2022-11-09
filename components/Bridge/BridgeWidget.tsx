@@ -190,7 +190,7 @@ const BridgeWidget = () => {
 
     if (!isActive) {
       return (
-        <button className="transfer-button" onClick={showConnectWalletDialog}>
+        <button className="transfer-button" onClick={() => showConnectWalletDialog(chainFrom)}>
           <i className="fa-regular fa-wallet"></i> Connect Wallet
         </button>
       );

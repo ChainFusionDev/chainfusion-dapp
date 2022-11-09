@@ -1,19 +1,51 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
-import { useCallback, useEffect, useState } from 'react';
-import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { StakingHeader, StakingItem } from '@components/Staking/StakingTable';
 import { useChainContext } from '@src/context/ChainContext';
 import { getNativeChain } from '@src/config';
 import { StakingInfo, ValidatorInfo } from '@src/types';
 import { useStaking } from '@store/staking/hooks';
-import { utils } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import { defaultStakingInfo } from '@store/staking/reducer';
+import { useWeb3React } from '@web3-react/core';
+import Alert from '@components/Alerts/Alert';
+import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
+
+const MsgStakeSuccess = () => (
+  <Alert
+    alertType="success"
+    icon="fa-circle-check"
+    title="Success"
+    message="You have successfully increased your stake"
+  />
+);
+
+const MsgAnnounceSuccess = () => (
+  <Alert
+    alertType="success"
+    icon="fa-circle-check"
+    title="Success"
+    message="You have successfully announced withdrawal"
+  />
+);
+
+const MsgWithdrawSuccess = () => (
+  <Alert alertType="success" icon="fa-circle-check" title="Success" message="You have successfully withdwarn stake" />
+);
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
+  const [stakingPending, setStakingPending] = useState(false);
+  const [announcePending, setAnnouncePending] = useState(false);
+  const [withdrawalPending, setWithdrawalPending] = useState(false);
+
   const {
     validators,
     validatorsLoading,
@@ -25,8 +57,11 @@ const Staking = () => {
     setStakingInfoLoading,
   } = useStaking();
 
-  const { nativeContainer } = useChainContext();
+  const { nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { isActive } = useWeb3React();
   const nativeChain = getNativeChain();
+
+  const nativeConnected = nativeContainer?.connected ?? false;
 
   useEffect(() => {
     setIsMounted(true);
@@ -67,7 +102,16 @@ const Staking = () => {
     const validatorsCount = await staking.getValidatorsCount();
     const validators: ValidatorInfo[] = await staking.listValidators(0, validatorsCount);
 
-    return validators;
+    const sortedValidators = [...validators];
+    sortedValidators.sort((a, b) => {
+      if (a.stake.eq(b.stake)) {
+        return a.validator.localeCompare(b.validator);
+      }
+
+      return a.stake.lt(b.stake) ? 1 : -1;
+    });
+
+    return sortedValidators;
   }, [nativeContainer]);
 
   const loadStakingInfo = useCallback(async () => {
@@ -81,15 +125,26 @@ const Staking = () => {
       return undefined;
     }
 
+    const withdrawalPeriod = await staking.withdrawalPeriod();
+
     const withdrawalInfo = await staking.withdrawalAnnouncements(account);
 
     const result: StakingInfo = {
       ...stake,
       withdrawalAmount: withdrawalInfo.amount,
-      withdrawalTime: withdrawalInfo.time,
+      withdrawalTime: withdrawalInfo.time.add(withdrawalPeriod),
     };
 
     return result;
+  }, [nativeContainer]);
+
+  const loadBalance = useCallback(async () => {
+    if (nativeContainer === undefined) {
+      return undefined;
+    }
+
+    const { provider, account } = nativeContainer;
+    return await provider.getBalance(account);
   }, [nativeContainer]);
 
   useEffect(() => {
@@ -108,7 +163,7 @@ const Staking = () => {
     return () => {
       pending = false;
     };
-  }, [nativeContainer, setValidators, loadValidators]);
+  }, [nativeContainer, stakingPending, withdrawalPending, setValidators, loadValidators]);
 
   useEffect(() => {
     if (nativeContainer === undefined) {
@@ -117,6 +172,7 @@ const Staking = () => {
 
     let pending = true;
 
+    setBalance(BigNumber.from(0));
     if (stakingInfo.validator !== nativeContainer.account) {
       setStakingInfoLoading();
     }
@@ -131,10 +187,96 @@ const Staking = () => {
       }
     });
 
+    loadBalance().then((balance) => {
+      if (pending) {
+        if (balance === undefined) {
+          setBalance(BigNumber.from(0));
+        } else {
+          setBalance(balance);
+        }
+      }
+    });
+
     return () => {
       pending = false;
     };
-  }, [nativeContainer, setStakingInfo, setStakingInfoLoading, loadStakingInfo, stakingInfo.validator]);
+  }, [
+    nativeContainer,
+    stakingPending,
+    announcePending,
+    withdrawalPending,
+    setStakingInfo,
+    setStakingInfoLoading,
+    loadStakingInfo,
+    loadBalance,
+    stakingInfo.validator,
+  ]);
+
+  const buttons: ReactElement[] = [];
+
+  if (nativeConnected) {
+    if (!stakingInfoLoading && stakingInfo.status !== 2) {
+      buttons.push(
+        <button
+          disabled={stakingPending}
+          key="increase-stake"
+          className="btn-blue"
+          onClick={() => setShowIncreaseStakeModal(true)}
+        >
+          <i className={`fa-light ${stakingPending ? 'fa-spinner' : 'fa-circle-arrow-up'}`}></i> Increase Stake
+        </button>
+      );
+    }
+
+    if (stakingInfo.stake.gt(0)) {
+      buttons.push(
+        <button
+          disabled={announcePending}
+          key="announce-withdrawal"
+          className="btn-blue-light mt-2"
+          onClick={() => setShowAnnounceWithdrawalModal(true)}
+        >
+          <i className={`fa-light ${announcePending ? 'fa-spinner' : 'fa-message-arrow-down'}`}></i> Announce Withdrawal
+        </button>
+      );
+    }
+
+    if (stakingInfo.withdrawalAmount.gt(0) && stakingInfo.withdrawalTime.lt(Math.round(new Date().getTime() / 1000))) {
+      buttons.push(
+        <button
+          disabled={withdrawalPending}
+          key="withdraw-stake"
+          className="btn-blue-light mt-2"
+          onClick={async () => {
+            if (nativeContainer === undefined) {
+              return;
+            }
+
+            const { staking } = nativeContainer;
+            setWithdrawalPending(true);
+            await (await staking.withdraw()).wait();
+            setWithdrawalPending(false);
+
+            toast(<MsgWithdrawSuccess />);
+          }}
+        >
+          <i className={`fa-light ${withdrawalPending ? 'fa-spinner' : 'fa-circle-arrow-down'}`}></i> Withdraw Stake
+        </button>
+      );
+    }
+  } else if (isActive) {
+    buttons.push(
+      <button key="switch-network" className="btn-blue" onClick={() => switchNetwork(nativeChain)}>
+        <i className="fa-regular fa-shuffle"></i> Switch Network
+      </button>
+    );
+  } else {
+    buttons.push(
+      <button key="connect-wallet" className="btn-blue" onClick={() => showConnectWalletDialog(nativeChain)}>
+        <i className="fa-regular fa-wallet"></i> Connect Wallet
+      </button>
+    );
+  }
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -170,14 +312,14 @@ const Staking = () => {
                           <div className="number-block">{`${utils.formatUnits(
                             stakingInfo.withdrawalAmount,
                             nativeChain.nativeCurrency.decimals
-                          )} ${nativeChain.nativeCurrency.symbol}`}</div>
+                          )}`}</div>
                         </div>
                       </div>
                       <div className="col-sm-6 pl-sm-1">
                         <div className="withdrawal-time-block">
                           <div className="title-validator">Withdrawal Time</div>
                           <div className="time-withdrawal">
-                            <span>13:23:11 - 21.10.22</span>
+                            <span>{dayjs.unix(stakingInfo.withdrawalTime.toNumber()).format('L LT')}</span>
                           </div>
                         </div>
                       </div>
@@ -185,24 +327,7 @@ const Staking = () => {
                   )}
                 </div>
 
-                {!stakingInfoLoading && stakingInfo.status !== 2 && (
-                  // not slashed
-                  <a href="#" className="btn-blue" onClick={() => setShowIncreaseStakeModal(true)}>
-                    <i className="fa-light fa-circle-arrow-up"></i> Increase Stake
-                  </a>
-                )}
-                {stakingInfo.stake.gt(0) && (
-                  // has stake
-                  <a href="#" className="btn-blue-light mt-2" onClick={() => setShowAnnounceWithdrawalModal(true)}>
-                    <i className="fa-light fa-message-arrow-down"></i> Announce Withdrawal
-                  </a>
-                )}
-                {stakingInfo.withdrawalAmount.gt(0) && stakingInfo.withdrawalTime.lt(new Date().getTime() / 1000) && (
-                  // can withdraw stake
-                  <a href="#" className="btn-blue-light mt-2">
-                    <i className="fa-light fa-circle-arrow-down"></i> Withdraw Stake
-                  </a>
-                )}
+                {buttons}
               </div>
             </div>
 
@@ -215,7 +340,7 @@ const Staking = () => {
                   {validators.map((data, i) => {
                     const rank = i + 1;
 
-                    return <StakingItem key={rank} rank={rank} data={data} />;
+                    return <StakingItem key={data.validator} rank={rank} data={data} />;
                   })}
                 </div>
               )}
@@ -226,19 +351,45 @@ const Staking = () => {
 
       <InputCFNModal
         show={showIncreaseStakeModal}
-        maxValue={123}
+        decimals={nativeChain.nativeCurrency.decimals}
+        maxValue={balance}
         maxValueText="Available to stake"
         title="Increase Stake"
         buttonText="Stake"
+        submit={async (amount) => {
+          if (nativeContainer === undefined) {
+            return;
+          }
+
+          const { staking } = nativeContainer;
+          setStakingPending(true);
+          await (await staking.stake({ value: amount })).wait();
+          setStakingPending(false);
+
+          toast(<MsgStakeSuccess />);
+        }}
         close={() => setShowIncreaseStakeModal(false)}
       />
 
       <InputCFNModal
         show={showAnnounceWithdrawalModal}
-        maxValue={16}
+        decimals={nativeChain.nativeCurrency.decimals}
+        maxValue={stakingInfo.stake}
         maxValueText="Available to announce"
         title="Announce Withdrawal"
         buttonText="Announce"
+        submit={async (amount) => {
+          if (nativeContainer === undefined) {
+            return;
+          }
+
+          const { staking } = nativeContainer;
+          setAnnouncePending(true);
+          await (await staking.announceWithdrawal(amount)).wait();
+          setAnnouncePending(false);
+
+          toast(<MsgAnnounceSuccess />);
+        }}
         close={() => setShowAnnounceWithdrawalModal(false)}
       />
 

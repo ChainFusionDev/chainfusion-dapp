@@ -8,29 +8,41 @@ import {
   walletConnect,
   walletConnectHooks,
 } from '@src/connectors/connectors';
-import { WalletType } from '@src/types';
+import { Chain, WalletType } from '@src/types';
+import { getChainParams } from '@src/config';
+import { Connector } from '@web3-react/types';
 
 interface ConnectWalletModalProps {
   show: boolean;
+  desiredChain: Chain | undefined;
   close: () => void;
 }
 
-const ConnectWalletModal = ({ show, close }: ConnectWalletModalProps) => {
+const ConnectWalletModal = ({ show, desiredChain, close }: ConnectWalletModalProps) => {
   const isMetamaskActive = metaMaskHooks.useIsActive();
   const isCoinbaseActive = coinbaseWalletHooks.useIsActive();
   const isWalletConnectActive = walletConnectHooks.useIsActive();
 
   const selectWallet = async (walletType: WalletType) => {
+    let connector: Connector | undefined = undefined;
     switch (walletType) {
       case WalletType.METAMASK:
-        await metaMask.activate();
+        connector = metaMask;
         break;
       case WalletType.COINBASE_WALLET:
-        await coinbaseWallet.activate();
+        connector = coinbaseWallet;
         break;
       case WalletType.WALLET_CONNECT:
-        await walletConnect.activate();
+        connector = walletConnect;
         break;
+    }
+
+    if (connector !== undefined) {
+      if (desiredChain !== undefined) {
+        await connector.activate(getChainParams(desiredChain));
+      } else {
+        await connector.activate();
+      }
     }
     close();
   };

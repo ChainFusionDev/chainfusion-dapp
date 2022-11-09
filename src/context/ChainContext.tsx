@@ -18,6 +18,7 @@ import { createContext, ReactElement, useContext, useEffect, useState } from 're
 export interface NativeContainer {
   provider: ethers.providers.JsonRpcProvider;
   account: string;
+  connected: boolean;
 
   staking: Staking;
 }
@@ -35,7 +36,7 @@ export interface ChainContextData {
   nativeContainer?: NativeContainer;
   chainContainer?: ChainContainer;
   switchNetwork: (chain: Chain) => Promise<void>;
-  showConnectWalletDialog: () => void;
+  showConnectWalletDialog: (chain?: Chain) => void;
 }
 
 export const ChainContext = createContext({} as ChainContextData);
@@ -47,6 +48,7 @@ export interface ChainContextProviderProps {
 
 export const ChainContextProvider = ({ children }: ChainContextProviderProps) => {
   const [showConnectWalletModal, setShowConnectWalletModal] = useState(false);
+  const [desiredChain, setDesiredChain] = useState<Chain>();
   const [chainContainer, setChainContainer] = useState<ChainContainer | undefined>(undefined);
   const [nativeContainer, setNativeContainer] = useState<NativeContainer | undefined>(undefined);
   const { chainId, account, provider, connector } = useWeb3React();
@@ -61,21 +63,28 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     try {
       const nativeChain = getNativeChain();
       const nativeContracts = getNativeContracts();
-      const provider = new ethers.providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
+
+      let connected = false;
+      let nativeProvider = new ethers.providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
+      if (provider !== undefined && chainId === nativeChain.chainId) {
+        nativeProvider = provider;
+        connected = true;
+      }
 
       const nativeAccount = account ?? '0x0000000000000000000000000000000000000000';
-      const stakingFactory = new Staking__factory(provider.getSigner(nativeAccount));
+      const stakingFactory = new Staking__factory(nativeProvider.getSigner(nativeAccount));
       const staking = stakingFactory.attach(nativeContracts.staking);
 
       setNativeContainer({
         account: nativeAccount,
-        provider,
+        provider: nativeProvider,
+        connected,
         staking,
       });
     } catch (e) {
       setNativeContainer(undefined);
     }
-  }, [account]);
+  }, [account, chainId, provider]);
 
   useEffect(() => {
     let pending = true;
@@ -130,14 +139,19 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     await connector.activate(chainParams);
   };
 
-  const showConnectWalletDialog = () => {
+  const showConnectWalletDialog = (chain?: Chain) => {
+    setDesiredChain(chain);
     setShowConnectWalletModal(true);
   };
 
   return (
     <ChainContext.Provider value={{ nativeContainer, chainContainer, switchNetwork, showConnectWalletDialog }}>
       {children}
-      <ConnectWalletModal show={showConnectWalletModal} close={() => setShowConnectWalletModal(false)} />
+      <ConnectWalletModal
+        show={showConnectWalletModal}
+        desiredChain={desiredChain}
+        close={() => setShowConnectWalletModal(false)}
+      />
     </ChainContext.Provider>
   );
 };
