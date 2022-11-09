@@ -1,5 +1,5 @@
 import { getNativeChain } from '@src/config';
-import { StakingItemData } from '@src/types';
+import { ValidatorInfo } from '@src/types';
 import { utils } from 'ethers';
 
 export const StakingHeader = () => {
@@ -14,7 +14,7 @@ export const StakingHeader = () => {
 
 export interface StakingItemProps {
   rank: number;
-  data: StakingItemData;
+  data: ValidatorInfo;
 }
 
 export const StakingItem = ({ rank, data }: StakingItemProps) => {

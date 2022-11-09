@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import { useChainContext } from '@src/context/ChainContext';
 import { getNativeChain } from '@src/config';
-import { StakingItemData } from '@src/types';
+import { ValidatorInfo } from '@src/types';
 import { useStaking } from '@store/staking/hooks';
 
 const Staking = () => {
@@ -29,9 +29,9 @@ const Staking = () => {
     const { staking } = nativeContainer;
 
     const validatorsCount = await staking.getValidatorsCount();
-    const stakingItems: StakingItemData[] = await staking.listValidators(0, validatorsCount);
+    const validators: ValidatorInfo[] = await staking.listValidators(0, validatorsCount);
 
-    return stakingItems;
+    return validators;
   }, [nativeContainer]);
 
   useEffect(() => {
@@ -41,9 +41,9 @@ const Staking = () => {
 
     let pending = true;
 
-    loadValidators().then((stakingItems) => {
+    loadValidators().then((validators) => {
       if (pending) {
-        setValidators(stakingItems);
+        setValidators(validators);
       }
     });
 

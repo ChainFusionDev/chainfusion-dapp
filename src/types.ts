@@ -68,7 +68,7 @@ export interface TransactionHistoryItem {
   status: string;
 }
 
-export interface StakingItemData {
+export interface ValidatorInfo {
   validator: string;
   stake: BigNumber;
   status: number;

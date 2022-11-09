@@ -1,4 +1,4 @@
-import { StakingItemData } from '@src/types';
+import { ValidatorInfo } from '@src/types';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@store/index';
@@ -15,6 +15,6 @@ export function useStaking () {
     validators,
     validatorsLoading,
 
-    setValidators: useCallback((validators: StakingItemData[]) => dispatch(setValidators(validators)), [])
+    setValidators: useCallback((validators: ValidatorInfo[]) => dispatch(setValidators(validators)), [])
   };
 }

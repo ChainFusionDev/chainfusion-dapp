@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StakingItemData } from '@src/types';
+import { ValidatorInfo } from '@src/types';
 
 interface StakingState {
-  validators: StakingItemData[];
+  validators: ValidatorInfo[];
   validatorsLoading: boolean;
 }
 
@@ -15,7 +15,7 @@ const stakingSlice = createSlice({
   name: 'staking',
   initialState,
   reducers: {
-    setValidators: (state, action: PayloadAction<StakingItemData[]>) => {
+    setValidators: (state, action: PayloadAction<ValidatorInfo[]>) => {
       state.validators = action.payload;
       state.validatorsLoading = false;
     },
