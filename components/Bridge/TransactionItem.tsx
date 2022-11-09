@@ -1,4 +1,4 @@
-import { getChain, getNativeChain, getToken } from '@src/config';
+import { getChain, getToken } from '@src/config';
 import { TransactionHistoryItem } from '@src/types';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -17,12 +17,15 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
   const toChain = getChain(item.to.chain);
   const toToken = getToken(item.to.token);
 
-  const nativeChain = getNativeChain();
   const senderChain = getChain(item.from.chain);
   const receiverChain = getChain(item.to.chain);
 
-  const getAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, nativeChain.explorer).href;
+  const getSenderAddressUrl = (address: string) => {
+    return new URL(`/address/${address}`, senderChain.explorer).href;
+  };
+
+  const getReceiverAddressUrl = (address: string) => {
+    return new URL(`/address/${address}`, receiverChain.explorer).href;
   };
 
   const getSenderTxUrl = (tx: string) => {
@@ -91,14 +94,14 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
           <div className="card-body">
             <span className="transaction-details">
               Sender:{' '}
-              <a href={getAddressUrl(item.sender)} target="_blank" rel="noreferrer">
+              <a href={getSenderAddressUrl(item.sender)} target="_blank" rel="noreferrer">
                 {item.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
-              <a href={getAddressUrl(item.receiver)} target="_blank" rel="noreferrer">
+              <a href={getReceiverAddressUrl(item.receiver)} target="_blank" rel="noreferrer">
                 {item.receiver}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>

@@ -67,6 +67,14 @@ const Staking = () => {
     setIsMounted(true);
   }, []);
 
+  const getValidatorIcon = () => {
+    if (stakingInfo.status === 1) {
+      return 'validator';
+    }
+
+    return 'not-validator';
+  };
+
   const getValidatorBadgeClass = () => {
     if (stakingInfo.status === 1) {
       return 'active-validator';
@@ -286,7 +294,7 @@ const Staking = () => {
             <div className="col-12 col-sm-8 col-md-8 col-lg-4 col-xl-4 mx-auto">
               <div className="validator-info mb-4">
                 <img
-                  src="img/avatar/validator.svg"
+                  src={`img/avatar/${getValidatorIcon()}.svg`}
                   alt="Validator"
                   className="img-fluid d-block mx-auto validator-avatar"
                 />
