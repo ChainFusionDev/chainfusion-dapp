@@ -1405,6 +1405,8 @@ label {
 }
 
 .validator-avatar {
+  width: 92px;
+  height: 92px;
   margin-bottom: 12px;
 }
 
@@ -1973,6 +1975,7 @@ label {
 
 .liquidity-title-pool img {
   width: 20px;
+  height: 20px;
   margin: -5px 0px 0px 1px;
 }
 
@@ -1997,6 +2000,7 @@ label {
 
 .liquidity-tokens img {
   width: 17px;
+  height: 17px;
 }
 
 .liquidity-tokens-list {
