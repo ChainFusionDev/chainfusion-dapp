@@ -1,15 +1,11 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import { useChainContext } from '@src/context/ChainContext';
-import { utils } from 'ethers';
-
-interface StakingItemData {
-  address: string;
-  stake: string;
-}
+import { getNativeChain } from '@src/config';
+import { StakingItemData } from '@src/types';
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
@@ -18,43 +14,42 @@ const Staking = () => {
   const [stakingItems, setStakingItems] = useState<StakingItemData[]>([]);
 
   const { nativeContainer } = useChainContext();
+  const nativeChain = getNativeChain();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  const loadValidators = useCallback(async () => {
+    if (nativeContainer === undefined) {
+      return [];
+    }
+
+    const { staking } = nativeContainer;
+
+    const validatorsCount = await staking.getValidatorsCount();
+    const stakingItems: StakingItemData[] = await staking.listValidators(0, validatorsCount);
+
+    return stakingItems;
+  }, [nativeContainer]);
+
   useEffect(() => {
+    if (nativeContainer === undefined) {
+      return;
+    }
+
     let pending = true;
 
-    const loadValidators = async () => {
-      if (nativeContainer === undefined) {
-        return;
-      }
-
-      const { staking } = nativeContainer;
-
-      const stakingItems: StakingItemData[] = [];
-      const validators = await staking.getValidators();
-      for (const address of validators) {
-        const { stake } = await staking.stakes(address);
-
-        stakingItems.push({
-          address,
-          stake: utils.formatEther(stake),
-        });
-      }
-
+    loadValidators().then((stakingItems) => {
       if (pending) {
         setStakingItems(stakingItems);
       }
-    };
-
-    loadValidators();
+    });
 
     return () => {
       pending = false;
     };
-  }, [nativeContainer]);
+  }, [nativeContainer, loadValidators]);
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -76,13 +71,13 @@ const Staking = () => {
                   <div className="col-md-12">
                     <div className="current-stake-block">
                       <div className="title-validator">Current Stake</div>
-                      <div className="number-block">156</div>
+                      <div className="number-block">{`156 ${nativeChain.nativeCurrency.symbol}`}</div>
                     </div>
                   </div>
                   <div className="col-sm-6 pr-sm-1">
                     <div className="announced-withdrawal-block">
                       <div className="title-validator">Announced Withdrawal</div>
-                      <div className="number-block">12</div>
+                      <div className="number-block">{`12 ${nativeChain.nativeCurrency.symbol}`}</div>
                     </div>
                   </div>
                   <div className="col-sm-6 pl-sm-1">
@@ -110,10 +105,10 @@ const Staking = () => {
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
               <div className="table-block">
                 <StakingHeader />
-                {stakingItems.map((item, i) => {
+                {stakingItems.map((data, i) => {
                   const rank = i + 1;
 
-                  return <StakingItem key={rank} rank={rank} address={item.address} stake={item.stake} />;
+                  return <StakingItem key={rank} rank={rank} data={data} />;
                 })}
               </div>
             </div>

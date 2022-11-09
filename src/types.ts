@@ -1,3 +1,5 @@
+import { BigNumber } from 'ethers';
+
 export enum WalletType {
   METAMASK,
   COINBASE_WALLET,
@@ -58,8 +60,16 @@ export interface TransactionHistoryItem {
     amount: number;
   };
   sender: string;
+  senderTx: string;
   receiver: string;
+  receiverTx: string;
   validatorFee: number;
   liquidityFee: number;
   status: string;
+}
+
+export interface StakingItemData {
+  validator: string;
+  stake: BigNumber;
+  status: number;
 }

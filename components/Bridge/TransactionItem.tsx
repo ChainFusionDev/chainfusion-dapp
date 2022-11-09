@@ -1,4 +1,4 @@
-import { getChain, getToken } from '@src/config';
+import { getChain, getNativeChain, getToken } from '@src/config';
 import { TransactionHistoryItem } from '@src/types';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -16,6 +16,27 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
 
   const toChain = getChain(item.to.chain);
   const toToken = getToken(item.to.token);
+
+  const nativeChain = getNativeChain();
+  const senderChain = getChain(item.from.chain);
+  const receiverChain = getChain(item.to.chain);
+
+  const getAddressUrl = (address: string) => {
+    return new URL(`/address/${address}`, nativeChain.explorer).href;
+  };
+
+  const getSenderTxUrl = (tx: string) => {
+    return new URL(`/transaction/${tx}`, senderChain.explorer).href;
+  };
+
+  const getReceiverTxUrl = (tx: string) => {
+    return new URL(`/transaction/${tx}`, receiverChain.explorer).href;
+  };
+
+  const getShortTx = (tx: string) => {
+    const visibleCharacters = 18;
+    return `${tx.substring(0, 2 + visibleCharacters)}...${tx.substring(tx.length - visibleCharacters)}`;
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -69,23 +90,30 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
         <div className="card">
           <div className="card-body">
             <span className="transaction-details">
-              TxHash:{' '}
-              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
-                0xb11F22089TU6N79TZ....C807F038V4685YNIX35
-              </a>
-              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
-            </span>
-            <span className="transaction-details">
               Sender:{' '}
-              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+              <a href={getAddressUrl(item.sender)} target="_blank" rel="noreferrer">
                 {item.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
-              <a href="https://explorer.chainfusion.org/" target="_blank" rel="noreferrer">
+              <a href={getAddressUrl(item.receiver)} target="_blank" rel="noreferrer">
                 {item.receiver}
+              </a>
+              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
+            </span>
+            <span className="transaction-details">
+              Sender Tx:{' '}
+              <a href={getSenderTxUrl(item.senderTx)} target="_blank" rel="noreferrer">
+                {getShortTx(item.senderTx)}
+              </a>
+              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
+            </span>
+            <span className="transaction-details">
+              Receiver Tx:{' '}
+              <a href={getReceiverTxUrl(item.receiverTx)} target="_blank" rel="noreferrer">
+                {getShortTx(item.receiverTx)}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>

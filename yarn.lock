@@ -108,10 +108,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@chainfusion/chainfusion-contracts@^0.0.40":
-  version "0.0.40"
-  resolved "https://registry.yarnpkg.com/@chainfusion/chainfusion-contracts/-/chainfusion-contracts-0.0.40.tgz#1d5f09d73b8f2870d6ef43b12afc51f505a87635"
-  integrity sha512-wP1xRlsjoFMeHZ3iJQhGCMHglShOcFDRmLKSuaI4PrCC1XExex9RIVU9a9GFhfaIjuSMHRNWrM8nwJESGpiZqw==
+"@chainfusion/chainfusion-contracts@^0.0.41":
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/@chainfusion/chainfusion-contracts/-/chainfusion-contracts-0.0.41.tgz#c00e77be6aceb2aa7598f6455603ed5b72023f3a"
+  integrity sha512-7WfOXOzc2oPujjfEibTVqp2hgZh2e3ymyM4ydOWWkx3dZSUypSxSkii2HH0okuZnqudFnI/z5jnwWk2CWwDPiw==
   dependencies:
     "@openzeppelin/contracts" "^4.5.0"
     cpy-cli "^4.2.0"
