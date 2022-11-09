@@ -352,7 +352,13 @@ label {
   transition: all ease-out 0.3s;
 }
 
-.btn-blue:hover {
+
+.btn-blue:disabled {
+  background: var(--light-blue);
+  box-shadow: none;
+}
+
+.btn-blue:not([disabled]):hover {
   background: var(--hover-color);
   color: var(--white);
 }
@@ -372,7 +378,7 @@ label {
   transition: all ease-out 0.3s;
 }
 
-.btn-blue-light:hover {
+.btn-blue-light:not([disabled]):hover {
   background: var(--light);
   color: var(--main-color);
 }
@@ -459,7 +465,7 @@ label {
 
 .btn-blue i,
 .btn-blue-light i {
-  padding-right: 5px;
+  margin-right: 5px;
 }
 
 .btn-blue.action-btn,
@@ -570,7 +576,7 @@ label {
   }
 }
 
-.transfer-button .fa-spinner {
+button .fa-spinner {
   animation: rotating 1s linear infinite;
 }
 

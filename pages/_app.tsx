@@ -14,6 +14,10 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { getConnectors } from '@src/connectors/connectors';
 import { ChainContextProvider } from '@src/context/ChainContext';
 
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+dayjs.extend(localizedFormat);
+
 function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
     require('bootstrap/dist/js/bootstrap');

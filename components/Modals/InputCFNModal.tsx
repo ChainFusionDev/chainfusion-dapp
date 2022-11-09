@@ -1,17 +1,29 @@
 import { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
+import { BigNumber, utils } from 'ethers';
 
 interface InputCFNModalProps {
   show: boolean;
-  maxValue: number;
+  decimals: number;
+  maxValue: BigNumber;
   maxValueText: string;
   title: string;
   buttonText: string;
+  submit: (amount: BigNumber) => void;
   close: () => void;
 }
 
-const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close }: InputCFNModalProps) => {
-  const [amount, setAmount] = useState<number>(0.0);
+const InputCFNModal = ({
+  show,
+  decimals,
+  maxValue,
+  maxValueText,
+  title,
+  buttonText,
+  submit,
+  close,
+}: InputCFNModalProps) => {
+  const [amount, setAmount] = useState<string>('');
 
   return (
     <Modal show={show} onHide={close}>
@@ -19,32 +31,49 @@ const InputCFNModal = ({ show, maxValue, maxValueText, title, buttonText, close 
       <ModalBody>
         <div className="form-group">
           <label>Amount:</label>
-          <span className="maxsum-input" onClick={() => setAmount(maxValue)}>
-            Max
-          </span>
+          {maxValue.gt(0) && (
+            <span className="maxsum-input" onClick={() => setAmount(utils.formatUnits(maxValue, decimals))}>
+              Max
+            </span>
+          )}
           <input
-            type="number"
+            type="text"
             step="any"
             className="input-standart"
             id="amount"
-            value={amount === 0 ? '' : amount}
-            onChange={(e) => setAmount(parseFloat(e.target.value))}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
             placeholder="Please write amount (CFN)..."
           />
         </div>
-        <div className="amount-afterform">
-          {maxValueText}: <span onClick={() => setAmount(maxValue)}>{maxValue}</span>
-          <div className="token-liquidity-amount">
-            <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
-            <span>CFN</span>
+        {maxValue.gt(0) ? (
+          <div className="amount-afterform">
+            {maxValueText}:{' '}
+            <span onClick={() => setAmount(utils.formatUnits(maxValue, decimals))}>
+              {utils.formatUnits(maxValue, decimals)}
+            </span>
+            <div className="token-liquidity-amount">
+              <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
+              <span>CFN</span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </ModalBody>
       <ModalFooter>
         <button type="button" className="btn-cancel" onClick={close}>
           Cancel
         </button>
-        <button type="button" className="btn-done" onClick={close}>
+        <button
+          type="button"
+          className="btn-done"
+          onClick={() => {
+            submit(utils.parseUnits(amount, decimals));
+            close();
+            setAmount('');
+          }}
+        >
           <i className="fa-regular fa-check"></i> {buttonText}
         </button>
       </ModalFooter>
