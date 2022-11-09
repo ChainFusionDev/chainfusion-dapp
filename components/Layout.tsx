@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from '@components/Navbar';
 import { Footer } from '@components/Footer';
+import AlertContainer from '@components/Alerts/AlertContainer';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -25,6 +26,7 @@ function Layout({ children, module, title, description }: LayoutProps) {
       <main className="d-flex flex-column h-100">
         <Navbar module={module} />
         {children}
+        <AlertContainer />
         <Footer />
       </main>
     </div>

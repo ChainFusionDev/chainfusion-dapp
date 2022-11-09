@@ -1,5 +1,4 @@
 import Alert from '@components/Alerts/Alert';
-import AlertContainer from '@components/Alerts/AlertContainer';
 import Layout from '@components/Layout';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -79,8 +78,6 @@ const Analytics = () => {
           </div>
         </div>
       </section>
-
-      <AlertContainer />
     </Layout>
   );
 };

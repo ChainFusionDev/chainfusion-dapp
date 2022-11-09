@@ -1,5 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { BigNumber, ethers, utils } from 'ethers';
 import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import FeeEstimate from '@components/Bridge/FeeEstimate';
@@ -10,11 +11,25 @@ import { getChain, getToken, getSupportedChains, getSupportedTokens } from '@src
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
+import Alert from '@components/Alerts/Alert';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
   liquidityFee: BigNumber;
 }
+
+const MsgApproveSuccess = () => (
+  <Alert
+    alertType="success"
+    icon="fa-circle-check"
+    title="Success"
+    message="You have successfully approved token spending"
+  />
+);
+
+const MsgTransferSuccess = () => (
+  <Alert alertType="success" icon="fa-circle-check" title="Success" message="Successfully transferred token" />
+);
 
 const BridgeWidget = () => {
   const [showFromModal, setShowFromModal] = useState(false);
@@ -24,6 +39,7 @@ const BridgeWidget = () => {
 
   const [validationPending, setValidationPending] = useState(false);
   const [approvalPending, setApprovalPending] = useState(false);
+  const [transferPending, setTransferPending] = useState(false);
   const [needsApproval, setNeedsApproval] = useState(true);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
 
@@ -68,6 +84,8 @@ const BridgeWidget = () => {
 
   useEffect(() => {
     let pending = true;
+
+    setValidationPending(true);
 
     const validate = async () => {
       if (from === 0.0 || chainContainer === undefined || tokenAddress === undefined) {
@@ -134,6 +152,7 @@ const BridgeWidget = () => {
       console.error(e);
     }
 
+    toast(<MsgApproveSuccess />);
     setApprovalPending(false);
   };
 
@@ -142,6 +161,7 @@ const BridgeWidget = () => {
       return;
     }
 
+    setTransferPending(true);
     setShowTransferModal(true);
 
     try {
@@ -153,7 +173,9 @@ const BridgeWidget = () => {
       console.error(e);
     }
 
+    toast(<MsgTransferSuccess />);
     setFromString('');
+    setTransferPending(false);
     setShowTransferModal(false);
   };
 
@@ -208,18 +230,26 @@ const BridgeWidget = () => {
       );
     }
 
-    if (needsApproval) {
-      return (
-        <button className="transfer-button" onClick={() => approve()}>
-          <i className="fa-solid fa-check"></i> Approve
-        </button>
-      );
-    }
-
     if (approvalPending) {
       return (
         <button disabled={true} className="transfer-button">
           <i className="fa-solid fa-spinner"></i> Approving...
+        </button>
+      );
+    }
+
+    if (transferPending) {
+      return (
+        <button disabled={true} className="transfer-button">
+          <i className="fa-solid fa-spinner"></i> Transferring...
+        </button>
+      );
+    }
+
+    if (needsApproval) {
+      return (
+        <button className="transfer-button" onClick={() => approve()}>
+          <i className="fa-solid fa-check"></i> Approve
         </button>
       );
     }
