@@ -17,6 +17,7 @@ import { createContext, ReactElement, useContext, useEffect, useState } from 're
 
 export interface NativeContainer {
   provider: ethers.providers.JsonRpcProvider;
+  account: string;
 
   staking: Staking;
 }
@@ -54,23 +55,27 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     metaMask.connectEagerly().catch(() => null);
     coinbaseWallet.connectEagerly().catch(() => null);
     walletConnect.connectEagerly().catch(() => null);
+  }, []);
 
+  useEffect(() => {
     try {
       const nativeChain = getNativeChain();
       const nativeContracts = getNativeContracts();
       const provider = new ethers.providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
 
-      const stakingFactory = new Staking__factory(provider.getSigner('0x0000000000000000000000000000000000000000'));
+      const nativeAccount = account ?? '0x0000000000000000000000000000000000000000';
+      const stakingFactory = new Staking__factory(provider.getSigner(nativeAccount));
       const staking = stakingFactory.attach(nativeContracts.staking);
 
       setNativeContainer({
+        account: nativeAccount,
         provider,
         staking,
       });
     } catch (e) {
       setNativeContainer(undefined);
     }
-  }, []);
+  }, [account]);
 
   useEffect(() => {
     let pending = true;

@@ -68,3 +68,11 @@ export interface ValidatorInfo {
   stake: BigNumber;
   status: number;
 }
+
+export interface StakingInfo {
+  validator: string;
+  stake: BigNumber;
+  status: number;
+  withdrawalAmount: BigNumber;
+  withdrawalTime: BigNumber;
+}
