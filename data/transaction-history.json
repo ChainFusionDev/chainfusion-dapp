@@ -11,7 +11,9 @@
       "amount": 99.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -28,7 +30,9 @@
       "amount": 149.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -45,7 +49,9 @@
       "amount": 24.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -62,7 +68,9 @@
       "amount": 99.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -79,7 +87,9 @@
       "amount": 149.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -96,7 +106,9 @@
       "amount": 24.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -113,7 +125,9 @@
       "amount": 99.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -130,7 +144,9 @@
       "amount": 149.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"
@@ -147,7 +163,9 @@
       "amount": 24.5
     },
     "sender": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "senderTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "receiver": "0xd13F66863ED91704e386C57501F00b5307CAbA18",
+    "receiverTx": "0x5c1b034b9387704b98a460163b77af26a89f725ded72ee7998460e0651bb5e40",
     "validatorFee": 0.3,
     "liquidityFee": 0.2,
     "status": "Success"

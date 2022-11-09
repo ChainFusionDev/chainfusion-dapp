@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
-import { supportedChains, supportedTokens } from '@src/config';
+import { getSupportedChains, getSupportedTokens } from '@src/config';
 import { Chain, Token } from '@src/types';
 
 interface SelectChainTokenModalProps {
@@ -20,8 +20,8 @@ const SelectChainTokenModal = ({
   close: parentClose,
   select,
 }: SelectChainTokenModalProps) => {
-  const chains = supportedChains();
-  const tokens = supportedTokens();
+  const chains = getSupportedChains();
+  const tokens = getSupportedTokens();
 
   const [selectedChain, setSelectedChain] = useState<Chain>(initialChain);
   const [selectedToken, setSelectedToken] = useState<Token>(initialToken);

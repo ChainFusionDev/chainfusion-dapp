@@ -6,7 +6,7 @@ import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
-import { getChain, getToken, supportedChains, supportedTokens } from '@src/config';
+import { getChain, getToken, getSupportedChains, getSupportedTokens } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
@@ -29,8 +29,8 @@ const BridgeWidget = () => {
 
   const [swap, setSwap] = useState(false);
 
-  const chains = supportedChains();
-  const tokens = supportedTokens();
+  const chains = getSupportedChains();
+  const tokens = getSupportedTokens();
 
   const [chainFromLocal, setChainFrom] = useLocalStorage<string>('chain-from');
   const [tokenFromLocal, setTokenFrom] = useLocalStorage<string>('token-from');

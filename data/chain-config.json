@@ -1,5 +1,5 @@
 {
-  "chainfusion": {
+  "nativeChain": {
     "chainId": 953842,
     "identifier": "chainfusion",
     "name": "ChainFusion",
@@ -11,8 +11,8 @@
       "decimals": 18
     }
   },
-  "systemContracts": {
-    "staking": "0x5E85B5Ab4ABfBf7178B1E92AB9df0C1188e839D1"
+  "nativeContracts": {
+    "staking": "0x933aC73D543c6421C6574056a39e65218F1389f5"
   },
   "chains": [
     {

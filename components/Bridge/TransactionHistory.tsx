@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import TransactionItem from '@components/Bridge/TransactionItem';
-import { transactionHistory } from '@src/config';
+import { getTransactionHistory } from '@src/config';
 import { TransactionHistoryItem } from '@src/types';
 
 const TransactionHistory = () => {
   const defaultItemsCount = 5;
-  const history = transactionHistory();
+  const history = getTransactionHistory();
 
   const [showAll, setShowAll] = useState(false);
 

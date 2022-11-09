@@ -19,6 +19,7 @@
       "@components/*" : ["components/*"],
       "@src/*" : ["src/*"],
       "@data/*" : ["data/*"],
+      "@store/*": ["store/*"],
       "@styles/*" : ["styles/*"],
     }
   },

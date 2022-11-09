@@ -1,28 +1,56 @@
 import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
-import stakingValidatorsData from '@data/staking-validators.json';
-
-interface StakingItemData {
-  address: string;
-  stake: number;
-}
+import { useChainContext } from '@src/context/ChainContext';
+import { getNativeChain } from '@src/config';
+import { ValidatorInfo } from '@src/types';
+import { useStaking } from '@store/staking/hooks';
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { validators, validatorsLoading, setValidators } = useStaking();
+
+  const { nativeContainer } = useChainContext();
+  const nativeChain = getNativeChain();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const stakingItems: StakingItemData[] = stakingValidatorsData;
-  stakingItems.sort((a: StakingItemData, b: StakingItemData) => {
-    return b.stake - a.stake;
-  });
+  const loadValidators = useCallback(async () => {
+    if (nativeContainer === undefined) {
+      return [];
+    }
+
+    const { staking } = nativeContainer;
+
+    const validatorsCount = await staking.getValidatorsCount();
+    const validators: ValidatorInfo[] = await staking.listValidators(0, validatorsCount);
+
+    return validators;
+  }, [nativeContainer]);
+
+  useEffect(() => {
+    if (nativeContainer === undefined) {
+      return;
+    }
+
+    let pending = true;
+
+    loadValidators().then((validators) => {
+      if (pending) {
+        setValidators(validators);
+      }
+    });
+
+    return () => {
+      pending = false;
+    };
+  }, [nativeContainer, setValidators, loadValidators]);
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -44,13 +72,13 @@ const Staking = () => {
                   <div className="col-md-12">
                     <div className="current-stake-block">
                       <div className="title-validator">Current Stake</div>
-                      <div className="number-block">156</div>
+                      <div className="number-block">{`156 ${nativeChain.nativeCurrency.symbol}`}</div>
                     </div>
                   </div>
                   <div className="col-sm-6 pr-sm-1">
                     <div className="announced-withdrawal-block">
                       <div className="title-validator">Announced Withdrawal</div>
-                      <div className="number-block">12</div>
+                      <div className="number-block">{`12 ${nativeChain.nativeCurrency.symbol}`}</div>
                     </div>
                   </div>
                   <div className="col-sm-6 pl-sm-1">
@@ -76,33 +104,18 @@ const Staking = () => {
             </div>
 
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-              <div className="table-block">
-                <StakingHeader />
-                {stakingItems.map((item, i) => {
-                  const rank = i + 1;
+              {validatorsLoading ? (
+                <h1 className="text-center">Loading</h1>
+              ) : (
+                <div className="table-block">
+                  <StakingHeader />
+                  {validators.map((data, i) => {
+                    const rank = i + 1;
 
-                  return <StakingItem key={rank} rank={rank} address={item.address} stake={item.stake} />;
-                })}
-
-                <div className="pagination-block d-flex justify-content-between">
-                  <ul className="pagination-nav">
-                    <li className="prev-btn">
-                      <i className="fa-regular fa-chevron-left"></i>
-                    </li>
-                    <li className="pagintaion-number">1</li>
-                    <li className="pagintaion-number active">2</li>
-                    <li className="pagintaion-number">3</li>
-                    <li className="pagintaion-dot">...</li>
-                    <li className="pagintaion-number">18</li>
-                    <li className="next-btn">
-                      <i className="fa-regular fa-chevron-right"></i>
-                    </li>
-                  </ul>
-                  <div className="count-page-pagination d-flex float-right">
-                    Page <span>2</span> of <span>18</span>
-                  </div>
+                    return <StakingItem key={rank} rank={rank} data={data} />;
+                  })}
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
