@@ -1428,6 +1428,11 @@ label {
   color: var(--success);
 }
 
+.status-validator.inactive-validator span {
+  background: var(--light-3);
+  color: var(--gray-two);
+}
+
 .current-stake-block {
   padding: 12px 0px;
   padding-top: 15px;

@@ -5,14 +5,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { StakingHeader, StakingItem } from '../../components/Staking/StakingTable';
 import { useChainContext } from '@src/context/ChainContext';
 import { getNativeChain } from '@src/config';
-import { ValidatorInfo } from '@src/types';
+import { StakingInfo, ValidatorInfo } from '@src/types';
 import { useStaking } from '@store/staking/hooks';
+import { utils } from 'ethers';
+import { defaultStakingInfo } from '@store/staking/reducer';
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const { validators, validatorsLoading, setValidators } = useStaking();
+  const {
+    validators,
+    validatorsLoading,
+    setValidators,
+
+    stakingInfo,
+    stakingInfoLoading,
+    setStakingInfo,
+    setStakingInfoLoading,
+  } = useStaking();
 
   const { nativeContainer } = useChainContext();
   const nativeChain = getNativeChain();
@@ -20,6 +31,31 @@ const Staking = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const getValidatorBadgeClass = () => {
+    if (stakingInfo.status === 1) {
+      return 'active-validator';
+    }
+
+    return 'inactive-validator';
+  };
+
+  const getValidatorStatus = () => {
+    if (stakingInfoLoading) {
+      return 'Loading';
+    }
+
+    switch (stakingInfo.status) {
+      case 0:
+        return 'Not a Validator';
+      case 1:
+        return 'Validator';
+      case 2:
+        return 'Slashed';
+    }
+
+    return 'Unknown';
+  };
 
   const loadValidators = useCallback(async () => {
     if (nativeContainer === undefined) {
@@ -32,6 +68,28 @@ const Staking = () => {
     const validators: ValidatorInfo[] = await staking.listValidators(0, validatorsCount);
 
     return validators;
+  }, [nativeContainer]);
+
+  const loadStakingInfo = useCallback(async () => {
+    if (nativeContainer === undefined) {
+      return undefined;
+    }
+
+    const { staking, account } = nativeContainer;
+    const stake = await staking.stakes(account);
+    if (stake.stake.eq(0)) {
+      return undefined;
+    }
+
+    const withdrawalInfo = await staking.withdrawalAnnouncements(account);
+
+    const result: StakingInfo = {
+      ...stake,
+      withdrawalAmount: withdrawalInfo.amount,
+      withdrawalTime: withdrawalInfo.time,
+    };
+
+    return result;
   }, [nativeContainer]);
 
   useEffect(() => {
@@ -52,6 +110,32 @@ const Staking = () => {
     };
   }, [nativeContainer, setValidators, loadValidators]);
 
+  useEffect(() => {
+    if (nativeContainer === undefined) {
+      return;
+    }
+
+    let pending = true;
+
+    if (stakingInfo.validator !== nativeContainer.account) {
+      setStakingInfoLoading();
+    }
+
+    loadStakingInfo().then((stakingInfo) => {
+      if (pending) {
+        if (stakingInfo !== undefined) {
+          setStakingInfo(stakingInfo);
+        } else {
+          setStakingInfo(defaultStakingInfo);
+        }
+      }
+    });
+
+    return () => {
+      pending = false;
+    };
+  }, [nativeContainer, setStakingInfo, setStakingInfoLoading, loadStakingInfo, stakingInfo.validator]);
+
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
       <section className="section-page" style={{ paddingBottom: '100px' }}>
@@ -64,42 +148,61 @@ const Staking = () => {
                   alt="Validator"
                   className="img-fluid d-block mx-auto validator-avatar"
                 />
-                <div className="status-validator active-validator">
-                  <span>Validator</span>
+                <div className={`status-validator ${getValidatorBadgeClass()}`}>
+                  <span>{getValidatorStatus()}</span>
                 </div>
 
                 <div className="row">
                   <div className="col-md-12">
                     <div className="current-stake-block">
                       <div className="title-validator">Current Stake</div>
-                      <div className="number-block">{`156 ${nativeChain.nativeCurrency.symbol}`}</div>
+                      <div className="number-block">{`${utils.formatUnits(
+                        stakingInfo.stake,
+                        nativeChain.nativeCurrency.decimals
+                      )} ${nativeChain.nativeCurrency.symbol}`}</div>
                     </div>
                   </div>
-                  <div className="col-sm-6 pr-sm-1">
-                    <div className="announced-withdrawal-block">
-                      <div className="title-validator">Announced Withdrawal</div>
-                      <div className="number-block">{`12 ${nativeChain.nativeCurrency.symbol}`}</div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 pl-sm-1">
-                    <div className="withdrawal-time-block">
-                      <div className="title-validator">Withdrawal Time</div>
-                      <div className="time-withdrawal">
-                        <span>13:23:11 - 21.10.22</span>
+                  {!stakingInfo.withdrawalTime.eq(0) && stakingInfo.withdrawalAmount.gt(0) && (
+                    <>
+                      <div className="col-sm-6 pr-sm-1">
+                        <div className="announced-withdrawal-block">
+                          <div className="title-validator">Announced Withdrawal</div>
+                          <div className="number-block">{`${utils.formatUnits(
+                            stakingInfo.withdrawalAmount,
+                            nativeChain.nativeCurrency.decimals
+                          )} ${nativeChain.nativeCurrency.symbol}`}</div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                      <div className="col-sm-6 pl-sm-1">
+                        <div className="withdrawal-time-block">
+                          <div className="title-validator">Withdrawal Time</div>
+                          <div className="time-withdrawal">
+                            <span>13:23:11 - 21.10.22</span>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
 
-                <a href="#" className="btn-blue" onClick={() => setShowIncreaseStakeModal(true)}>
-                  <i className="fa-light fa-circle-arrow-up"></i> Increase Stake
-                </a>
-                <a href="#" className="btn-blue-light mt-2" onClick={() => setShowAnnounceWithdrawalModal(true)}>
-                  <i className="fa-light fa-message-arrow-down"></i> Announce Withdrawal
-                </a>
-                <a href="#" className="btn-blue-light mt-2">
-                  <i className="fa-light fa-circle-arrow-down"></i> Withdraw Stake
-                </a>
+                {!stakingInfoLoading && stakingInfo.status !== 2 && (
+                  // not slashed
+                  <a href="#" className="btn-blue" onClick={() => setShowIncreaseStakeModal(true)}>
+                    <i className="fa-light fa-circle-arrow-up"></i> Increase Stake
+                  </a>
+                )}
+                {stakingInfo.stake.gt(0) && (
+                  // has stake
+                  <a href="#" className="btn-blue-light mt-2" onClick={() => setShowAnnounceWithdrawalModal(true)}>
+                    <i className="fa-light fa-message-arrow-down"></i> Announce Withdrawal
+                  </a>
+                )}
+                {stakingInfo.withdrawalAmount.gt(0) && stakingInfo.withdrawalTime.lt(new Date().getTime() / 1000) && (
+                  // can withdraw stake
+                  <a href="#" className="btn-blue-light mt-2">
+                    <i className="fa-light fa-circle-arrow-down"></i> Withdraw Stake
+                  </a>
+                )}
               </div>
             </div>
 
