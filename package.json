@@ -2,8 +2,8 @@
   "name": "chainfusion-dapp",
   "version": "0.1.0",
   "private": true,
-  "engines" : {
-    "node" : ">=10.0.0"
+  "engines": {
+    "node": ">=10.0.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,6 +16,7 @@
     "@chainfusion/chainfusion-contracts": "^0.0.41",
     "@chainfusion/erc-20-bridge-contracts": "^0.0.1-rc.3",
     "@coinbase/wallet-sdk": "^3.5.4",
+    "@reduxjs/toolkit": "^1.9.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -46,6 +47,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^1.6.6",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-toastify": "^9.0.8",
     "react-tooltip": "^4.4.0",
     "uuid": "^9.0.0"

@@ -6,12 +6,13 @@ import { StakingHeader, StakingItem } from '../../components/Staking/StakingTabl
 import { useChainContext } from '@src/context/ChainContext';
 import { getNativeChain } from '@src/config';
 import { StakingItemData } from '@src/types';
+import { useStaking } from '@store/staking/hooks';
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);
   const [showAnnounceWithdrawalModal, setShowAnnounceWithdrawalModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [stakingItems, setStakingItems] = useState<StakingItemData[]>([]);
+  const { validators, validatorsLoading, setValidators } = useStaking();
 
   const { nativeContainer } = useChainContext();
   const nativeChain = getNativeChain();
@@ -42,14 +43,14 @@ const Staking = () => {
 
     loadValidators().then((stakingItems) => {
       if (pending) {
-        setStakingItems(stakingItems);
+        setValidators(stakingItems);
       }
     });
 
     return () => {
       pending = false;
     };
-  }, [nativeContainer, loadValidators]);
+  }, [nativeContainer, setValidators, loadValidators]);
 
   return (
     <Layout module="staking" title="Staking" description="Stake CFN to validator transfers and receive rewards">
@@ -103,14 +104,18 @@ const Staking = () => {
             </div>
 
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-              <div className="table-block">
-                <StakingHeader />
-                {stakingItems.map((data, i) => {
-                  const rank = i + 1;
+              {validatorsLoading ? (
+                <h1 className="text-center">Loading</h1>
+              ) : (
+                <div className="table-block">
+                  <StakingHeader />
+                  {validators.map((data, i) => {
+                    const rank = i + 1;
 
-                  return <StakingItem key={rank} rank={rank} data={data} />;
-                })}
-              </div>
+                    return <StakingItem key={rank} rank={rank} data={data} />;
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
