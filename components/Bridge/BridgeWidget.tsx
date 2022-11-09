@@ -69,14 +69,8 @@ const BridgeWidget = () => {
   useEffect(() => {
     let pending = true;
 
-    setValidationPending(true);
-
     const validate = async () => {
-      if (chainContainer === undefined || tokenAddress === undefined) {
-        return;
-      }
-
-      if (from === 0.0) {
+      if (from === 0.0 || chainContainer === undefined || tokenAddress === undefined) {
         if (pending) {
           setInsufficientBalance(false);
           setNeedsApproval(false);
@@ -190,7 +184,7 @@ const BridgeWidget = () => {
       );
     }
 
-    if (chainContainer === undefined) {
+    if (chainContainer === undefined || tokenAddress === undefined) {
       return (
         <button disabled={true} className="transfer-button">
           Not Supported
