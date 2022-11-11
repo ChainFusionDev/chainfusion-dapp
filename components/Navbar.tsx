@@ -21,6 +21,13 @@ const Navbar = ({ module }: NavbarProps) => {
     return 'Unknown';
   };
 
+  const getConnectorLogo = (connector: Connector): string => {
+    if (connector instanceof MetaMask) return '/img/wallet/metamask.svg';
+    if (connector instanceof CoinbaseWallet) return '/img/wallet/coinbase.svg';
+    if (connector instanceof WalletConnect) return '/img/wallet/walletconnect.svg';
+    return 'Unknown';
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbarMenu">
       <div className="container-fluid">
@@ -76,8 +83,18 @@ const Navbar = ({ module }: NavbarProps) => {
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
               <span className="nav-link connect-wallet-btn" onClick={() => showConnectWalletDialog()}>
-                <i className="fa-regular fa-wallet"></i>{' '}
-                {isActive ? `${getConnectorName(connector)} Connected` : 'Connect Wallet'}
+                {isActive ? (
+                  <span className="connected-wallet-btn">
+                    <span className="connected-wallet-icon">
+                      <img src={`${getConnectorLogo(connector)}`} alt={`${getConnectorName(connector)} Logo`} />
+                    </span>{' '}
+                    Connected
+                  </span>
+                ) : (
+                  <span>
+                    <i className="fa-regular fa-wallet"></i> Connect Wallet
+                  </span>
+                )}
               </span>
             </li>
           </ul>

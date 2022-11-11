@@ -173,13 +173,19 @@ main,
 }
 
 .connect-wallet-btn {
+  display: flex;
+  justify-content: center;
   line-height: 16px !important;
-  font-size: .9375rem !important;
+  font-size: 0.9375rem !important;
   color: var(--white) !important;
   background: var(--main-color);
   transition: all ease-out 0.3s;
   border-radius: 50px;
   cursor: pointer;
+  max-height: 45px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .connect-wallet-btn:hover {
@@ -189,6 +195,27 @@ main,
 .connect-wallet-btn:active,
 .connect-wallet-btn:focus {
   background: var(--main-color);
+}
+
+.connected-wallet-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connected-wallet-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  width: 23px;
+  height: 23px;
+  border-radius: 50px;
+  margin-right: 5px;
+}
+
+.connected-wallet-icon img {
+  width: 14px;
 }
 
 .form-bridge {
@@ -274,7 +301,7 @@ textarea {
   margin-bottom: -10px;
   font-style: normal;
   font-weight: 500;
-  font-size: .875rem !important;
+  font-size: 0.875rem !important;
   color: var(--dark);
   border: 1px solid var(--light) !important;
   background: var(--white) !important;
@@ -328,7 +355,7 @@ textarea:-ms-input-placeholder {
 label {
   display: block;
   color: var(--gray-two);
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   margin-bottom: 0.1rem;
   font-weight: 500;
   margin-left: 15px;
@@ -342,7 +369,7 @@ label {
   padding: 10px 20px;
   background: var(--main-color);
   color: var(--white);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
@@ -351,7 +378,6 @@ label {
   outline: none !important;
   transition: all ease-out 0.3s;
 }
-
 
 .btn-blue:disabled {
   background: var(--light-blue);
@@ -369,7 +395,7 @@ label {
   padding: 10px 20px;
   background: #e8f1fb;
   color: var(--main-color);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -389,7 +415,7 @@ label {
   padding: 10px 20px;
   background: var(--success-light);
   color: var(--success);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -409,7 +435,7 @@ label {
   padding: 10px 20px;
   background: var(--warning-light);
   color: var(--warning);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -429,7 +455,7 @@ label {
   padding: 10px 20px;
   background: var(--info-light);
   color: var(--info);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -449,7 +475,7 @@ label {
   padding: 10px 20px;
   background: var(--error-light);
   color: var(--error);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -507,7 +533,7 @@ label {
   top: 5px;
   left: 16px;
   font-weight: 500;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   color: var(--dark);
 }
 
@@ -516,7 +542,7 @@ label {
   top: 28px;
   left: 16px;
   font-weight: 500;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   color: var(--gray);
 }
 
@@ -531,7 +557,7 @@ label {
   right: 165px;
   top: 26px;
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--silver);
   z-index: 2;
 }
@@ -632,7 +658,7 @@ button .fa-spinner {
   z-index: 2;
   display: block;
   width: 2.675rem;
-  font-size: .875rem;
+  font-size: 0.875rem;
   height: 2.375rem;
   line-height: 3rem;
   text-align: center;
@@ -654,7 +680,7 @@ button .fa-spinner {
   padding: 15px 15px 15px 30px;
   font-style: normal;
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
   background: var(--light-2);
   height: 35px;
@@ -697,7 +723,7 @@ button .fa-spinner {
 
 .token-icon h6,
 .blockchain-icon h6 {
-  font-size: .875rem;
+  font-size: 0.875rem;
   margin-top: 2px;
 }
 
@@ -721,7 +747,7 @@ button .fa-spinner {
 
 .modal-dialog .close .fa-xmark-large {
   color: var(--silver);
-  font-size: .875rem;
+  font-size: 0.875rem;
   transition: all ease-out 0.3s;
 }
 
@@ -765,7 +791,7 @@ button .fa-spinner {
   min-height: 45px;
   background: rgba(13, 126, 231, 0.1);
   color: var(--main-color);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -785,7 +811,7 @@ button .fa-spinner {
   min-height: 45px;
   background: var(--main-color);
   color: var(--white);
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
   border-radius: 50px;
@@ -822,7 +848,7 @@ button .fa-spinner {
   border: 1px solid var(--light);
   color: var(--dark);
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -888,7 +914,7 @@ button .fa-spinner {
   color: var(--gray);
   right: 29px;
   margin-top: 5px;
-  font-size: .875rem;
+  font-size: 0.875rem;
   transition: all ease-out 0.1s;
 }
 
@@ -932,7 +958,7 @@ button .fa-spinner {
   align-items: center;
   font-style: normal;
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
   padding-right: 0.3rem;
 }
@@ -956,7 +982,7 @@ button .fa-spinner {
 
 .breadcrumbs-link:after {
   float: left;
-  font-size: .6875rem;
+  font-size: 0.6875rem;
   padding: 0 0.5rem 0 0.5rem;
   color: #c8cfd8;
   content: '\f054';
@@ -997,20 +1023,20 @@ button .fa-spinner {
 
 .title-panel {
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .title-panel strong {
   font-weight: 700;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--main-color);
 }
 
 .token-fees {
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
 }
 
@@ -1023,7 +1049,7 @@ button .fa-spinner {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
 }
 
@@ -1114,6 +1140,24 @@ button .fa-spinner {
   margin-right: 6px;
 }
 
+.wallet-active-connect {
+  position: absolute;
+  right: 25px;
+  padding: 1px 0px;
+}
+
+.wallet-active-connect i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8125rem;
+  width: 25px;
+  height: 25px;
+  background: var(--light-1);
+  color: var(--main-color);
+  border-radius: 50px;
+}
+
 /* Progress transfer */
 
 .progress-transfer {
@@ -1182,7 +1226,7 @@ button .fa-spinner {
   padding: 10px 15px;
   font-style: normal;
   font-weight: 600;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   list-style-type: none;
   border: 1px solid var(--light);
@@ -1268,21 +1312,21 @@ button .fa-spinner {
 
 .transfer-block .title-panel {
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
   margin-left: 10px;
 }
 
 .transfer-block .title-panel strong {
   font-weight: 700;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--main-color);
 }
 
 .transfer-block .blockchain-fees,
 .transfer-block .token-fees {
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
 }
 
@@ -1294,7 +1338,7 @@ button .fa-spinner {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
 }
 
@@ -1313,7 +1357,7 @@ button .fa-spinner {
   display: block;
   font-style: normal;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
 }
 
@@ -1341,14 +1385,14 @@ button .fa-spinner {
   display: block;
   font-style: normal;
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--dark);
 }
 
 .transaction-details a {
   cursor: pointer;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1363,17 +1407,20 @@ button .fa-spinner {
   font-family: 'Font Awesome 6 Pro' !important;
   font-weight: 300;
   content: '\f24d';
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--gray-two);
   border: none;
   margin-left: 5px;
   transition: all 0.03s ease-in-out;
 }
 
-.copy-token-icon:hover:after,
-.copy-token-icon:active:after {
+.copy-token-icon:hover:after {
   font-weight: 300;
   color: var(--hover-color);
+}
+
+.copy-token-icon:active:after {
+  font-size: 0.6875rem;
 }
 
 .loadmore-btn {
@@ -1381,7 +1428,7 @@ button .fa-spinner {
   border: 1px solid var(--main-color);
   color: var(--main-color);
   font-weight: 500;
-  font-size: .875rem;
+  font-size: 0.875rem;
   border-radius: 50px;
   text-decoration: none !important;
   transition: all ease-out 0.3s;
@@ -1425,7 +1472,7 @@ button .fa-spinner {
   background: var(--light-3);
   border-radius: 100px;
   font-weight: 600;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--gray-two);
 }
 
@@ -1450,7 +1497,7 @@ button .fa-spinner {
 .current-stake-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1479,7 +1526,7 @@ button .fa-spinner {
 .announced-withdrawal-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1508,7 +1555,7 @@ button .fa-spinner {
 .withdrawal-time-block .title-validator {
   max-width: 100px;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 16px;
   text-align: center;
   margin: 0px auto 5px auto;
@@ -1525,7 +1572,7 @@ button .fa-spinner {
   background: var(--light-3);
   border-radius: 50px;
   font-weight: 600;
-  font-size: .75rem;
+  font-size: 0.6875rem;
 }
 
 .staking-table-title {
@@ -1541,7 +1588,7 @@ button .fa-spinner {
 .staking-table-title .amount {
   font-style: normal;
   font-weight: 700;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1576,7 +1623,7 @@ button .fa-spinner {
 .staking-table-tr .amount {
   font-style: normal;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   display: flex;
   align-items: center;
   color: var(--dark);
@@ -1604,7 +1651,7 @@ button .fa-spinner {
 
 .staking-table-tr .wallet a {
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1700,7 +1747,7 @@ button .fa-spinner {
 
 .count-page-pagination {
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
   align-items: center;
 }
@@ -1720,7 +1767,7 @@ button .fa-spinner {
 .amount-afterform {
   display: flex;
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
   margin: -5px 15px 5px 0px;
 }
@@ -1795,7 +1842,7 @@ button .fa-spinner {
   height: 22px;
   text-align: center;
   border-radius: 6px;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 500;
   margin-bottom: 6px;
 }
@@ -1837,7 +1884,7 @@ button .fa-spinner {
 
 .slashing-text {
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
 }
 
@@ -1849,14 +1896,14 @@ button .fa-spinner {
 
 .slashing-adress {
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
 }
 
 .slashing-adress a {
   cursor: pointer;
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   font-family: 'Noto Sans Mono', monospace;
   transition: all 0.03s ease-in-out;
@@ -1870,7 +1917,7 @@ button .fa-spinner {
   padding: 3px 7px;
   background: var(--light-3);
   font-weight: 600;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--main-color);
   border: 1px solid var(--light-1);
   border-radius: 6px;
@@ -1879,7 +1926,7 @@ button .fa-spinner {
 .slashing-date,
 .slashing-timer {
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--gray-two);
 }
 
@@ -1892,7 +1939,7 @@ button .fa-spinner {
   background: var(--light-3);
   border-radius: 50px;
   font-weight: 500;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
   color: var(--gray-two);
 }
@@ -1914,7 +1961,7 @@ button .fa-spinner {
   cursor: pointer;
   padding: 8px 10px;
   font-family: 'Noto Sans Mono', monospace;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   border: 1px solid var(--light-2);
   margin: 0px 0px 5px 0px;
@@ -2005,7 +2052,7 @@ button .fa-spinner {
 .liquidity-tokens span {
   font-style: normal;
   font-weight: 500;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--gray-two);
 }
 
@@ -2035,14 +2082,14 @@ button .fa-spinner {
 .liquidity-tvl span {
   font-style: normal;
   font-weight: 500;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--gray-two);
 }
 
 .liquidity-tvl .liquidity-sum {
   font-style: normal;
   font-weight: 700;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
   margin-top: -1px;
 }
@@ -2062,7 +2109,7 @@ button .fa-spinner {
   font-weight: 600 !important;
   height: 17px;
   border-radius: 50px;
-  font-size: .625rem !important;
+  font-size: 0.625rem !important;
   text-align: center;
   color: var(--gray-two) !important;
 }
@@ -2159,7 +2206,7 @@ button .fa-spinner {
   justify-content: center;
   font-style: normal;
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2167,14 +2214,14 @@ button .fa-spinner {
 .liquidity-card-left .liquidity-sum span {
   font-style: normal;
   font-weight: 700;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
 }
 
 .liquidity-card-left .liquidity-sum span > strong {
   font-style: normal;
   font-weight: 500;
-  font-size: .625rem;
+  font-size: 0.625rem;
   color: var(--dark);
 }
 
@@ -2190,7 +2237,7 @@ button .fa-spinner {
 .liquidity-card-right .liquidity-rewards {
   font-style: normal;
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 160%;
   color: var(--gray-two);
 }
@@ -2201,7 +2248,7 @@ button .fa-spinner {
 
 .liquidity-card-right .liquidity-provided span {
   font-weight: 700;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--main-color);
   margin-right: 5px;
 }
@@ -2214,7 +2261,7 @@ button .fa-spinner {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  font-size: .625rem !important;
+  font-size: 0.625rem !important;
   color: var(--main-color);
   background: var(--light-3);
   border: 1px solid var(--light-1);
@@ -2235,7 +2282,7 @@ button .fa-spinner {
 
 .liquidity-card-right .liquidity-rewards span {
   font-weight: 700;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--main-color);
 }
 
@@ -2245,7 +2292,7 @@ button .fa-spinner {
   cursor: pointer;
   padding: 1px 10px;
   font-weight: 500;
-  font-size: .6875rem;
+  font-size: 0.6875rem;
   line-height: 140%;
   color: var(--white);
   background: var(--main-color);
@@ -2291,7 +2338,7 @@ button .fa-spinner {
 
 .token-liquidity-amount span {
   font-weight: 500;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--dark);
 }
 
@@ -2304,7 +2351,7 @@ button .fa-spinner {
   top: 30px;
   right: 22px;
   font-weight: 600;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
   width: 40px;
   height: 40px;
@@ -2333,18 +2380,32 @@ button .fa-spinner {
 
 .standart-tooltip {
   padding: 1px 6px !important;
-  font-size: .6875rem !important;
+  font-size: 0.6875rem !important;
   background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 50px !important;
   color: var(--gray) !important;
+  margin-top: -8px !important;
+  margin-left: 5px !important;
+  box-shadow: 0px 4px 56px -48px rgba(0, 0, 0, 0.99);
+}
+
+.standart-tooltip.place-top::after {
+  border: 1px solid var(--light-6) !important;
+  bottom: -5px !important;
 }
 
 .standart-tooltip.place-top::before {
-  border-top: 8px solid var(--light-6) !important;
+  border: none !important;
+  background: #fff !important;
+  height: 7px !important;
+  left: 49% !important;
+  bottom: 0px !important;
 }
 
 .standart-tooltip.border {
+  background: #fff !important;
   border: 1px solid var(--light-6) !important;
+  z-index: 3 !important;
 }
 
 /* Footer */
@@ -2369,7 +2430,7 @@ footer {
 footer .copyright {
   font-style: normal;
   font-weight: 400;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--gray-two);
   margin-right: 28px;
 }
@@ -2381,7 +2442,7 @@ footer .copyright {
 .footer-link li > a {
   font-style: normal;
   font-weight: 500;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: #52657a;
 }
 
@@ -2456,7 +2517,7 @@ footer .copyright {
 
 .titleAlert {
   font-weight: 600;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   color: var(--dark);
 }
 
@@ -2477,7 +2538,7 @@ footer .copyright {
 
 .alertMsg p {
   font-weight: 400;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   line-height: 16px;
   color: var(--gray-two);
   margin: 0;
