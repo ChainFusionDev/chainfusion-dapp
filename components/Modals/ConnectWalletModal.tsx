@@ -54,15 +54,27 @@ const ConnectWalletModal = ({ show, desiredChain, close }: ConnectWalletModalPro
         <ul className="wallet-list">
           <li onClick={() => selectWallet(WalletType.METAMASK)}>
             <img src="/img/wallet/metamask.svg" alt="MetaMask Logo" /> MetaMask{' '}
-            {isMetamaskActive && <i className="fa-regular fa-check"></i>}
+            {isMetamaskActive && (
+              <span className="wallet-active-connect">
+                <i className="fa-regular fa-check"></i>
+              </span>
+            )}
           </li>
           <li onClick={() => selectWallet(WalletType.COINBASE_WALLET)}>
             <img src="/img/wallet/coinbase.svg" alt="Coinbase Wallet Logo" /> Coinbase Wallet{' '}
-            {isCoinbaseActive && <i className="fa-regular fa-check"></i>}
+            {isCoinbaseActive && (
+              <span className="wallet-active-connect">
+                <i className="fa-regular fa-check"></i>
+              </span>
+            )}
           </li>
           <li onClick={() => selectWallet(WalletType.WALLET_CONNECT)}>
             <img src="/img/wallet/walletconnect.svg" alt="Wallet Connect Logo" /> Wallet Connect{' '}
-            {isWalletConnectActive && <i className="fa-regular fa-check"></i>}
+            {isWalletConnectActive && (
+              <span className="wallet-active-connect">
+                <i className="fa-regular fa-check"></i>
+              </span>
+            )}
           </li>
         </ul>
       </ModalBody>
