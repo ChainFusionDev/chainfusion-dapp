@@ -1777,10 +1777,14 @@ button .fa-spinner {
 
 .amount-afterform {
   display: flex;
+  cursor: pointer;
   font-weight: 500;
   font-size: 0.8125rem;
   color: var(--gray-two);
   margin: -5px 15px 5px 0px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .amount-afterform span {
