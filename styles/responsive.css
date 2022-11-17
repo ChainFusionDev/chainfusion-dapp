@@ -33,6 +33,15 @@
     padding-right: 43px;
   }
 
+  .bridge-input-with-balance {
+    padding: 15px 205px 15px 25px !important;
+  }
+
+  .bridge-balance {
+    position: static;
+    margin: 5px 0px -5px 25px !important;
+  }
+
   .select-token {
     width: 100%;
     display: flex;

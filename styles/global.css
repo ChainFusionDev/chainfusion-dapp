@@ -265,6 +265,17 @@ main,
   position: relative;
 }
 
+.bridge-balance {
+  position: absolute;
+  top: 40px;
+  left: 25px;
+  margin: 0 !important;
+}
+
+.bridge-input-with-balance {
+  padding: 0px 205px 18px 25px !important;
+}
+
 input[type='text'],
 input[type='text']:disabled,
 input[type='number'],
@@ -272,7 +283,7 @@ input[type='number']:disabled {
   padding: 15px 205px 15px 25px;
   font-style: normal;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.3125rem;
   color: var(--dark);
   background: rgb(231 238 245 / 52%);
   height: 76px;
