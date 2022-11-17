@@ -2,7 +2,7 @@ import Layout from '@components/Layout';
 import InputCFNModal from '@components/Modals/InputCFNModal';
 import ReactTooltip from 'react-tooltip';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { StakingHeader, StakingItem } from '@components/Staking/StakingTable';
+import { StakingHeader, StakingItem, SkeletonStakingItem } from '@components/Staking/StakingTable';
 import { useChainContext } from '@src/context/ChainContext';
 import { getNativeChain } from '@src/config';
 import { StakingInfo, ValidatorInfo } from '@src/types';
@@ -340,18 +340,26 @@ const Staking = () => {
             </div>
 
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-              {validatorsLoading ? (
-                <h1 className="text-center">Loading</h1>
-              ) : (
-                <div className="table-block">
-                  <StakingHeader />
-                  {validators.map((data, i) => {
-                    const rank = i + 1;
+              <div className="table-block">
+                <StakingHeader />
+                {validatorsLoading ? (
+                  <div>
+                    <SkeletonStakingItem />
+                    <SkeletonStakingItem />
+                    <SkeletonStakingItem />
+                    <SkeletonStakingItem />
+                    <SkeletonStakingItem />
+                  </div>
+                ) : (
+                  <div>
+                    {validators.map((data, i) => {
+                      const rank = i + 1;
 
-                    return <StakingItem key={data.validator} rank={rank} data={data} />;
-                  })}
-                </div>
-              )}
+                      return <StakingItem key={data.validator} rank={rank} data={data} />;
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'animate.css';
 import '@styles/global.css';
 import '@styles/responsive.css';
+import '@styles/skeleton.css';
 import '@styles/fontawesome.css';
 import '@styles/fonts.css';
 
