@@ -27,7 +27,8 @@
   }
 
   input[type='number'],
-  input[type='text'] {
+  input[type='text'],
+  input[type='text']:disabled {
     font-size: 1.1875rem;
     height: 55px;
     padding-right: 43px;
