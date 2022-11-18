@@ -1777,7 +1777,6 @@ button .fa-spinner {
 
 .amount-afterform {
   display: flex;
-  cursor: pointer;
   font-weight: 500;
   font-size: 0.8125rem;
   color: var(--gray-two);
@@ -1789,6 +1788,7 @@ button .fa-spinner {
 
 .amount-afterform span {
   display: contents;
+  cursor: pointer;
   color: var(--main-color);
   font-weight: 600;
 }
