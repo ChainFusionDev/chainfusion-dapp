@@ -43,6 +43,7 @@ const BridgeWidget = () => {
   const [needsApproval, setNeedsApproval] = useState(true);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
 
+  const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
   const [fromString, setFromString] = useState<string>('');
   const [toString, setToString] = useState<string>('');
   const parsedFrom = parseFloat(fromString);
@@ -81,6 +82,33 @@ const BridgeWidget = () => {
 
     setSwap(!swap);
   };
+
+  useEffect(() => {
+    let pending = true;
+
+    const updateBalance = async () => {
+      if (chainContainer === undefined || tokenAddress === undefined) {
+        if (pending) {
+          setBalance(BigNumber.from(0));
+        }
+        return;
+      }
+
+      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
+      const mockToken = mockTokenFactory.attach(tokenAddress);
+      const balance = await mockToken.balanceOf(chainContainer.account);
+
+      if (pending) {
+        setBalance(balance);
+      }
+    };
+
+    updateBalance();
+
+    return () => {
+      pending = false;
+    };
+  }, [tokenFrom, chainFrom, tokenAddress, chainContainer]);
 
   useEffect(() => {
     let pending = true;
@@ -132,7 +160,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [from, chainFrom, tokenFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
+  }, [balance, from, chainFrom, tokenFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
 
   const approve = async () => {
     if (chainContainer === undefined || tokenAddress === undefined) {
@@ -283,12 +311,24 @@ const BridgeWidget = () => {
         <input
           type="text"
           autoComplete="off"
-          className="form-control"
+          className={`form-control ${balance.gt(0) && 'bridge-input-with-balance'}`}
           id="from-amount"
           placeholder="0.0000"
           value={fromString}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFromString(e.target.value)}
         />
+        {balance.gt(0) && (
+          <div className="bridge-balance amount-afterform">
+            Available:{' '}
+            <span
+              onClick={() => {
+                setFromString(ethers.utils.formatUnits(balance, tokenFrom.decimals));
+              }}
+            >
+              {ethers.utils.formatUnits(balance, tokenFrom.decimals)}
+            </span>
+          </div>
+        )}
       </div>
       <span className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
         <i className="fa-regular fa-arrow-up-arrow-down"></i>
@@ -316,7 +356,6 @@ const BridgeWidget = () => {
           placeholder="0.0000"
         />
       </div>
-
       {estimatedFee.validatorsFee.add(estimatedFee.liquidityFee).gt(0) && (
         <FeeEstimate
           token={tokenFrom}
@@ -325,7 +364,6 @@ const BridgeWidget = () => {
           isEstimating={validationPending}
         />
       )}
-
       {transferButton()}
       <SelectChainTokenModal
         key={`from:${chainFrom.identifier}:${tokenFrom.identifier}`}
@@ -347,7 +385,6 @@ const BridgeWidget = () => {
           setTokenTo(token.identifier);
         }}
       />
-
       <SelectChainTokenModal
         key={`to:${chainTo.identifier}:${tokenTo.identifier}`}
         title="To"
@@ -368,7 +405,6 @@ const BridgeWidget = () => {
           setTokenFrom(token.identifier);
         }}
       />
-
       <OptionsModal show={showOptionsModal} close={() => setShowOptionsModal(false)} />
       <TransferModal show={showTransferModal} close={() => setShowTransferModal(false)} />
     </div>
