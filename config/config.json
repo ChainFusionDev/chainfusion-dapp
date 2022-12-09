@@ -17,18 +17,6 @@
   },
   "chains": [
     {
-      "chainId": 953842,
-      "identifier": "chainfusion",
-      "name": "ChainFusion",
-      "rpc": "https://rpc.chainfusion.org",
-      "explorer": "https://explorer.chainfusion.org",
-      "nativeCurrency": {
-        "name": "ChainFusion",
-        "symbol": "CFN",
-        "decimals": 18
-      }
-    },
-    {
       "chainId": 5001,
       "identifier": "chainfusion-bg1",
       "name": "Bridgenet 1",

@@ -883,7 +883,7 @@ button .fa-spinner {
 .scroll-select-list {
   padding: 10px;
   width: 90%;
-  height: 240px;
+  max-height: 240px;
   top: 5px !important;
   left: 1px !important;
   right: 0 !important;
@@ -895,7 +895,7 @@ button .fa-spinner {
 
 .listInCustomDropdown {
   padding: 0px 12px;
-  height: 148px;
+  max-height: 148px;
   overflow-y: scroll;
   margin-right: 10px;
   overflow-x: hidden !important;
