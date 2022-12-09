@@ -1,53 +1,55 @@
-import { getChain, getToken } from '@src/config';
-import { TransactionHistoryItem } from '@src/types';
+import { Chain, Token } from '@src/types';
+import { BigNumber, utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
+export interface ChainHistoryItem {
+  hash: string;
+  sender: string;
+  receiver: string;
+  fromChain: Chain;
+  toChain: Chain;
+  token: Token;
+  amount: BigNumber;
+  fee: BigNumber;
+  status: string;
+}
+
 export interface TransactionItemProps {
-  item: TransactionHistoryItem;
+  item: ChainHistoryItem;
 }
 
 const TransactionItem = ({ item }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const fromChain = getChain(item.from.chain);
-  const fromToken = getToken(item.from.token);
-
-  const toChain = getChain(item.to.chain);
-  const toToken = getToken(item.to.token);
-
-  const senderChain = getChain(item.from.chain);
-  const receiverChain = getChain(item.to.chain);
-
   const getSenderAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, senderChain.explorer).href;
+    return new URL(`/address/${address}`, item.fromChain.explorer).href;
   };
 
   const getReceiverAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, receiverChain.explorer).href;
+    return new URL(`/address/${address}`, item.toChain.explorer).href;
   };
 
-  const getSenderTxUrl = (tx: string) => {
-    return new URL(`/transaction/${tx}`, senderChain.explorer).href;
-  };
+  // const getSenderTxUrl = (tx: string) => {
+  //   return new URL(`/transaction/${tx}`, item.fromChain.explorer).href;
+  // };
 
-  const getReceiverTxUrl = (tx: string) => {
-    return new URL(`/transaction/${tx}`, receiverChain.explorer).href;
-  };
+  // const getReceiverTxUrl = (tx: string) => {
+  //   return new URL(`/transaction/${tx}`, item.toChain.explorer).href;
+  // };
 
-  const getShortTx = (tx: string) => {
-    const visibleCharacters = 18;
-    return `${tx.substring(0, 2 + visibleCharacters)}...${tx.substring(tx.length - visibleCharacters)}`;
-  };
+  // const getShortTx = (tx: string) => {
+  //   const visibleCharacters = 18;
+  //   return `${tx.substring(0, 2 + visibleCharacters)}...${tx.substring(tx.length - visibleCharacters)}`;
+  // };
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (fromChain === undefined || fromToken === undefined || toChain === undefined || toToken === undefined) {
-    return <></>;
-  }
+  const amountFrom = item.amount.add(item.fee);
+  const amountTo = item.amount;
 
   return (
     <div className="transfer-block mb-2">
@@ -65,12 +67,12 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
             <span className="blockchain-fees">
-              <img src={`/img/${fromChain.identifier}.svg`} alt={`${fromChain.name} Logo`} />
+              <img src={`/img/${item.fromChain.identifier}.svg`} alt={`${item.fromChain.name} Logo`} />
               &nbsp;
-              {fromChain.name}: <strong>{item.from.amount}</strong>&nbsp;
+              {item.fromChain.name}: <strong>{utils.formatUnits(amountFrom, item.token.decimals)}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} /> {fromToken.name}
+              <img src={`/img/${item.token.identifier}.svg`} alt={`${item.token.name} Logo`} /> {item.token.name}
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
@@ -79,12 +81,12 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
           </span>
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
-              <img src={`/img/${toChain.identifier}.svg`} alt={`${toChain.name} Logo`} />
+              <img src={`/img/${item.toChain.identifier}.svg`} alt={`${item.toChain.name} Logo`} />
               &nbsp;
-              {toChain.name}: <strong>{item.to.amount}</strong>&nbsp;
+              {item.toChain.name}: <strong>{utils.formatUnits(amountTo, item.token.decimals)}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${toToken.identifier}.svg`} alt={`${toToken.name} Logo`} /> {toToken.name}
+              <img src={`/img/${item.token.identifier}.svg`} alt={`${item.token.name} Logo`} /> {item.token.name}
             </span>
           </span>
         </p>
@@ -106,7 +108,7 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
-            <span className="transaction-details">
+            {/* <span className="transaction-details">
               Sender Tx:{' '}
               <a href={getSenderTxUrl(item.senderTx)} target="_blank" rel="noreferrer">
                 {getShortTx(item.senderTx)}
@@ -135,7 +137,7 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
                 &nbsp;
                 {fromToken.name}
               </span>
-            </span>
+            </span> */}
             <span className="success-status">
               Status: <strong>{item.status}</strong>
             </span>

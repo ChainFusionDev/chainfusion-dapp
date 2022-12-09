@@ -12,6 +12,11 @@ export interface NativeCurrency {
   decimals: number;
 }
 
+export interface NativeContracts {
+  staking: string;
+  eventRegistry: string;
+}
+
 export interface Chain {
   chainId: number;
   identifier: string;
@@ -26,41 +31,12 @@ export interface ChainToAddress {
   [identifier: string]: string | undefined;
 }
 
-export interface NativeContracts {
-  staking: string;
-}
-
 export interface Token {
   identifier: string;
   name: string;
   symbol: string;
   decimals: number;
   chains: ChainToAddress;
-}
-
-export interface TransactionHistoryFee {
-  token: string;
-  amount: number;
-}
-
-export interface TransactionHistoryItem {
-  from: {
-    chain: string;
-    token: string;
-    amount: number;
-  };
-  to: {
-    chain: string;
-    token: string;
-    amount: number;
-  };
-  sender: string;
-  senderTx: string;
-  receiver: string;
-  receiverTx: string;
-  validatorFee: number;
-  liquidityFee: number;
-  status: string;
 }
 
 export interface ValidatorInfo {
