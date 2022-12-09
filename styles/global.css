@@ -1854,7 +1854,6 @@ button .fa-spinner {
 .slashing-status {
   display: block;
   max-width: 80px;
-  height: 22px;
   text-align: center;
   border-radius: 6px;
   font-size: 0.75rem;
