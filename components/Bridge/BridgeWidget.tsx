@@ -70,8 +70,10 @@ const BridgeWidget = () => {
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
   const { isActive, chainId } = useWeb3React();
-  const { chainContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { networkContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const tokenAddress = tokenFrom.chains[chainFrom.identifier];
+
+  const fromNetwork = networkContainer[chainFrom.identifier];
 
   const swapFromTo = () => {
     setChainFrom(chainTo.identifier);
@@ -87,16 +89,16 @@ const BridgeWidget = () => {
     let pending = true;
 
     const updateBalance = async () => {
-      if (chainContainer === undefined || tokenAddress === undefined) {
+      if (fromNetwork === undefined || tokenAddress === undefined) {
         if (pending) {
           setBalance(BigNumber.from(0));
         }
         return;
       }
 
-      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
+      const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenAddress);
-      const balance = await mockToken.balanceOf(chainContainer.account);
+      const balance = await mockToken.balanceOf(fromNetwork.account);
 
       if (pending) {
         setBalance(balance);
@@ -108,7 +110,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [tokenFrom, chainFrom, tokenAddress, chainContainer]);
+  }, [fromNetwork, tokenAddress]);
 
   useEffect(() => {
     let pending = true;
@@ -116,7 +118,12 @@ const BridgeWidget = () => {
     setValidationPending(true);
 
     const validate = async () => {
-      if (from === 0.0 || chainContainer === undefined || tokenAddress === undefined) {
+      if (
+        from === 0.0 ||
+        fromNetwork === undefined ||
+        fromNetwork.contracts === undefined ||
+        tokenAddress === undefined
+      ) {
         if (pending) {
           setInsufficientBalance(false);
           setNeedsApproval(false);
@@ -131,14 +138,17 @@ const BridgeWidget = () => {
         return;
       }
 
-      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
-      const mockToken = mockTokenFactory.attach(tokenAddress);
-      const allowance = await mockToken.allowance(chainContainer.account, chainContainer.erc20Bridge.address);
-      const balance = await mockToken.balanceOf(chainContainer.account);
+      let allowance: BigNumber = BigNumber.from(0);
+      if (fromNetwork.connected) {
+        const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
+        const mockToken = mockTokenFactory.attach(tokenAddress);
+        allowance = await mockToken.allowance(fromNetwork.account, fromNetwork.contracts.erc20Bridge.address);
+      }
+
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
-      const validatorsFee = await chainContainer.feeManager.validatorRefundFee();
-      const estimatedFee = await chainContainer.feeManager.calculateFee(tokenAddress, amount);
+      const validatorsFee = await fromNetwork.contracts.feeManager.validatorRefundFee();
+      const estimatedFee = await fromNetwork.contracts.feeManager.calculateFee(tokenAddress, amount);
 
       const willReceive = amount.sub(estimatedFee);
 
@@ -160,18 +170,23 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [balance, from, chainFrom, tokenFrom, chainTo, approvalPending, tokenAddress, chainContainer]);
+  }, [fromNetwork, balance, from, tokenFrom, approvalPending, tokenAddress]);
 
   const approve = async () => {
-    if (chainContainer === undefined || tokenAddress === undefined) {
+    if (
+      fromNetwork === undefined ||
+      !fromNetwork.connected ||
+      fromNetwork.contracts === undefined ||
+      tokenAddress === undefined
+    ) {
       return;
     }
 
     setApprovalPending(true);
 
     try {
-      const { erc20Bridge } = chainContainer;
-      const mockTokenFactory = new MockToken__factory(chainContainer.provider.getSigner());
+      const { erc20Bridge } = fromNetwork.contracts;
+      const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenAddress);
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
@@ -185,7 +200,12 @@ const BridgeWidget = () => {
   };
 
   const transfer = async () => {
-    if (chainContainer === undefined || tokenAddress === undefined) {
+    if (
+      fromNetwork === undefined ||
+      !fromNetwork.connected ||
+      fromNetwork.contracts === undefined ||
+      tokenAddress === undefined
+    ) {
       return;
     }
 
@@ -193,10 +213,10 @@ const BridgeWidget = () => {
     setShowTransferModal(true);
 
     try {
-      const { erc20Bridge } = chainContainer;
+      const { erc20Bridge } = fromNetwork.contracts;
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
-      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, chainContainer.account, amount)).wait();
+      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, fromNetwork.account, amount)).wait();
     } catch (e) {
       console.error(e);
     }
@@ -212,6 +232,14 @@ const BridgeWidget = () => {
       return (
         <button disabled={true} className="transfer-button">
           Enter Amount
+        </button>
+      );
+    }
+
+    if (validationPending) {
+      return (
+        <button disabled={true} className="transfer-button">
+          <i className="fa-solid fa-spinner"></i> Calculating...
         </button>
       );
     }
@@ -234,7 +262,7 @@ const BridgeWidget = () => {
       );
     }
 
-    if (chainContainer === undefined || tokenAddress === undefined) {
+    if (fromNetwork?.contracts === undefined || tokenAddress === undefined) {
       return (
         <button disabled={true} className="transfer-button">
           Not Supported
@@ -246,14 +274,6 @@ const BridgeWidget = () => {
       return (
         <button disabled={true} className="transfer-button">
           Insufficient Balance
-        </button>
-      );
-    }
-
-    if (validationPending) {
-      return (
-        <button disabled={true} className="transfer-button">
-          <i className="fa-solid fa-spinner"></i> Calculating...
         </button>
       );
     }

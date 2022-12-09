@@ -1,6 +1,5 @@
-import chainConfig from '@data/chain-config.json';
-import history from '@data/transaction-history.json';
-import { Chain, NativeContracts, Token, TransactionHistoryItem } from '@src/types';
+import chainConfig from '@config/config.json';
+import { Chain, NativeContracts, Token } from '@src/types';
 
 interface ChainConfig {
   nativeChain: Chain;
@@ -16,7 +15,7 @@ for (const chain of config.chains) {
   chainMap[chain.identifier] = chain;
 }
 
-const chainByIdMap: { [identifier: string]: Chain } = {};
+const chainByIdMap: { [id: string]: Chain } = {};
 for (const chain of config.chains) {
   chainByIdMap[chain.chainId] = chain;
 }
@@ -26,8 +25,11 @@ for (const token of config.tokens) {
   tokenMap[token.identifier] = token;
 }
 
-export function getTransactionHistory(): TransactionHistoryItem[] {
-  return history;
+const tokenByChainAndAddressMap: { [address: string]: Token | undefined } = {};
+for (const token of config.tokens) {
+  for (const [chainIdentifier, address] of Object.entries(token.chains)) {
+    tokenByChainAndAddressMap[`${chainIdentifier}-${address}`] = token;
+  }
 }
 
 export function getNativeChain(): Chain {
@@ -56,6 +58,10 @@ export function getChainById(chainId: number): Chain {
 
 export function getToken(identifier: string): Token {
   return tokenMap[identifier];
+}
+
+export function getTokenByChainIdentifierAndAddress(chainIdentifier: string, address: string): Token | undefined {
+  return tokenByChainAndAddressMap[`${chainIdentifier}-${address}`];
 }
 
 export function getChainParams(chain: Chain) {
