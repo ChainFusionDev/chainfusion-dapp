@@ -132,8 +132,38 @@ const TransactionHistory = () => {
 
   if (!historyLoaded) {
     return (
-      <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-        <p className="text-center m-5">Loading transfer history...</p>
+      <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-5">
+        <div className="title-block">Previous Transfers</div>
+        <div className="transfer-block-loading mb-2">
+          <div className="skeleton mt-2 mt-md-0">
+            <div className="line-skeleton"></div>
+            <div className="line-skeleton"></div>
+          </div>
+        </div>
+        <div className="transfer-block-loading mb-2">
+          <div className="skeleton mt-2 mt-md-0">
+            <div className="line-skeleton"></div>
+            <div className="line-skeleton"></div>
+          </div>
+        </div>
+        <div className="transfer-block-loading mb-2">
+          <div className="skeleton mt-2 mt-md-0">
+            <div className="line-skeleton"></div>
+            <div className="line-skeleton"></div>
+          </div>
+        </div>
+        <div className="transfer-block-loading mb-2">
+          <div className="skeleton mt-2 mt-md-0">
+            <div className="line-skeleton"></div>
+            <div className="line-skeleton"></div>
+          </div>
+        </div>
+        <div className="transfer-block-loading mb-2">
+          <div className="skeleton mt-2 mt-md-0">
+            <div className="line-skeleton"></div>
+            <div className="line-skeleton"></div>
+          </div>
+        </div>
       </div>
     );
   }
