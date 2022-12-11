@@ -62,9 +62,13 @@ const TransactionHistory = () => {
       let eventHistory: ChainHistoryItem[] = [];
       for (const event of events) {
         const fromChain = getChainById(event.args._sourceChain.toNumber());
-        const fromNetwork = networkContainer[fromChain.identifier];
-
         const toChain = getChainById(event.args._destinationChain.toNumber());
+
+        if (fromChain === undefined || toChain === undefined) {
+          continue;
+        }
+
+        const fromNetwork = networkContainer[fromChain.identifier];
         const toNetwork = networkContainer[toChain.identifier];
 
         if (
