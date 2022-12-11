@@ -1457,7 +1457,7 @@ button .fa-spinner {
   padding: 17px 20px;
   background-color: var(--white);
   border: 1px solid var(--light);
-  border-radius: 15px;
+  border-radius: 20px;
   filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
 }
 

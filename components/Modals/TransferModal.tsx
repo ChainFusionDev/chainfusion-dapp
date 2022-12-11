@@ -29,13 +29,9 @@ const TransferModal = ({ show, stage, close }: TransferModalProps) => {
           </div>
         </div>
         <ul className="progress-transfer-list">
-          <ProgressItem stage={1} activeStage={stage} message="1. Confirming deposit transaction" />
-          <ProgressItem stage={2} activeStage={stage} message="2. Registering transfer event" />
-          <ProgressItem
-            stage={3}
-            activeStage={stage}
-            message="3. Creating distributed transaction on destination chain"
-          />
+          <ProgressItem stage={1} activeStage={stage} message="Confirming deposit transaction" />
+          <ProgressItem stage={2} activeStage={stage} message="Registering transfer event" />
+          <ProgressItem stage={3} activeStage={stage} message="Creating distributed transaction on destination chain" />
         </ul>
       </ModalBody>
     </Modal>

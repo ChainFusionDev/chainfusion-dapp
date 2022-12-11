@@ -1,3 +1,5 @@
+import { getChainById, getTokenByChainIdentifierAndAddress } from '@src/config';
+import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import { BigNumber, utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
@@ -12,41 +14,66 @@ export interface ChainHistoryItem {
   token: Token;
   amount: BigNumber;
   fee: BigNumber;
-  status: string;
+}
+
+export interface EventRegistered {
+  _hash: string;
+  _appContract: string;
+  _sourceChain: BigNumber;
+  _destinationChain: BigNumber;
+  _data: string;
+  _validatorFee: BigNumber;
+  _eventType: number;
 }
 
 export interface TransactionItemProps {
-  item: ChainHistoryItem;
+  event: EventRegistered;
 }
 
-export const TransactionItem = ({ item }: TransactionItemProps) => {
+export const TransactionItem = ({ event }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  const [item, setItem] = useState<ChainHistoryItem | undefined>(undefined);
+
+  const { networkContainer } = useChainContext();
+
+  const fromChain = getChainById(event._sourceChain.toNumber());
+  const toChain = getChainById(event._destinationChain.toNumber());
+  const fromNetwork = networkContainer[fromChain?.identifier];
+  const toNetwork = networkContainer[toChain?.identifier];
+
   const getSenderAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, item.fromChain.explorer).href;
+    return new URL(`/address/${address}`, fromChain.explorer).href;
   };
 
   const getReceiverAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, item.toChain.explorer).href;
+    return new URL(`/address/${address}`, toChain.explorer).href;
   };
-
-  // const getSenderTxUrl = (tx: string) => {
-  //   return new URL(`/transaction/${tx}`, item.fromChain.explorer).href;
-  // };
-
-  // const getReceiverTxUrl = (tx: string) => {
-  //   return new URL(`/transaction/${tx}`, item.toChain.explorer).href;
-  // };
-
-  // const getShortTx = (tx: string) => {
-  //   const visibleCharacters = 18;
-  //   return `${tx.substring(0, 2 + visibleCharacters)}...${tx.substring(tx.length - visibleCharacters)}`;
-  // };
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    const loadItem = async () => {
+      if (fromNetwork?.contracts === undefined || toNetwork?.contracts === undefined) {
+        return;
+      }
+
+      const data = await fromNetwork.contracts.relayBridge.sentData(event._hash);
+      const item = decodeChainHistoryItem(event._hash, fromNetwork.chain, toNetwork.chain, data);
+      if (item !== undefined) {
+        setItem(item);
+      }
+    };
+
+    loadItem();
+  }, [networkContainer, event, fromNetwork, toNetwork]);
+
+  if (item === undefined) {
+    return <SkeletonTransactionItem />;
+  }
 
   const amountFrom = item.amount.add(item.fee);
   const amountTo = item.amount;
@@ -108,38 +135,8 @@ export const TransactionItem = ({ item }: TransactionItemProps) => {
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
-            {/* <span className="transaction-details">
-              Sender Tx:{' '}
-              <a href={getSenderTxUrl(item.senderTx)} target="_blank" rel="noreferrer">
-                {getShortTx(item.senderTx)}
-              </a>
-              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
-            </span>
-            <span className="transaction-details">
-              Receiver Tx:{' '}
-              <a href={getReceiverTxUrl(item.receiverTx)} target="_blank" rel="noreferrer">
-                {getShortTx(item.receiverTx)}
-              </a>
-              <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
-            </span>
-            <span className="fees-details">
-              Validators Refund: <strong>{item.validatorFee}</strong>&nbsp;
-              <span className="token-fees">
-                <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} />
-                &nbsp;
-                {fromToken.name}
-              </span>
-            </span>
-            <span className="fees-details">
-              Liquidity Fee: <strong>{item.liquidityFee}</strong>&nbsp;
-              <span className="token-fees">
-                <img src={`/img/${fromToken.identifier}.svg`} alt={`${fromToken.name} Logo`} />
-                &nbsp;
-                {fromToken.name}
-              </span>
-            </span> */}
             <span className="success-status">
-              Status: <strong>{item.status}</strong>
+              Status: <strong>Success</strong>
             </span>
           </div>
         </div>
@@ -169,4 +166,38 @@ export const SkeletonTransactionItem = () => {
       </div>
     </div>
   );
+};
+
+const decodeChainHistoryItem = (
+  hash: string,
+  fromChain: Chain,
+  toChain: Chain,
+  data: utils.BytesLike
+): ChainHistoryItem | undefined => {
+  try {
+    const result = utils.defaultAbiCoder.decode(
+      ['uint256', 'address', 'address', 'uint256', 'address', 'uint256', 'uint256'],
+      data
+    );
+
+    const token = getTokenByChainIdentifierAndAddress(fromChain.identifier, result[2] as string);
+    if (token === undefined) {
+      return undefined;
+    }
+
+    const item: ChainHistoryItem = {
+      hash: hash,
+      sender: result[1] as string,
+      receiver: result[4] as string,
+      fromChain: fromChain,
+      toChain: toChain,
+      token: token,
+      amount: result[5] as BigNumber,
+      fee: result[6] as BigNumber,
+    };
+
+    return item;
+  } catch (e) {
+    return undefined;
+  }
 };
