@@ -168,7 +168,7 @@ export const SkeletonTransactionItem = () => {
   );
 };
 
-const decodeChainHistoryItem = (
+export const decodeChainHistoryItem = (
   hash: string,
   fromChain: Chain,
   toChain: Chain,

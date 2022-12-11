@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@chainfusion/chainfusion-contracts": "^0.0.41",
-    "@chainfusion/erc-20-bridge-contracts": "^0.0.1-rc.3",
+    "@chainfusion/erc-20-bridge-contracts": "^0.0.1",
     "@coinbase/wallet-sdk": "^3.5.4",
     "@reduxjs/toolkit": "^1.9.0",
     "@types/uuid": "^8.3.4",

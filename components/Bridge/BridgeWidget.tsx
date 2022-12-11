@@ -7,12 +7,13 @@ import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
-import { getChain, getToken, getSupportedChains, getSupportedTokens } from '@src/config';
+import { getChain, getToken, getSupportedChains, getSupportedTokens, getChainById } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
-import { EventRegistry } from '@chainfusion/chainfusion-contracts';
+import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
+import { decodeChainHistoryItem } from './TransactionItem';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -74,7 +75,8 @@ const BridgeWidget = () => {
 
   const { isActive, chainId } = useWeb3React();
   const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
-  const tokenAddress = tokenFrom.chains[chainFrom.identifier];
+  const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
+  const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
   const fromNetwork = networkContainer[chainFrom.identifier];
   const toNetwork = networkContainer[chainTo.identifier];
@@ -93,7 +95,7 @@ const BridgeWidget = () => {
     let pending = true;
 
     const updateBalance = async () => {
-      if (fromNetwork === undefined || tokenAddress === undefined) {
+      if (fromNetwork === undefined || tokenFromAddress === undefined) {
         if (pending) {
           setBalance(BigNumber.from(0));
         }
@@ -101,7 +103,7 @@ const BridgeWidget = () => {
       }
 
       const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
-      const mockToken = mockTokenFactory.attach(tokenAddress);
+      const mockToken = mockTokenFactory.attach(tokenFromAddress);
       const balance = await mockToken.balanceOf(fromNetwork.account);
 
       if (pending) {
@@ -114,7 +116,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [fromNetwork, tokenAddress]);
+  }, [fromNetwork, tokenFromAddress]);
 
   useEffect(() => {
     let pending = true;
@@ -126,7 +128,7 @@ const BridgeWidget = () => {
         from === 0.0 ||
         fromNetwork === undefined ||
         fromNetwork.contracts === undefined ||
-        tokenAddress === undefined
+        tokenFromAddress === undefined
       ) {
         if (pending) {
           setInsufficientBalance(false);
@@ -145,14 +147,14 @@ const BridgeWidget = () => {
       let allowance: BigNumber = BigNumber.from(0);
       if (fromNetwork.connected) {
         const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
-        const mockToken = mockTokenFactory.attach(tokenAddress);
+        const mockToken = mockTokenFactory.attach(tokenFromAddress);
         allowance = await mockToken.allowance(fromNetwork.account, fromNetwork.contracts.erc20Bridge.address);
       }
 
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
       const validatorsFee = await fromNetwork.contracts.feeManager.validatorRefundFee();
-      const estimatedFee = await fromNetwork.contracts.feeManager.calculateFee(tokenAddress, amount);
+      const estimatedFee = await fromNetwork.contracts.feeManager.calculateFee(tokenFromAddress, amount);
 
       const willReceive = amount.sub(estimatedFee);
 
@@ -174,14 +176,14 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [fromNetwork, balance, from, tokenFrom, approvalPending, tokenAddress]);
+  }, [fromNetwork, balance, from, tokenFrom, approvalPending, tokenFromAddress]);
 
   const approve = async () => {
     if (
       fromNetwork === undefined ||
       !fromNetwork.connected ||
       fromNetwork.contracts === undefined ||
-      tokenAddress === undefined
+      tokenFromAddress === undefined
     ) {
       return;
     }
@@ -191,7 +193,7 @@ const BridgeWidget = () => {
     try {
       const { erc20Bridge } = fromNetwork.contracts;
       const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
-      const mockToken = mockTokenFactory.attach(tokenAddress);
+      const mockToken = mockTokenFactory.attach(tokenFromAddress);
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
       await (await mockToken.approve(erc20Bridge.address, amount)).wait();
@@ -209,7 +211,8 @@ const BridgeWidget = () => {
       !fromNetwork.connected ||
       fromNetwork.contracts === undefined ||
       toNetwork?.contracts === undefined ||
-      tokenAddress === undefined ||
+      tokenFromAddress === undefined ||
+      tokenToAddress === undefined ||
       nativeContainer === undefined
     ) {
       return;
@@ -223,17 +226,26 @@ const BridgeWidget = () => {
       const { erc20Bridge } = fromNetwork.contracts;
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
-      const onEventRegisteredPromise = onEventRegistered(nativeContainer.eventRegistry, {
-        appContract: erc20Bridge.address,
-        sourceChain: BigNumber.from(chainFrom.chainId),
-        destinationChain: BigNumber.from(chainTo.chainId),
-      });
+      const onEventRegisteredPromise = onEventRegistered(
+        nativeContainer.eventRegistry,
+        fromNetwork.contracts.relayBridge,
+        {
+          appContract: erc20Bridge.address,
+          sender: fromNetwork.account,
+          receiver: fromNetwork.account,
+          sourceChain: BigNumber.from(chainFrom.chainId),
+          destinationChain: BigNumber.from(chainTo.chainId),
+        }
+      );
 
       const onTransferCompletePromise = onTransferComplete(toNetwork.contracts.erc20Bridge, {
         sender: fromNetwork.account,
+        receiver: fromNetwork.account,
+        token: tokenToAddress,
+        amount: amount,
       });
 
-      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, fromNetwork.account, amount)).wait(1);
+      await (await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, fromNetwork.account, amount)).wait(1);
       setTransferStage(2);
 
       await onEventRegisteredPromise;
@@ -285,7 +297,7 @@ const BridgeWidget = () => {
       );
     }
 
-    if (fromNetwork?.contracts === undefined || tokenAddress === undefined) {
+    if (fromNetwork?.contracts === undefined || tokenFromAddress === undefined) {
       return (
         <button disabled={true} className="transfer-button">
           Not Supported
@@ -458,28 +470,39 @@ export default BridgeWidget;
 
 interface EventRegisteredFilter {
   appContract: string;
+  sender: string;
+  receiver: string;
   sourceChain: BigNumber;
   destinationChain: BigNumber;
 }
 
-async function onEventRegistered(eventRegistry: EventRegistry, filter: EventRegisteredFilter): Promise<void> {
+async function onEventRegistered(
+  eventRegistry: EventRegistry,
+  relayBridge: RelayBridge,
+  filter: EventRegisteredFilter
+): Promise<void> {
   return new Promise<void>((resolve) => {
     eventRegistry.once(
       'EventRegistered',
-      (
-        hash: BytesLike,
-        appContract: string,
-        sourceChain: BigNumber,
-        destinationChain: BigNumber,
-        data: BytesLike,
-        validatorFee: BigNumber,
-        eventType: number
-      ) => {
+      async (hash: BytesLike, appContract: string, sourceChain: BigNumber, destinationChain: BigNumber) => {
         if (
           appContract !== filter.appContract ||
           !sourceChain.eq(filter.sourceChain) ||
           !destinationChain.eq(filter.destinationChain)
         ) {
+          return;
+        }
+
+        const fromChain = getChainById(sourceChain.toNumber());
+        const toChain = getChainById(destinationChain.toNumber());
+
+        if (fromChain === undefined || toChain === undefined) {
+          return;
+        }
+
+        const sentData = await relayBridge.sentData(hash);
+        const item = decodeChainHistoryItem(hash.toString(), fromChain, toChain, sentData);
+        if (item === undefined || item.sender !== filter.sender || item.receiver !== filter.receiver) {
           return;
         }
 
@@ -493,21 +516,21 @@ async function onEventRegistered(eventRegistry: EventRegistry, filter: EventRegi
 
 interface TransferCompleteFilter {
   sender: string;
+  receiver: string;
+  token: string;
+  amount: BigNumber;
 }
 
 async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferCompleteFilter): Promise<void> {
   return new Promise<void>((resolve) => {
-    erc20Bridge.on(
-      'Transferred',
-      (sender: string, token: string, sourceChain: BigNumber, receiver: string, amount: BigNumber) => {
-        if (sender !== filter.sender) {
-          return;
-        }
-
-        resolve();
-
-        return false;
+    erc20Bridge.on('Transferred', (sender: string, token: string, destinationChain: BigNumber, receiver: string) => {
+      if (sender !== filter.sender || receiver !== filter.receiver || token !== filter.token) {
+        return;
       }
-    );
+
+      resolve();
+
+      return false;
+    });
   });
 }
