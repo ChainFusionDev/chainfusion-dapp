@@ -19,7 +19,7 @@ export interface TransactionItemProps {
   item: ChainHistoryItem;
 }
 
-const TransactionItem = ({ item }: TransactionItemProps) => {
+export const TransactionItem = ({ item }: TransactionItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -160,4 +160,13 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
   );
 };
 
-export default TransactionItem;
+export const SkeletonTransactionItem = () => {
+  return (
+    <div className="transfer-block-loading mb-2">
+      <div className="skeleton mt-2 mt-md-0">
+        <div className="line-skeleton"></div>
+        <div className="line-skeleton"></div>
+      </div>
+    </div>
+  );
+};

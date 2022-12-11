@@ -1452,6 +1452,15 @@ button .fa-spinner {
   color: var(--white);
 }
 
+.transfer-block-loading {
+  margin-top: 5px;
+  padding: 17px 20px;
+  background-color: var(--white);
+  border: 1px solid var(--light);
+  border-radius: 15px;
+  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+}
+
 /* Section and other style */
 
 .section-page {

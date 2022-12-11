@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import TransactionItem, { ChainHistoryItem } from '@components/Bridge/TransactionItem';
+import { TransactionItem, SkeletonTransactionItem, ChainHistoryItem } from '@components/Bridge/TransactionItem';
 import { getChainById, getTokenByChainIdentifierAndAddress } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { BigNumber, utils } from 'ethers';
@@ -132,8 +132,13 @@ const TransactionHistory = () => {
 
   if (!historyLoaded) {
     return (
-      <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-        <p className="text-center m-5">Loading transfer history...</p>
+      <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-5">
+        <div className="title-block">Previous Transfers</div>
+        <SkeletonTransactionItem />
+        <SkeletonTransactionItem />
+        <SkeletonTransactionItem />
+        <SkeletonTransactionItem />
+        <SkeletonTransactionItem />
       </div>
     );
   }
