@@ -1,8 +1,8 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { BigNumber, ethers, utils } from 'ethers';
-import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
+import { BigNumber, BytesLike, ethers, utils } from 'ethers';
+import { ERC20Bridge, MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
@@ -12,6 +12,7 @@ import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
+import { EventRegistry } from '@chainfusion/chainfusion-contracts';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -54,6 +55,8 @@ const BridgeWidget = () => {
     liquidityFee: BigNumber.from(0),
   });
 
+  const [transferStage, setTransferStage] = useState<number>(1);
+
   const [swap, setSwap] = useState(false);
 
   const chains = getSupportedChains();
@@ -70,10 +73,11 @@ const BridgeWidget = () => {
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
   const { isActive, chainId } = useWeb3React();
-  const { networkContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const tokenAddress = tokenFrom.chains[chainFrom.identifier];
 
   const fromNetwork = networkContainer[chainFrom.identifier];
+  const toNetwork = networkContainer[chainTo.identifier];
 
   const swapFromTo = () => {
     setChainFrom(chainTo.identifier);
@@ -204,11 +208,14 @@ const BridgeWidget = () => {
       fromNetwork === undefined ||
       !fromNetwork.connected ||
       fromNetwork.contracts === undefined ||
-      tokenAddress === undefined
+      toNetwork?.contracts === undefined ||
+      tokenAddress === undefined ||
+      nativeContainer === undefined
     ) {
       return;
     }
 
+    setTransferStage(1);
     setTransferPending(true);
     setShowTransferModal(true);
 
@@ -216,7 +223,24 @@ const BridgeWidget = () => {
       const { erc20Bridge } = fromNetwork.contracts;
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
-      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, fromNetwork.account, amount)).wait();
+      const onEventRegisteredPromise = onEventRegistered(nativeContainer.eventRegistry, {
+        appContract: erc20Bridge.address,
+        sourceChain: BigNumber.from(chainFrom.chainId),
+        destinationChain: BigNumber.from(chainTo.chainId),
+      });
+
+      const onTransferCompletePromise = onTransferComplete(toNetwork.contracts.erc20Bridge, {
+        sender: fromNetwork.account,
+      });
+
+      await (await erc20Bridge.deposit(tokenAddress, chainTo.chainId, fromNetwork.account, amount)).wait(1);
+      setTransferStage(2);
+
+      await onEventRegisteredPromise;
+      setTransferStage(3);
+
+      await onTransferCompletePromise;
+      setTransferStage(4);
     } catch (e) {
       console.error(e);
     }
@@ -224,7 +248,6 @@ const BridgeWidget = () => {
     toast(<MsgTransferSuccess />);
     setFromString('');
     setTransferPending(false);
-    setShowTransferModal(false);
   };
 
   const transferButton = () => {
@@ -426,9 +449,65 @@ const BridgeWidget = () => {
         }}
       />
       <OptionsModal show={showOptionsModal} close={() => setShowOptionsModal(false)} />
-      <TransferModal show={showTransferModal} close={() => setShowTransferModal(false)} />
+      <TransferModal show={showTransferModal} stage={transferStage} close={() => setShowTransferModal(false)} />
     </div>
   );
 };
 
 export default BridgeWidget;
+
+interface EventRegisteredFilter {
+  appContract: string;
+  sourceChain: BigNumber;
+  destinationChain: BigNumber;
+}
+
+async function onEventRegistered(eventRegistry: EventRegistry, filter: EventRegisteredFilter): Promise<void> {
+  return new Promise<void>((resolve) => {
+    eventRegistry.once(
+      'EventRegistered',
+      (
+        hash: BytesLike,
+        appContract: string,
+        sourceChain: BigNumber,
+        destinationChain: BigNumber,
+        data: BytesLike,
+        validatorFee: BigNumber,
+        eventType: number
+      ) => {
+        if (
+          appContract !== filter.appContract ||
+          !sourceChain.eq(filter.sourceChain) ||
+          !destinationChain.eq(filter.destinationChain)
+        ) {
+          return;
+        }
+
+        resolve();
+
+        return false;
+      }
+    );
+  });
+}
+
+interface TransferCompleteFilter {
+  sender: string;
+}
+
+async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferCompleteFilter): Promise<void> {
+  return new Promise<void>((resolve) => {
+    erc20Bridge.on(
+      'Transferred',
+      (sender: string, token: string, sourceChain: BigNumber, receiver: string, amount: BigNumber) => {
+        if (sender !== filter.sender) {
+          return;
+        }
+
+        resolve();
+
+        return false;
+      }
+    );
+  });
+}

@@ -100,6 +100,10 @@ const TransactionHistory = () => {
 
       eventHistory = eventHistory.reverse();
       eventHistory = eventHistory.slice(0, 10);
+      if (eventHistory.length === 0) {
+        return;
+      }
+
       setHistory([...eventHistory]);
       setHistoryLoaded(true);
 
