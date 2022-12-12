@@ -15,9 +15,11 @@ import {
   TokenManager__factory,
 } from '@chainfusion/erc-20-bridge-contracts';
 import ConnectWalletModal from '@components/Modals/ConnectWalletModal';
-import { getChainParams, getNativeChain, getNativeContracts, getSupportedChains } from '@src/config';
+import { getChainById, getChainParams, getNativeChain, getNativeContracts, getSupportedChains } from '@src/config';
 import { coinbaseWallet, metaMask, walletConnect } from '@src/connectors/connectors';
 import { Chain } from '@src/types';
+import { useBridge } from '@store/bridge/hooks';
+import { EventRegistered } from '@store/bridge/reducer';
 import { useWeb3React } from '@web3-react/core';
 import { ethers, providers } from 'ethers';
 import { createContext, ReactElement, useContext, useEffect, useState } from 'react';
@@ -72,8 +74,13 @@ export interface ChainContextData {
   nativeContainer?: NativeContainer;
   networkContainer: NetworkContainer;
   addressContainer?: AddressContainer;
+  actions: ChainActions;
+}
+
+export interface ChainActions {
   switchNetwork: (chain: Chain) => Promise<void>;
   showConnectWalletDialog: (chain?: Chain) => void;
+  loadHistory: () => Promise<void>;
 }
 
 export const ChainContext = createContext({} as ChainContextData);
@@ -84,6 +91,8 @@ export interface ChainContextProviderProps {
 }
 
 export const ChainContextProvider = ({ children }: ChainContextProviderProps) => {
+  const { setHistory } = useBridge();
+
   const initialNetworkContainer: NetworkContainer = {};
   const chains = getSupportedChains();
   for (const chain of chains) {
@@ -276,10 +285,50 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     setShowConnectWalletModal(true);
   };
 
+  const loadHistory = async () => {
+    if (nativeContainer === undefined || addressContainer === undefined) {
+      return;
+    }
+
+    const currentBlock = await nativeContainer.provider.getBlockNumber();
+    const filter = nativeContainer.eventRegistry.filters.EventRegistered();
+    const events = await nativeContainer.eventRegistry.queryFilter(filter, currentBlock - 100000, currentBlock);
+
+    let eventHistory: EventRegistered[] = [];
+    for (const event of events) {
+      const fromChain = getChainById(event.args._sourceChain.toNumber());
+      const toChain = getChainById(event.args._destinationChain.toNumber());
+
+      if (fromChain === undefined || toChain === undefined) {
+        continue;
+      }
+
+      const fromNetwork = networkContainer[fromChain.identifier];
+
+      const erc20BridgeAddress = fromNetwork?.contracts?.erc20Bridge.address;
+      if (event.args._appContract !== erc20BridgeAddress) {
+        continue;
+      }
+
+      eventHistory.push(event.args);
+    }
+
+    if (eventHistory.length === 0) {
+      return;
+    }
+
+    eventHistory = eventHistory.reverse();
+    setHistory([...eventHistory]);
+  };
+
+  const actions: ChainActions = {
+    switchNetwork,
+    showConnectWalletDialog,
+    loadHistory,
+  };
+
   return (
-    <ChainContext.Provider
-      value={{ nativeContainer, networkContainer, addressContainer, switchNetwork, showConnectWalletDialog }}
-    >
+    <ChainContext.Provider value={{ nativeContainer, networkContainer, addressContainer, actions }}>
       {children}
       <ConnectWalletModal
         show={showConnectWalletModal}

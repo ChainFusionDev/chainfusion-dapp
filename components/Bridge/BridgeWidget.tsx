@@ -74,7 +74,7 @@ const BridgeWidget = () => {
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
   const { isActive, chainId } = useWeb3React();
-  const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { networkContainer, nativeContainer, actions } = useChainContext();
   const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
   const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
@@ -253,6 +253,8 @@ const BridgeWidget = () => {
 
       await onTransferCompletePromise;
       setTransferStage(4);
+
+      actions.loadHistory();
     } catch (e) {
       console.error(e);
     }
@@ -281,7 +283,7 @@ const BridgeWidget = () => {
 
     if (!isActive) {
       return (
-        <button className="transfer-button" onClick={() => showConnectWalletDialog(chainFrom)}>
+        <button className="transfer-button" onClick={() => actions.showConnectWalletDialog(chainFrom)}>
           <i className="fa-regular fa-wallet"></i> Connect Wallet
         </button>
       );
@@ -289,7 +291,7 @@ const BridgeWidget = () => {
 
     if (chainId !== chainFrom.chainId) {
       return (
-        <button className="transfer-button" onClick={() => switchNetwork(chainFrom)}>
+        <button className="transfer-button" onClick={() => actions.switchNetwork(chainFrom)}>
           <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
           <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
           {chainFrom.name}
@@ -497,12 +499,16 @@ async function onEventRegistered(
         const toChain = getChainById(destinationChain.toNumber());
 
         if (fromChain === undefined || toChain === undefined) {
+          console.log('Chains not available');
           return;
         }
 
         const sentData = await relayBridge.sentData(hash);
         const item = decodeChainHistoryItem(hash.toString(), fromChain, toChain, sentData);
         if (item === undefined || item.sender !== filter.sender || item.receiver !== filter.receiver) {
+          console.log('Shit');
+          console.log(item);
+          console.log(filter);
           return;
         }
 
