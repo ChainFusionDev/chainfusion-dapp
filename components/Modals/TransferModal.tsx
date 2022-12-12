@@ -31,7 +31,7 @@ const TransferModal = ({ show, stage, close }: TransferModalProps) => {
         <ul className="progress-transfer-list">
           <ProgressItem stage={1} activeStage={stage} message="Confirming deposit transaction" />
           <ProgressItem stage={2} activeStage={stage} message="Registering transfer event" />
-          <ProgressItem stage={3} activeStage={stage} message="Creating distributed transaction on destination chain" />
+          <ProgressItem stage={3} activeStage={stage} message="Receiving transfer on destination chain" />
         </ul>
       </ModalBody>
     </Modal>
@@ -49,6 +49,9 @@ const ProgressItem = ({ stage, activeStage, message }: ProgresItemProps) => {
     <li className={`${stage >= activeStage ? 'progress-active' : ''}`}>
       <i className={`fa-light ${stage < activeStage ? 'fa-circle-check' : 'fa-spinner-third'}`}></i>{' '}
       <span>{message}</span>
+      <a href="#" className="progress-link" target="_blank">
+        <i className="fa-regular fa-arrow-up-right-from-square"></i>
+      </a>
     </li>
   );
 };
