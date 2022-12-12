@@ -1,6 +1,7 @@
 import { getChainById, getTokenByChainIdentifierAndAddress } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
+import { EventRegistered } from '@store/bridge/reducer';
 import { BigNumber, utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -14,16 +15,6 @@ export interface ChainHistoryItem {
   token: Token;
   amount: BigNumber;
   fee: BigNumber;
-}
-
-export interface EventRegistered {
-  _hash: string;
-  _appContract: string;
-  _sourceChain: BigNumber;
-  _destinationChain: BigNumber;
-  _data: string;
-  _validatorFee: BigNumber;
-  _eventType: number;
 }
 
 export interface TransactionItemProps {

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { TransactionItem, SkeletonTransactionItem, EventRegistered } from '@components/Bridge/TransactionItem';
+import { TransactionItem, SkeletonTransactionItem } from '@components/Bridge/TransactionItem';
 import { getChainById } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
+import { EventRegistered } from '@store/bridge/reducer';
+import { useBridge } from '@store/bridge/hooks';
 
 const TransactionHistory = () => {
-  const [history, setHistory] = useState<EventRegistered[]>([]);
   const [itemsToShow, setItemsToShow] = useState<number>(5);
-  const [historyLoaded, setHistoryLoaded] = useState(false);
 
+  const { history, historyLoading, setHistory } = useBridge();
   const { nativeContainer, networkContainer, addressContainer } = useChainContext();
 
   useEffect(() => {
@@ -45,11 +46,10 @@ const TransactionHistory = () => {
 
       eventHistory = eventHistory.reverse();
       setHistory([...eventHistory]);
-      setHistoryLoaded(true);
     };
 
     loadHistory();
-  }, [nativeContainer, networkContainer, addressContainer]);
+  }, [setHistory, nativeContainer, networkContainer, addressContainer]);
 
   const transactionItems = history
     .map((event: EventRegistered, index: number) => {
@@ -57,7 +57,7 @@ const TransactionHistory = () => {
     })
     .filter((element) => element !== null);
 
-  if (!historyLoaded) {
+  if (historyLoading) {
     return (
       <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-5">
         <div className="title-block">Previous Transfers</div>

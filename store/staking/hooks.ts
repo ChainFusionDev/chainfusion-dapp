@@ -8,16 +8,11 @@ import { setValidators, setStakingInfo, setStakingInfoLoading } from './reducer'
 export function useStaking () {
   const dispatch = useDispatch();
 
-  const validators = useAppSelector(({ staking }) => staking.validators);
-  const validatorsLoading = useAppSelector(({ staking }) => staking.validatorsLoading);
-  const stakingInfo = useAppSelector(({ staking }) => staking.stakingInfo);
-  const stakingInfoLoading = useAppSelector(({ staking }) => staking.stakingInfoLoading);
-
   return {
-    validators,
-    validatorsLoading,
-    stakingInfo,
-    stakingInfoLoading,
+    validators: useAppSelector(({ staking }) => staking.validators),
+    validatorsLoading: useAppSelector(({ staking }) => staking.validatorsLoading),
+    stakingInfo: useAppSelector(({ staking }) => staking.stakingInfo),
+    stakingInfoLoading: useAppSelector(({ staking }) => staking.stakingInfoLoading),
 
     setValidators: useCallback((validators: ValidatorInfo[]) => dispatch(setValidators(validators)), []),
     setStakingInfo: useCallback((stakingInfo: StakingInfo) => dispatch(setStakingInfo(stakingInfo)), []),
