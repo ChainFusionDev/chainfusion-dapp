@@ -8,7 +8,42 @@ import { getChainById } from '@src/config';
 
 export function useBridge() {
   const dispatch = useDispatch();
-  const { nativeContainer, networkContainer, addressContainer } = useChainContext();
+  const { nativeContainer, networkContainer } = useChainContext();
+
+  const loadHistory = useCallback(async () => {
+    if (nativeContainer === undefined) {
+      return;
+    }
+
+    const currentBlock = await nativeContainer.provider.getBlockNumber();
+    const filter = nativeContainer.eventRegistry.filters.EventRegistered();
+    const events = await nativeContainer.eventRegistry.queryFilter(filter, currentBlock - 100000, currentBlock);
+
+    let eventHistory: EventRegistered[] = [];
+    for (const event of events) {
+      const fromChain = getChainById(event.args._sourceChain.toNumber());
+      const toChain = getChainById(event.args._destinationChain.toNumber());
+
+      if (fromChain === undefined || toChain === undefined) {
+        continue;
+      }
+
+      const fromNetwork = networkContainer[fromChain.identifier];
+
+      const erc20BridgeAddress = fromNetwork?.contracts?.erc20Bridge.address;
+      if (event.args._appContract !== erc20BridgeAddress) {
+        continue;
+      }
+
+      eventHistory.push(event.args);
+    }
+
+    if (eventHistory.length === 0) {
+      return;
+    }
+
+    dispatch(setHistory(eventHistory.reverse()));
+  }, [nativeContainer, networkContainer]);
 
   return {
     history: useAppSelector(({ bridge }) => bridge.history),
@@ -16,39 +51,6 @@ export function useBridge() {
 
     setHistory: useCallback((validators: EventRegistered[]) => dispatch(setHistory(validators)), []),
 
-    loadHistory: useCallback(async () => {
-      if (nativeContainer === undefined || addressContainer === undefined) {
-        return;
-      }
-
-      const currentBlock = await nativeContainer.provider.getBlockNumber();
-      const filter = nativeContainer.eventRegistry.filters.EventRegistered();
-      const events = await nativeContainer.eventRegistry.queryFilter(filter, currentBlock - 100000, currentBlock);
-
-      let eventHistory: EventRegistered[] = [];
-      for (const event of events) {
-        const fromChain = getChainById(event.args._sourceChain.toNumber());
-        const toChain = getChainById(event.args._destinationChain.toNumber());
-
-        if (fromChain === undefined || toChain === undefined) {
-          continue;
-        }
-
-        const fromNetwork = networkContainer[fromChain.identifier];
-
-        const erc20BridgeAddress = fromNetwork?.contracts?.erc20Bridge.address;
-        if (event.args._appContract !== erc20BridgeAddress) {
-          continue;
-        }
-
-        eventHistory.push(event.args);
-      }
-
-      if (eventHistory.length === 0) {
-        return;
-      }
-
-      dispatch(setHistory(eventHistory.reverse()));
-    }, [networkContainer]),
+    loadHistory: loadHistory,
   };
 }
