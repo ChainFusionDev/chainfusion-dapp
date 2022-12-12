@@ -16,7 +16,7 @@ const TransferHistory = () => {
     }
 
     actions.loadHistory();
-  }, [networkContainer, actions]);
+  }, [networkContainer]);
 
   const transactionItems = history
     .map((event: EventRegistered, index: number) => {
