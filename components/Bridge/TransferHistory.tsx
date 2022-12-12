@@ -1,28 +1,22 @@
 import { useEffect, useState } from 'react';
 import { TransferItem, SkeletonTransferItem } from '@components/Bridge/TransferItem';
-import { useChainContext } from '@src/context/ChainContext';
 import { EventRegistered } from '@store/bridge/reducer';
 import { useBridge } from '@store/bridge/hooks';
 
 const TransferHistory = () => {
   const [itemsToShow, setItemsToShow] = useState<number>(5);
 
-  const { history, historyLoading } = useBridge();
-  const { networkContainer, actions } = useChainContext();
+  const { history, historyLoading, loadHistory } = useBridge();
 
   useEffect(() => {
-    if (networkContainer === undefined) {
-      return;
-    }
-
-    actions.loadHistory();
-  }, [networkContainer]);
+    loadHistory();
+  }, [loadHistory]);
 
   const transactionItems = history
-    .map((event: EventRegistered, index: number) => {
-      return index < itemsToShow ? <TransferItem key={index} event={event} /> : null;
-    })
-    .filter((element) => element !== null);
+    .filter((event: EventRegistered, index: number) => index < itemsToShow)
+    .map((event: EventRegistered) => {
+      return <TransferItem key={event._hash} event={event} />;
+    });
 
   if (historyLoading) {
     return (

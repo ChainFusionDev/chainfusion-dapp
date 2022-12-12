@@ -25,13 +25,13 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Web3ReactProvider connectors={getConnectors()}>
-        <ChainContextProvider>
+    <Web3ReactProvider connectors={getConnectors()}>
+      <ChainContextProvider>
+        <Provider store={store}>
           <Component {...pageProps} />
-        </ChainContextProvider>
-      </Web3ReactProvider>
-    </Provider>
+        </Provider>
+      </ChainContextProvider>
+    </Web3ReactProvider>
   );
 }
 

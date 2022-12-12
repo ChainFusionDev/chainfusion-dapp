@@ -12,7 +12,7 @@ type NavbarProps = {
 
 const Navbar = ({ module }: NavbarProps) => {
   const { connector, isActive } = useWeb3React();
-  const { actions } = useChainContext();
+  const { showConnectWalletDialog } = useChainContext();
 
   const getConnectorName = (connector: Connector): string => {
     if (connector instanceof MetaMask) return 'MetaMask';
@@ -82,7 +82,7 @@ const Navbar = ({ module }: NavbarProps) => {
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
-              <span className="nav-link connect-wallet-btn" onClick={() => actions.showConnectWalletDialog()}>
+              <span className="nav-link connect-wallet-btn" onClick={() => showConnectWalletDialog()}>
                 {isActive ? (
                   <span className="connected-wallet-btn">
                     <span className="connected-wallet-icon">

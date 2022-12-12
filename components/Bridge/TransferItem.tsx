@@ -60,7 +60,7 @@ export const TransferItem = ({ event }: TransferItemProps) => {
     };
 
     loadItem();
-  }, [networkContainer, event, fromNetwork, toNetwork]);
+  }, [fromNetwork, toNetwork, event]);
 
   if (item === undefined) {
     return <SkeletonTransferItem />;

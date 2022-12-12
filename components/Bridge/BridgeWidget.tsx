@@ -14,6 +14,7 @@ import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
 import { decodeChainHistoryItem } from './TransferItem';
+import { useBridge } from '@store/bridge/hooks';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -74,7 +75,8 @@ const BridgeWidget = () => {
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
 
   const { isActive, chainId } = useWeb3React();
-  const { networkContainer, nativeContainer, actions } = useChainContext();
+  const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { loadHistory } = useBridge();
   const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
   const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
@@ -254,7 +256,7 @@ const BridgeWidget = () => {
       await onTransferCompletePromise;
       setTransferStage(4);
 
-      actions.loadHistory();
+      loadHistory();
     } catch (e) {
       console.error(e);
     }
@@ -283,7 +285,7 @@ const BridgeWidget = () => {
 
     if (!isActive) {
       return (
-        <button className="transfer-button" onClick={() => actions.showConnectWalletDialog(chainFrom)}>
+        <button className="transfer-button" onClick={() => showConnectWalletDialog(chainFrom)}>
           <i className="fa-regular fa-wallet"></i> Connect Wallet
         </button>
       );
@@ -291,7 +293,7 @@ const BridgeWidget = () => {
 
     if (chainId !== chainFrom.chainId) {
       return (
-        <button className="transfer-button" onClick={() => actions.switchNetwork(chainFrom)}>
+        <button className="transfer-button" onClick={() => switchNetwork(chainFrom)}>
           <i className="fa-regular fa-shuffle"></i> Switch Network to{' '}
           <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />{' '}
           {chainFrom.name}

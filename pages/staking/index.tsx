@@ -57,8 +57,8 @@ const Staking = () => {
     setStakingInfoLoading,
   } = useStaking();
 
-  const { nativeContainer, actions } = useChainContext();
   const { isActive } = useWeb3React();
+  const { nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const nativeChain = getNativeChain();
 
   const nativeConnected = nativeContainer?.connected ?? false;
@@ -274,13 +274,13 @@ const Staking = () => {
     }
   } else if (isActive) {
     buttons.push(
-      <button key="switch-network" className="btn-blue" onClick={() => actions.switchNetwork(nativeChain)}>
+      <button key="switch-network" className="btn-blue" onClick={() => switchNetwork(nativeChain)}>
         <i className="fa-regular fa-shuffle"></i> Switch Network
       </button>
     );
   } else {
     buttons.push(
-      <button key="connect-wallet" className="btn-blue" onClick={() => actions.showConnectWalletDialog(nativeChain)}>
+      <button key="connect-wallet" className="btn-blue" onClick={() => showConnectWalletDialog(nativeChain)}>
         <i className="fa-regular fa-wallet"></i> Connect Wallet
       </button>
     );
