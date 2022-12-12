@@ -1,5 +1,5 @@
 import Layout from '@components/Layout';
-import TransactionHistory from '@components/Bridge/TransactionHistory';
+import TransferHistory from '@components/Bridge/TransferHistory';
 import BridgeWidget from '@components/Bridge/BridgeWidget';
 
 const Bridge = () => {
@@ -14,7 +14,7 @@ const Bridge = () => {
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             <BridgeWidget />
           </div>
-          <TransactionHistory />
+          <TransferHistory />
         </div>
       </div>
     </Layout>

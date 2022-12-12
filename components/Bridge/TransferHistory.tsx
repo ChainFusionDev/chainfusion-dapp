@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { TransactionItem, SkeletonTransactionItem } from '@components/Bridge/TransactionItem';
+import { TransferItem, SkeletonTransferItem } from '@components/Bridge/TransferItem';
 import { getChainById } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { EventRegistered } from '@store/bridge/reducer';
 import { useBridge } from '@store/bridge/hooks';
 
-const TransactionHistory = () => {
+const TransferHistory = () => {
   const [itemsToShow, setItemsToShow] = useState<number>(5);
 
   const { history, historyLoading, setHistory } = useBridge();
@@ -53,7 +53,7 @@ const TransactionHistory = () => {
 
   const transactionItems = history
     .map((event: EventRegistered, index: number) => {
-      return index < itemsToShow ? <TransactionItem key={index} event={event} /> : null;
+      return index < itemsToShow ? <TransferItem key={index} event={event} /> : null;
     })
     .filter((element) => element !== null);
 
@@ -61,11 +61,11 @@ const TransactionHistory = () => {
     return (
       <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-5">
         <div className="title-block">Previous Transfers</div>
-        <SkeletonTransactionItem />
-        <SkeletonTransactionItem />
-        <SkeletonTransactionItem />
-        <SkeletonTransactionItem />
-        <SkeletonTransactionItem />
+        <SkeletonTransferItem />
+        <SkeletonTransferItem />
+        <SkeletonTransferItem />
+        <SkeletonTransferItem />
+        <SkeletonTransferItem />
       </div>
     );
   }
@@ -89,4 +89,4 @@ const TransactionHistory = () => {
   );
 };
 
-export default TransactionHistory;
+export default TransferHistory;

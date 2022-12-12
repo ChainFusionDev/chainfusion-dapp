@@ -13,7 +13,7 @@ import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { decodeChainHistoryItem } from './TransactionItem';
+import { decodeChainHistoryItem } from './TransferItem';
 
 interface FeeInfo {
   validatorsFee: BigNumber;

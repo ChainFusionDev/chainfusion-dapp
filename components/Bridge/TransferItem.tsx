@@ -17,11 +17,11 @@ export interface ChainHistoryItem {
   fee: BigNumber;
 }
 
-export interface TransactionItemProps {
+export interface TransferItemProps {
   event: EventRegistered;
 }
 
-export const TransactionItem = ({ event }: TransactionItemProps) => {
+export const TransferItem = ({ event }: TransferItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -63,7 +63,7 @@ export const TransactionItem = ({ event }: TransactionItemProps) => {
   }, [networkContainer, event, fromNetwork, toNetwork]);
 
   if (item === undefined) {
-    return <SkeletonTransactionItem />;
+    return <SkeletonTransferItem />;
   }
 
   const amountFrom = item.amount.add(item.fee);
@@ -148,7 +148,7 @@ export const TransactionItem = ({ event }: TransactionItemProps) => {
   );
 };
 
-export const SkeletonTransactionItem = () => {
+export const SkeletonTransferItem = () => {
   return (
     <div className="transfer-block-loading mb-2">
       <div className="skeleton mt-2 mt-md-0">
