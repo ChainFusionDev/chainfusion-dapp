@@ -1283,6 +1283,20 @@ button .fa-spinner {
   }
 }
 
+.progress-link {
+  position: absolute;
+  right: 30px;
+  margin-top: -1px;
+  font-size: 0.875rem;
+  color: var(--main-color);
+  transition: all ease-out 0.3s;
+}
+
+.progress-link:hover,
+.progress-link:focus {
+  color: var(--hover-color);
+}
+
 /* Previous Transfers  */
 
 .title-block {
