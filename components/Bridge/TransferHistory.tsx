@@ -38,6 +38,13 @@ const TransferHistory = () => {
   return (
     <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-5">
       <div className="title-block">Previous Transfers</div>
+      <div className="toggleTransactionsBlock">
+        <input type="checkbox" id="toggleOwnAll" className="transactionsCheckbox" />
+        <label htmlFor="toggleOwnAll" className="toggleTransactions">
+          <div>All</div>
+          <div>My own</div>
+        </label>
+      </div>
       {transactionItems}
       {history.length > itemsToShow && (
         <div className="text-center mt-4 mb-2">
