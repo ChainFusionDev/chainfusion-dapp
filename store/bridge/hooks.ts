@@ -24,7 +24,7 @@ export function useBridge() {
       dispatch(setHistory([]));
     }
 
-    let eventHistory: BridgeTransfer[] = [];
+    let history: BridgeTransfer[] = [];
     for (const event of events) {
       if (event.args._eventType !== 0) {
         continue;
@@ -48,20 +48,20 @@ export function useBridge() {
       if (data === undefined) {
         continue;
       }
-      const chainHistoryItem = decodeBridgeTransfer(event.args._hash, fromChain, toChain, data);
 
-      if (chainHistoryItem === undefined) {
+      const transfer = decodeBridgeTransfer(event.args._hash, fromChain, toChain, data);
+      if (transfer === undefined) {
         continue;
       }
 
-      eventHistory.push(chainHistoryItem);
+      history.push(transfer);
     }
 
-    if (eventHistory.length === 0) {
+    if (history.length === 0) {
       return;
     }
 
-    dispatch(setHistory(eventHistory.reverse()));
+    dispatch(setHistory(history.reverse()));
   }, [nativeContainer, networkContainer]);
 
   return {

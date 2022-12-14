@@ -5,10 +5,10 @@ import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 export interface TransferItemProps {
-  item: BridgeTransfer;
+  transfer: BridgeTransfer;
 }
 
-export const TransferItem = ({ item }: TransferItemProps) => {
+export const TransferItem = ({ transfer }: TransferItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -16,8 +16,8 @@ export const TransferItem = ({ item }: TransferItemProps) => {
     setIsMounted(true);
   }, []);
 
-  const amountFrom = item.amount.add(item.fee);
-  const amountTo = item.amount;
+  const amountFrom = transfer.amount.add(transfer.fee);
+  const amountTo = transfer.amount;
 
   return (
     <div className="transfer-block mb-2">
@@ -25,7 +25,7 @@ export const TransferItem = ({ item }: TransferItemProps) => {
         data-toggle="collapse"
         role="button"
         aria-expanded={open}
-        aria-controls={item.sender}
+        aria-controls={transfer.sender}
         className="btn-block py-2 with-chevron"
         onClick={() => setOpen(!open)}
       >
@@ -35,12 +35,13 @@ export const TransferItem = ({ item }: TransferItemProps) => {
           </span>
           <span className="from-transaction d-flex flex-grow-1 justify-content-start">
             <span className="blockchain-fees">
-              <img src={`/img/${item.fromChain.identifier}.svg`} alt={`${item.fromChain.name} Logo`} />
+              <img src={`/img/${transfer.fromChain.identifier}.svg`} alt={`${transfer.fromChain.name} Logo`} />
               &nbsp;
-              {item.fromChain.name}: <strong>{utils.formatUnits(amountFrom, item.token.decimals)}</strong>&nbsp;
+              {transfer.fromChain.name}: <strong>{utils.formatUnits(amountFrom, transfer.token.decimals)}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${item.token.identifier}.svg`} alt={`${item.token.name} Logo`} /> {item.token.name}
+              <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
+              {transfer.token.name}
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
@@ -49,30 +50,31 @@ export const TransferItem = ({ item }: TransferItemProps) => {
           </span>
           <span className="to-transaction d-flex flex-grow-1 justify-content-end">
             <span className="blockchain-fees">
-              <img src={`/img/${item.toChain.identifier}.svg`} alt={`${item.toChain.name} Logo`} />
+              <img src={`/img/${transfer.toChain.identifier}.svg`} alt={`${transfer.toChain.name} Logo`} />
               &nbsp;
-              {item.toChain.name}: <strong>{utils.formatUnits(amountTo, item.token.decimals)}</strong>&nbsp;
+              {transfer.toChain.name}: <strong>{utils.formatUnits(amountTo, transfer.token.decimals)}</strong>&nbsp;
             </span>
             <span className="token-fees">
-              <img src={`/img/${item.token.identifier}.svg`} alt={`${item.token.name} Logo`} /> {item.token.name}
+              <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
+              {transfer.token.name}
             </span>
           </span>
         </p>
       </a>
-      <div id={item.sender} className={`collapse ${open && 'show'}`}>
+      <div id={transfer.sender} className={`collapse ${open && 'show'}`}>
         <div className="card">
           <div className="card-body">
             <span className="transaction-details">
               Sender:{' '}
-              <a href={getAddressLink(item.fromChain, item.sender)} target="_blank" rel="noreferrer">
-                {item.sender}
+              <a href={getAddressLink(transfer.fromChain, transfer.sender)} target="_blank" rel="noreferrer">
+                {transfer.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
-              <a href={getAddressLink(item.toChain, item.receiver)} target="_blank" rel="noreferrer">
-                {item.receiver}
+              <a href={getAddressLink(transfer.toChain, transfer.receiver)} target="_blank" rel="noreferrer">
+                {transfer.receiver}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>

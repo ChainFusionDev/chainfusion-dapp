@@ -15,9 +15,9 @@ const TransferHistory = () => {
   }, [loadHistory]);
 
   const transactionItems = history
-    .filter((item: BridgeTransfer, index: number) => index < itemsToShow)
-    .map((item: BridgeTransfer) => {
-      return <TransferItem key={item.hash} item={item} />;
+    .filter((transfer: BridgeTransfer, index: number) => index < itemsToShow)
+    .map((transfer: BridgeTransfer) => {
+      return <TransferItem key={transfer.hash} transfer={transfer} />;
     });
 
   return (
