@@ -17,8 +17,13 @@ export function useBridge() {
     }
 
     const currentBlock = await nativeContainer.provider.getBlockNumber();
+    let startFrom = currentBlock - 100000;
+    if (startFrom < 0) {
+      startFrom = 0;
+    }
+
     const filter = nativeContainer.eventRegistry.filters.EventRegistered();
-    const events = await nativeContainer.eventRegistry.queryFilter(filter, currentBlock - 100000, currentBlock);
+    const events = await nativeContainer.eventRegistry.queryFilter(filter, startFrom, currentBlock);
 
     if (events.length === 0) {
       dispatch(setHistory([]));
