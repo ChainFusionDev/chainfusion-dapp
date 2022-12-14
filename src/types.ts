@@ -52,3 +52,14 @@ export interface StakingInfo {
   withdrawalAmount: BigNumber;
   withdrawalTime: BigNumber;
 }
+
+export interface BridgeTransfer {
+  hash: string;
+  sender: string;
+  receiver: string;
+  fromChain: Chain;
+  toChain: Chain;
+  token: Token;
+  amount: BigNumber;
+  fee: BigNumber;
+}

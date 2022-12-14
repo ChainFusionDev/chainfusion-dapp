@@ -13,9 +13,8 @@ import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { decodeChainHistoryItem } from './TransferItem';
 import { useBridge } from '@store/bridge/hooks';
-import { getTransactionLink } from '@src/utils';
+import { decodeBridgeTransfer, getTransactionLink } from '@src/utils';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -530,7 +529,7 @@ async function onEventRegistered(
         }
 
         const sentData = await relayBridge.sentData(hash);
-        const item = decodeChainHistoryItem(hash.toString(), fromChain, toChain, sentData);
+        const item = decodeBridgeTransfer(hash.toString(), fromChain, toChain, sentData);
         if (item === undefined || item.sender !== filter.sender || item.receiver !== filter.receiver) {
           return;
         }

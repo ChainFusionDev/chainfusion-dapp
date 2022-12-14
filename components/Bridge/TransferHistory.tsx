@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { TransferItem, SkeletonTransferItem } from '@components/Bridge/TransferItem';
-import { EventRegistered } from '@store/bridge/reducer';
 import { useBridge } from '@store/bridge/hooks';
 import { useWeb3React } from '@web3-react/core';
+import { BridgeTransfer } from '@src/types';
 
 const TransferHistory = () => {
   const [itemsToShow, setItemsToShow] = useState<number>(5);
@@ -15,9 +15,9 @@ const TransferHistory = () => {
   }, [loadHistory]);
 
   const transactionItems = history
-    .filter((event: EventRegistered, index: number) => index < itemsToShow)
-    .map((event: EventRegistered) => {
-      return <TransferItem key={event._hash} event={event} />;
+    .filter((item: BridgeTransfer, index: number) => index < itemsToShow)
+    .map((item: BridgeTransfer) => {
+      return <TransferItem key={item.hash} item={item} />;
     });
 
   return (

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BridgeTransfer } from '@src/types';
 import { BigNumber } from 'ethers';
 
 export interface EventRegistered {
@@ -12,7 +13,7 @@ export interface EventRegistered {
 }
 
 interface BridgeState {
-  history: EventRegistered[];
+  history: BridgeTransfer[];
   historyLoading: boolean;
   onlyMyHistory: boolean;
 }
@@ -27,7 +28,7 @@ const bridgeSlice = createSlice({
   name: 'bridge',
   initialState,
   reducers: {
-    setHistory: (state, action: PayloadAction<EventRegistered[]>) => {
+    setHistory: (state, action: PayloadAction<BridgeTransfer[]>) => {
       state.history = action.payload;
       state.historyLoading = false;
     },

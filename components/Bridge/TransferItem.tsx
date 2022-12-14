@@ -1,63 +1,20 @@
-import { getChainById, getTokenByChainIdentifierAndAddress } from '@src/config';
-import { useChainContext } from '@src/context/ChainContext';
-import { Chain, Token } from '@src/types';
+import { BridgeTransfer } from '@src/types';
 import { getAddressLink } from '@src/utils';
-import { EventRegistered } from '@store/bridge/reducer';
-import { BigNumber, utils } from 'ethers';
+import { utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
-export interface ChainHistoryItem {
-  hash: string;
-  sender: string;
-  receiver: string;
-  fromChain: Chain;
-  toChain: Chain;
-  token: Token;
-  amount: BigNumber;
-  fee: BigNumber;
-}
-
 export interface TransferItemProps {
-  event: EventRegistered;
+  item: BridgeTransfer;
 }
 
-export const TransferItem = ({ event }: TransferItemProps) => {
+export const TransferItem = ({ item }: TransferItemProps) => {
   const [open, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-
-  const [item, setItem] = useState<ChainHistoryItem | undefined>(undefined);
-
-  const { networkContainer } = useChainContext();
-
-  const fromChain = getChainById(event._sourceChain.toNumber());
-  const toChain = getChainById(event._destinationChain.toNumber());
-  const fromNetwork = networkContainer[fromChain?.identifier];
-  const toNetwork = networkContainer[toChain?.identifier];
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  useEffect(() => {
-    const loadItem = async () => {
-      if (fromNetwork?.contracts === undefined || toNetwork?.contracts === undefined) {
-        return;
-      }
-
-      const data = await fromNetwork.contracts.relayBridge.sentData(event._hash);
-      const item = decodeChainHistoryItem(event._hash, fromNetwork.chain, toNetwork.chain, data);
-      if (item !== undefined) {
-        setItem(item);
-      }
-    };
-
-    loadItem();
-  }, [fromNetwork, toNetwork, event]);
-
-  if (item === undefined) {
-    return <SkeletonTransferItem />;
-  }
 
   const amountFrom = item.amount.add(item.fee);
   const amountTo = item.amount;
@@ -107,14 +64,14 @@ export const TransferItem = ({ event }: TransferItemProps) => {
           <div className="card-body">
             <span className="transaction-details">
               Sender:{' '}
-              <a href={getAddressLink(fromChain, item.sender)} target="_blank" rel="noreferrer">
+              <a href={getAddressLink(item.fromChain, item.sender)} target="_blank" rel="noreferrer">
                 {item.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
-              <a href={getAddressLink(toChain, item.receiver)} target="_blank" rel="noreferrer">
+              <a href={getAddressLink(item.toChain, item.receiver)} target="_blank" rel="noreferrer">
                 {item.receiver}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
@@ -150,38 +107,4 @@ export const SkeletonTransferItem = () => {
       </div>
     </div>
   );
-};
-
-export const decodeChainHistoryItem = (
-  hash: string,
-  fromChain: Chain,
-  toChain: Chain,
-  data: utils.BytesLike
-): ChainHistoryItem | undefined => {
-  try {
-    const result = utils.defaultAbiCoder.decode(
-      ['uint256', 'address', 'address', 'uint256', 'address', 'uint256', 'uint256'],
-      data
-    );
-
-    const token = getTokenByChainIdentifierAndAddress(fromChain.identifier, result[2] as string);
-    if (token === undefined) {
-      return undefined;
-    }
-
-    const item: ChainHistoryItem = {
-      hash: hash,
-      sender: result[1] as string,
-      receiver: result[4] as string,
-      fromChain: fromChain,
-      toChain: toChain,
-      token: token,
-      amount: result[5] as BigNumber,
-      fee: result[6] as BigNumber,
-    };
-
-    return item;
-  } catch (e) {
-    return undefined;
-  }
 };

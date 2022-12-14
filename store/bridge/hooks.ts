@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@store/index';
-import { EventRegistered, setHistory, setOnlyMyHistory } from './reducer';
+import { setHistory, setOnlyMyHistory } from './reducer';
 import { useChainContext } from '@src/context/ChainContext';
 import { getChainById } from '@src/config';
-
+import { BridgeTransfer } from '@src/types';
+import { decodeBridgeTransfer, decodeSendEventData } from '@src/utils';
 
 export function useBridge() {
   const dispatch = useDispatch();
@@ -23,8 +24,12 @@ export function useBridge() {
       dispatch(setHistory([]));
     }
 
-    let eventHistory: EventRegistered[] = [];
+    let eventHistory: BridgeTransfer[] = [];
     for (const event of events) {
+      if (event.args._eventType !== 0) {
+        continue;
+      }
+
       const fromChain = getChainById(event.args._sourceChain.toNumber());
       const toChain = getChainById(event.args._destinationChain.toNumber());
 
@@ -39,7 +44,17 @@ export function useBridge() {
         continue;
       }
 
-      eventHistory.push(event.args);
+      const data = decodeSendEventData(event.args._data);
+      if (data === undefined) {
+        continue;
+      }
+      const chainHistoryItem = decodeBridgeTransfer(event.args._hash, fromChain, toChain, data);
+
+      if (chainHistoryItem === undefined) {
+        continue;
+      }
+
+      eventHistory.push(chainHistoryItem);
     }
 
     if (eventHistory.length === 0) {
@@ -54,7 +69,7 @@ export function useBridge() {
     historyLoading: useAppSelector(({ bridge }) => bridge.historyLoading),
     onlyMyHistory: useAppSelector(({ bridge }) => bridge.onlyMyHistory),
 
-    setHistory: useCallback((validators: EventRegistered[]) => dispatch(setHistory(validators)), []),
+    setHistory: useCallback((history: BridgeTransfer[]) => dispatch(setHistory(history)), []),
     setOnlyMyHistory: useCallback((onlyMyHistory: boolean) => dispatch(setOnlyMyHistory(onlyMyHistory)), []),
 
     loadHistory: loadHistory,
