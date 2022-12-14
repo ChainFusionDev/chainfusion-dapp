@@ -34,6 +34,7 @@ const bridgeSlice = createSlice({
     },
     setOnlyMyHistory: (state, action: PayloadAction<boolean>) => {
       state.onlyMyHistory = action.payload;
+      state.historyLoading = true;
     },
   }
 });

@@ -13,8 +13,8 @@ import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { useBridge } from '@store/bridge/hooks';
 import { decodeBridgeTransfer, getTransactionLink } from '@src/utils';
+import { useAPI } from '@src/hooks/useAPI';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -77,12 +77,12 @@ const BridgeWidget = () => {
 
   const { isActive, chainId } = useWeb3React();
   const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
-  const { loadHistory } = useBridge();
+  const { loadHistory } = useAPI();
   const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
   const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
-  const fromNetwork = networkContainer[chainFrom.identifier];
-  const toNetwork = networkContainer[chainTo.identifier];
+  const fromNetwork = networkContainer.get(chainFrom.identifier);
+  const toNetwork = networkContainer.get(chainTo.identifier);
 
   const swapFromTo = () => {
     setChainFrom(chainTo.identifier);

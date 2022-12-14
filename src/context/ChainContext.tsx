@@ -70,7 +70,7 @@ export interface ChainContracts {
 
 export interface ChainContextData {
   nativeContainer?: NativeContainer;
-  networkContainer: NetworkContainer;
+  networkContainer: Map<string, ChainNetwork>;
   addressContainer?: AddressContainer;
   switchNetwork: (chain: Chain) => Promise<void>;
   showConnectWalletDialog: (chain?: Chain) => void;
@@ -102,7 +102,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   const [showConnectWalletModal, setShowConnectWalletModal] = useState(false);
   const [desiredChain, setDesiredChain] = useState<Chain>();
   const [addressContainer, setAddressContainer] = useState<AddressContainer | undefined>(undefined);
-  const [networkContainer, setNetworkContainer] = useState<NetworkContainer>(initialNetworkContainer);
+  const [networkContainer, setNetworkContainer] = useState(new Map<string, ChainNetwork>());
   const [nativeContainer, setNativeContainer] = useState<NativeContainer | undefined>(undefined);
   const { chainId, account, provider, connector } = useWeb3React();
 
@@ -206,7 +206,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   }, [chains]);
 
   useEffect(() => {
-    const networkContainer: NetworkContainer = {};
+    const networkContainer = new Map<string, ChainNetwork>();
 
     for (const chain of chains) {
       let chainProvider: providers.JsonRpcProvider = new providers.JsonRpcProvider(chain.rpc, chain.chainId);
@@ -261,7 +261,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
         contracts: chainContracts,
       };
 
-      networkContainer[chain.identifier] = chainNetwork;
+      networkContainer.set(chain.identifier, chainNetwork);
     }
 
     setNetworkContainer(networkContainer);

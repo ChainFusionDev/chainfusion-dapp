@@ -3,12 +3,14 @@ import { TransferItem, SkeletonTransferItem } from '@components/Bridge/TransferI
 import { useBridge } from '@store/bridge/hooks';
 import { useWeb3React } from '@web3-react/core';
 import { BridgeTransfer } from '@src/types';
+import { useAPI } from '@src/hooks/useAPI';
 
 const TransferHistory = () => {
   const [itemsToShow, setItemsToShow] = useState<number>(5);
 
   const { isActive } = useWeb3React();
-  const { history, historyLoading, loadHistory, onlyMyHistory, setOnlyMyHistory } = useBridge();
+  const { history, historyLoading, onlyMyHistory, setOnlyMyHistory } = useBridge();
+  const { loadHistory } = useAPI();
 
   useEffect(() => {
     loadHistory();
@@ -30,7 +32,9 @@ const TransferHistory = () => {
             id="toggleOwnAll"
             className="transactionsCheckbox"
             checked={onlyMyHistory}
-            onChange={() => setOnlyMyHistory(!onlyMyHistory)}
+            onChange={() => {
+              setOnlyMyHistory(!onlyMyHistory);
+            }}
           />
           <label htmlFor="toggleOwnAll" className="toggleTransactions">
             <div>All</div>
