@@ -8,13 +8,15 @@ import { useCallback } from 'react';
 
 export function useAPI() {
   const { account, isActive } = useWeb3React();
-  const { setHistory, onlyMyHistory } = useBridge();
+  const { setHistory, setHistoryLoading, onlyMyHistory } = useBridge();
   const { nativeContainer, networkContainer } = useChainContext();
 
   const loadHistory = useCallback(async () => {
     if (nativeContainer === undefined || networkContainer.size === 0) {
       return;
     }
+
+    setHistoryLoading(true);
 
     const currentBlock = await nativeContainer.provider.getBlockNumber();
     let startFrom = currentBlock - 100000;
@@ -27,6 +29,7 @@ export function useAPI() {
 
     if (events.length === 0) {
       setHistory([]);
+      setHistoryLoading(false);
     }
 
     const history: BridgeTransfer[] = [];
@@ -66,7 +69,8 @@ export function useAPI() {
     }
 
     setHistory(history.reverse());
-  }, [nativeContainer, networkContainer, setHistory, onlyMyHistory, account, isActive]);
+    setHistoryLoading(false);
+  }, [nativeContainer, networkContainer, setHistory, setHistoryLoading, onlyMyHistory, account, isActive]);
 
   return {
     loadHistory,

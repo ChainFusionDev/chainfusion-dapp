@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@store/index';
-import { setHistory, setOnlyMyHistory } from './reducer';
+import { setHistory, setHistoryLoading, setOnlyMyHistory } from './reducer';
 import { BridgeTransfer } from '@src/types';
 
 export function useBridge() {
@@ -13,6 +13,7 @@ export function useBridge() {
     onlyMyHistory: useAppSelector(({ bridge }) => bridge.onlyMyHistory),
 
     setHistory: useCallback((history: BridgeTransfer[]) => dispatch(setHistory(history)), []),
+    setHistoryLoading: useCallback((historyLoading: boolean) => dispatch(setHistoryLoading(historyLoading)), []),
     setOnlyMyHistory: useCallback((onlyMyHistory: boolean) => dispatch(setOnlyMyHistory(onlyMyHistory)), []),
   };
 }

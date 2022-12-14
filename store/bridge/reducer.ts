@@ -30,17 +30,19 @@ const bridgeSlice = createSlice({
   reducers: {
     setHistory: (state, action: PayloadAction<BridgeTransfer[]>) => {
       state.history = action.payload;
-      state.historyLoading = false;
+    },
+    setHistoryLoading: (state, action: PayloadAction<boolean>) => {
+      state.historyLoading = action.payload;
     },
     setOnlyMyHistory: (state, action: PayloadAction<boolean>) => {
       state.onlyMyHistory = action.payload;
-      state.historyLoading = true;
     },
   }
 });
 
 export const {
   setHistory,
+  setHistoryLoading,
   setOnlyMyHistory
 } = bridgeSlice.actions;
 export default bridgeSlice.reducer;
