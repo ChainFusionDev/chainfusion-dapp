@@ -1,6 +1,7 @@
 import { getChainById, getTokenByChainIdentifierAndAddress } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
+import { getAddressLink } from '@src/utils';
 import { EventRegistered } from '@store/bridge/reducer';
 import { BigNumber, utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
@@ -33,14 +34,6 @@ export const TransferItem = ({ event }: TransferItemProps) => {
   const toChain = getChainById(event._destinationChain.toNumber());
   const fromNetwork = networkContainer[fromChain?.identifier];
   const toNetwork = networkContainer[toChain?.identifier];
-
-  const getSenderAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, fromChain.explorer).href;
-  };
-
-  const getReceiverAddressUrl = (address: string) => {
-    return new URL(`/address/${address}`, toChain.explorer).href;
-  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -114,14 +107,14 @@ export const TransferItem = ({ event }: TransferItemProps) => {
           <div className="card-body">
             <span className="transaction-details">
               Sender:{' '}
-              <a href={getSenderAddressUrl(item.sender)} target="_blank" rel="noreferrer">
+              <a href={getAddressLink(fromChain, item.sender)} target="_blank" rel="noreferrer">
                 {item.sender}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>
             </span>
             <span className="transaction-details">
               Receiver:{' '}
-              <a href={getReceiverAddressUrl(item.receiver)} target="_blank" rel="noreferrer">
+              <a href={getAddressLink(toChain, item.receiver)} target="_blank" rel="noreferrer">
                 {item.receiver}
               </a>
               <span className="copy-token-icon" data-toggle="tooltip" data-tip data-for="transaction-copy"></span>

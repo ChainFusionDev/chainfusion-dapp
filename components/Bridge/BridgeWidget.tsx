@@ -1,13 +1,13 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { BigNumber, BytesLike, ethers, utils } from 'ethers';
+import { BigNumber, BytesLike, ethers, Event, utils } from 'ethers';
 import { ERC20Bridge, MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import FeeEstimate from '@components/Bridge/FeeEstimate';
 import SelectChainTokenModal from '@components/Modals/SelectChainTokenModal';
 import OptionsModal from '@components/Modals/OptionsModal';
 import TransferModal from '@components/Modals/TransferModal';
-import { getChain, getToken, getSupportedChains, getSupportedTokens, getChainById } from '@src/config';
+import { getChain, getToken, getSupportedChains, getSupportedTokens, getChainById, getNativeChain } from '@src/config';
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
@@ -15,6 +15,7 @@ import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
 import { decodeChainHistoryItem } from './TransferItem';
 import { useBridge } from '@store/bridge/hooks';
+import { getTransactionLink } from '@src/utils';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -58,6 +59,7 @@ const BridgeWidget = () => {
   });
 
   const [transferStage, setTransferStage] = useState<number>(1);
+  const [stageLinks, setStageLinks] = useState(new Map<number, string>());
 
   const [swap, setSwap] = useState(false);
 
@@ -220,6 +222,7 @@ const BridgeWidget = () => {
       return;
     }
 
+    setStageLinks(new Map());
     setTransferStage(1);
     setTransferPending(true);
     setShowTransferModal(true);
@@ -247,13 +250,20 @@ const BridgeWidget = () => {
         amount: amount,
       });
 
-      await (await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, fromNetwork.account, amount)).wait(1);
+      const depositTx = await (
+        await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, fromNetwork.account, amount)
+      ).wait(1);
+      setStageLinks(new Map(stageLinks.set(1, getTransactionLink(fromNetwork.chain, depositTx.transactionHash))));
       setTransferStage(2);
 
-      await onEventRegisteredPromise;
+      const registeredEvent = await onEventRegisteredPromise;
+      setStageLinks(new Map(stageLinks.set(2, getTransactionLink(getNativeChain(), registeredEvent.transactionHash))));
       setTransferStage(3);
 
-      await onTransferCompletePromise;
+      const transferCompleteEvent = await onTransferCompletePromise;
+      setStageLinks(
+        new Map(stageLinks.set(3, getTransactionLink(toNetwork.chain, transferCompleteEvent.transactionHash)))
+      );
       setTransferStage(4);
 
       loadHistory();
@@ -465,7 +475,12 @@ const BridgeWidget = () => {
         }}
       />
       <OptionsModal show={showOptionsModal} close={() => setShowOptionsModal(false)} />
-      <TransferModal show={showTransferModal} stage={transferStage} close={() => setShowTransferModal(false)} />
+      <TransferModal
+        show={showTransferModal}
+        stage={transferStage}
+        stageLinks={stageLinks}
+        close={() => setShowTransferModal(false)}
+      />
     </div>
   );
 };
@@ -484,11 +499,21 @@ async function onEventRegistered(
   eventRegistry: EventRegistry,
   relayBridge: RelayBridge,
   filter: EventRegisteredFilter
-): Promise<void> {
-  return new Promise<void>((resolve) => {
+): Promise<Event> {
+  return new Promise<Event>((resolve) => {
     eventRegistry.once(
       'EventRegistered',
-      async (hash: BytesLike, appContract: string, sourceChain: BigNumber, destinationChain: BigNumber) => {
+      async (
+        hash: BytesLike,
+        appContract: string,
+        sourceChain: BigNumber,
+        destinationChain: BigNumber,
+        data: BytesLike,
+        validatorFee: BigNumber,
+        eventType: BigNumber,
+        event: Event
+      ) => {
+        console.log(event);
         if (
           appContract !== filter.appContract ||
           !sourceChain.eq(filter.sourceChain) ||
@@ -501,20 +526,16 @@ async function onEventRegistered(
         const toChain = getChainById(destinationChain.toNumber());
 
         if (fromChain === undefined || toChain === undefined) {
-          console.log('Chains not available');
           return;
         }
 
         const sentData = await relayBridge.sentData(hash);
         const item = decodeChainHistoryItem(hash.toString(), fromChain, toChain, sentData);
         if (item === undefined || item.sender !== filter.sender || item.receiver !== filter.receiver) {
-          console.log('Shit');
-          console.log(item);
-          console.log(filter);
           return;
         }
 
-        resolve();
+        resolve(event);
 
         return false;
       }
@@ -529,16 +550,26 @@ interface TransferCompleteFilter {
   amount: BigNumber;
 }
 
-async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferCompleteFilter): Promise<void> {
-  return new Promise<void>((resolve) => {
-    erc20Bridge.on('Transferred', (sender: string, token: string, destinationChain: BigNumber, receiver: string) => {
-      if (sender !== filter.sender || receiver !== filter.receiver || token !== filter.token) {
-        return;
+async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferCompleteFilter): Promise<Event> {
+  return new Promise<Event>((resolve) => {
+    erc20Bridge.on(
+      'Transferred',
+      (
+        sender: string,
+        token: string,
+        destinationChain: BigNumber,
+        receiver: string,
+        amount: BigNumber,
+        event: Event
+      ) => {
+        if (sender !== filter.sender || receiver !== filter.receiver || token !== filter.token) {
+          return;
+        }
+
+        resolve(event);
+
+        return false;
       }
-
-      resolve();
-
-      return false;
-    });
+    );
   });
 }
