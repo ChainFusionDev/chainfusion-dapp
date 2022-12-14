@@ -14,11 +14,13 @@ export interface EventRegistered {
 interface BridgeState {
   history: EventRegistered[];
   historyLoading: boolean;
+  onlyMyHistory: boolean;
 }
 
 const initialState: BridgeState = {
   history: [],
   historyLoading: true,
+  onlyMyHistory: false,
 };
 
 const bridgeSlice = createSlice({
@@ -29,10 +31,14 @@ const bridgeSlice = createSlice({
       state.history = action.payload;
       state.historyLoading = false;
     },
+    setOnlyMyHistory: (state, action: PayloadAction<boolean>) => {
+      state.onlyMyHistory = action.payload;
+    },
   }
 });
 
 export const {
   setHistory,
+  setOnlyMyHistory
 } = bridgeSlice.actions;
 export default bridgeSlice.reducer;
