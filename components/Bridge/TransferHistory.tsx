@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { TransferItem, SkeletonTransferItem } from '@components/Bridge/TransferItem';
 import { useBridge } from '@store/bridge/hooks';
 import { useWeb3React } from '@web3-react/core';
