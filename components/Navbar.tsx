@@ -64,14 +64,14 @@ const Navbar = ({ module }: NavbarProps) => {
                 <a className="nav-link">Staking</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'slashing' && 'active'}`}>
-              <Link href="/slashing">
-                <a className="nav-link">Slashing</a>
-              </Link>
-            </li>
             <li className={`nav-item ${module === 'liquidity' && 'active'}`}>
               <Link href="/liquidity">
                 <a className="nav-link">Liquidity</a>
+              </Link>
+            </li>
+            <li className={`nav-item ${module === 'slashing' && 'active'}`}>
+              <Link href="/slashing">
+                <a className="nav-link">Slashing</a>
               </Link>
             </li>
             <li className={`nav-item ${module === 'analytics' && 'active'}`}>
