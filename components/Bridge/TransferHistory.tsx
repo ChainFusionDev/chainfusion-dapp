@@ -6,10 +6,10 @@ import { BridgeTransfer } from '@src/types';
 import { useAPI } from '@src/hooks/useAPI';
 
 const TransferHistory = () => {
-  const [itemsToShow, setItemsToShow] = useState<number>(5);
-
   const { isActive } = useWeb3React();
-  const { history, historyLoading, onlyMyHistory, setOnlyMyHistory } = useBridge();
+  const { history, historyLoading, historyItemsToShow, onlyMyHistory, setHistoryItemsToShow, setOnlyMyHistory } =
+    useBridge();
+
   const { loadHistory } = useAPI();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const TransferHistory = () => {
   }, [loadHistory]);
 
   const transactionItems = history
-    .filter((transfer: BridgeTransfer, index: number) => index < itemsToShow)
+    .filter((transfer: BridgeTransfer, index: number) => index < historyItemsToShow)
     .map((transfer: BridgeTransfer) => {
       return <TransferItem key={transfer.hash} transfer={transfer} />;
     });
@@ -55,9 +55,9 @@ const TransferHistory = () => {
       ) : (
         <></>
       )}
-      {history.length > itemsToShow && (
+      {history.length > historyItemsToShow && !historyLoading && (
         <div className="text-center mt-4 mb-2">
-          <a onClick={() => setItemsToShow(itemsToShow + 5)} className="show-more-btn">
+          <a onClick={() => setHistoryItemsToShow(historyItemsToShow + 5)} className="show-more-btn">
             Show More
           </a>
         </div>

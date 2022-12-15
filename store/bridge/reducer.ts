@@ -15,12 +15,14 @@ export interface EventRegistered {
 interface BridgeState {
   history: BridgeTransfer[];
   historyLoading: boolean;
+  historyItemsToShow: number;
   onlyMyHistory: boolean;
 }
 
 const initialState: BridgeState = {
   history: [],
   historyLoading: true,
+  historyItemsToShow: 5,
   onlyMyHistory: false,
 };
 
@@ -33,6 +35,12 @@ const bridgeSlice = createSlice({
     },
     setHistoryLoading: (state, action: PayloadAction<boolean>) => {
       state.historyLoading = action.payload;
+      if (action.payload) {
+        state.historyItemsToShow = initialState.historyItemsToShow;
+      }
+    },
+    setHistoryItemsToShow: (state, actions: PayloadAction<number>) => {
+      state.historyItemsToShow = actions.payload;
     },
     setOnlyMyHistory: (state, action: PayloadAction<boolean>) => {
       state.onlyMyHistory = action.payload;
@@ -43,6 +51,7 @@ const bridgeSlice = createSlice({
 export const {
   setHistory,
   setHistoryLoading,
+  setHistoryItemsToShow,
   setOnlyMyHistory
 } = bridgeSlice.actions;
 export default bridgeSlice.reducer;
