@@ -83,13 +83,13 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
         </div>
         <div className="liquidity-card-left flex-sm-grow-1">
           <div className="liquidity-sum">
-            Provided total:{' '}
+            Provided:{' '}
             <span>
               {isLoading ? '...' : utils.formatEther(providedLiquidity)} <strong>{token.symbol}</strong>
             </span>
           </div>
           <div className="liquidity-sum">
-            Available total:{' '}
+            Available:{' '}
             <span>
               {isLoading ? '...' : utils.formatEther(availableLiquidity)} <strong>{token.symbol}</strong>
             </span>
@@ -97,7 +97,7 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
         </div>
         <div className="liquidity-card-right flex-sm-grow-1">
           <div className="liquidity-provided">
-            Provided:
+            Balance:
             <div className="liquidity-provided-sum">
               <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
               <button className="liquidity-provided-plus" onClick={onAddLiquidity}>
