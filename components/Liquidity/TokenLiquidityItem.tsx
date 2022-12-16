@@ -1,5 +1,7 @@
+import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
+import { trimDecimals } from '@src/utils';
 import { useWeb3React } from '@web3-react/core';
 import { BigNumber, utils } from 'ethers';
 import { useEffect, useState } from 'react';
@@ -48,8 +50,11 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
     const liquidityPools = network.contracts.liqidityPools;
 
     const loadLiqudity = async () => {
+      const mockTokenFactory = new MockToken__factory(network.provider.getSigner());
+      const mockToken = mockTokenFactory.attach(tokenAddress);
+
       const providedLiquidityPromise = liquidityPools.providedLiquidity(tokenAddress);
-      const availableLiquidityPromise = liquidityPools.availableLiquidity(tokenAddress);
+      const availableLiquidityPromise = mockToken.balanceOf(liquidityPools.address);
       const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, account ?? '0x0');
       const ourRewardsPromise = liquidityPools.rewardsOwing(tokenAddress);
 
@@ -59,10 +64,10 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
       const ourRewards = await ourRewardsPromise;
 
       if (pending) {
-        setProvidedLiquidity(providedLiquidity);
-        setAvailableLiquidity(availableLiquidity);
-        setOurLiquidity(ourLiquidity.balance);
-        setOurRewards(ourRewards);
+        setProvidedLiquidity(trimDecimals(providedLiquidity, token.decimals, 2));
+        setAvailableLiquidity(trimDecimals(availableLiquidity, token.decimals, 2));
+        setOurLiquidity(trimDecimals(ourLiquidity.balance, token.decimals, 2));
+        setOurRewards(trimDecimals(ourRewards, token.decimals, 2));
         setIsLoading(false);
       }
     };
