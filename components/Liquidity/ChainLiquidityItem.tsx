@@ -1,4 +1,3 @@
-import { MockToken__factory } from '@chainfusion/chainfusion-contracts';
 import { getSupportedTokens } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain } from '@src/types';
@@ -11,10 +10,10 @@ export interface ChainLiquidityItemProps {
 }
 
 export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
+  const { networkContainer } = useChainContext();
+
   const [isLoading, setIsLoading] = useState(true);
   const [tvl, setTVL] = useState(BigNumber.from(0));
-
-  const { networkContainer } = useChainContext();
 
   const tokens = getSupportedTokens().filter((token) => token.chains[chain.identifier] !== undefined);
 
@@ -30,7 +29,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
       return;
     }
 
-    const liquidityPoolsAddress = network.contracts.liqidityPools.address;
+    const liquidityPools = network.contracts.liqidityPools;
 
     const loadTVL = async () => {
       let tvl: BigNumber = BigNumber.from(0);
@@ -41,10 +40,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
           continue;
         }
 
-        const mockTokenFactory = new MockToken__factory(network.provider.getSigner());
-        const mockToken = mockTokenFactory.attach(tokenAddress);
-
-        tokenTVLPromises.push(mockToken.balanceOf(liquidityPoolsAddress));
+        tokenTVLPromises.push(liquidityPools.availableLiquidity(tokenAddress));
       }
 
       for (const tvlPromise of tokenTVLPromises) {
