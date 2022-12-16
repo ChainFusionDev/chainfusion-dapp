@@ -45,7 +45,7 @@ const OptionsModal = ({ show, close }: OptionsModalProps) => {
           type="button"
           className="btn-done"
           onClick={() => {
-            if (utils.isAddress(receiverOption ?? '')) {
+            if (utils.isAddress(receiverOption ?? '') || receiverOption === '' || receiverOption === undefined) {
               setReceiver(receiverOption);
             } else {
               setReceiverOption(undefined);
