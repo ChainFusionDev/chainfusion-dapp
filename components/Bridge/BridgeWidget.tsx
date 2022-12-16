@@ -142,17 +142,21 @@ const BridgeWidget = () => {
         return;
       }
 
-      let allowance: BigNumber = BigNumber.from(0);
+      let allowancePromise = new Promise<BigNumber>((resolve) => resolve(BigNumber.from(0)));
       if (fromNetwork.connected) {
         const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
         const mockToken = mockTokenFactory.attach(tokenFromAddress);
-        allowance = await mockToken.allowance(fromNetwork.account, fromNetwork.contracts.erc20Bridge.address);
+        allowancePromise = mockToken.allowance(fromNetwork.account, fromNetwork.contracts.erc20Bridge.address);
       }
 
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
-      const validatorsFee = await fromNetwork.contracts.feeManager.validatorRefundFee();
-      const estimatedFee = await fromNetwork.contracts.feeManager.calculateFee(tokenFromAddress, amount);
+      const validatorsFeePromise = fromNetwork.contracts.feeManager.validatorRefundFee();
+      const estimatedFeePromise = fromNetwork.contracts.feeManager.calculateFee(tokenFromAddress, amount);
+
+      const allowance = await allowancePromise;
+      const validatorsFee = await validatorsFeePromise;
+      const estimatedFee = await estimatedFeePromise;
 
       const willReceive = amount.sub(estimatedFee);
 
