@@ -39,6 +39,8 @@ const BridgeWidget = () => {
   const [needsApproval, setNeedsApproval] = useState(true);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
 
+  const isLoading = approvalPending || transferPending;
+
   const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
   const [fromString, setFromString] = useState<string>('');
   const [toString, setToString] = useState<string>('');
@@ -403,7 +405,7 @@ const BridgeWidget = () => {
       </div>
       <div className="form-group form-block">
         <span className="token-amount">From:</span>
-        <div className="select-token" onClick={() => setShowFromModal(true)}>
+        <button disabled={isLoading} className="select-token" onClick={() => setShowFromModal(true)}>
           <span className="blockchanin-label send-from">
             <img className="chain-icon-sm" src={`/img/${chainFrom.identifier}.svg`} alt={chainFrom.name} />
             {` ${chainFrom.name}`}
@@ -413,8 +415,9 @@ const BridgeWidget = () => {
             {` ${tokenFrom.symbol}`}
           </span>
           <i className="fa-light fa-chevron-down"></i>
-        </div>
+        </button>
         <input
+          disabled={isLoading}
           type="text"
           autoComplete="off"
           className={`form-control ${balance.gt(0) && 'bridge-input-with-balance'}`}
@@ -426,22 +429,23 @@ const BridgeWidget = () => {
         {balance.gt(0) && (
           <div className="bridge-balance amount-afterform">
             Available:{' '}
-            <span
+            <button
+              disabled={isLoading}
               onClick={() => {
                 setFromString(ethers.utils.formatUnits(balance, tokenFrom.decimals));
               }}
             >
               {ethers.utils.formatUnits(balance, tokenFrom.decimals)}
-            </span>
+            </button>
           </div>
         )}
       </div>
-      <span className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
+      <button disabled={isLoading} className={`change-token ${swap && 'swap'}`} onClick={swapFromTo}>
         <i className="fa-regular fa-arrow-up-arrow-down"></i>
-      </span>
+      </button>
       <div className="form-group form-block">
         <span className="token-amount">To:</span>
-        <div className="select-token" onClick={() => setShowToModal(true)}>
+        <button disabled={isLoading} className="select-token" onClick={() => setShowToModal(true)}>
           <span className="blockchanin-label send-to">
             <img className="chain-icon-sm" src={`/img/${chainTo.identifier}.svg`} alt={chainTo.name} />
             {` ${chainTo.name}`}
@@ -451,7 +455,7 @@ const BridgeWidget = () => {
             {` ${tokenTo.symbol}`}
           </span>
           <i className="fa-light fa-chevron-down"></i>
-        </div>
+        </button>
         <input
           disabled={true}
           type="text"

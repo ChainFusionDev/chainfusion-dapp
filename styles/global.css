@@ -512,7 +512,6 @@ label {
 
 .select-token {
   position: absolute;
-  cursor: pointer;
   text-align: center;
   right: 9px;
   top: 8px;
@@ -526,7 +525,7 @@ label {
   z-index: 2;
 }
 
-.select-token:hover {
+.select-token:not([disabled]):hover {
   border: 1px solid var(--light);
 }
 
@@ -575,7 +574,6 @@ label {
 
 .change-token {
   position: absolute;
-  cursor: pointer;
   top: 165px;
   left: 0;
   right: 0;
@@ -1864,9 +1862,8 @@ button .fa-spinner {
   user-select: none;
 }
 
-.amount-afterform span {
+.amount-afterform button {
   display: contents;
-  cursor: pointer;
   color: var(--main-color);
   font-weight: 600;
 }
