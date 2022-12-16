@@ -1,5 +1,5 @@
 import { BridgeTransfer, Chain } from '@src/types';
-import { BigNumber, BytesLike, ethers, utils } from 'ethers';
+import { BigNumber, BytesLike, utils } from 'ethers';
 import { getTokenByChainIdentifierAndAddress } from './config';
 
 export const nullAddress = '0x0000000000000000000000000000000000000000';
