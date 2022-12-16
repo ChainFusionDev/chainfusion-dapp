@@ -61,7 +61,7 @@ export function useAPI() {
         continue;
       }
 
-      if (onlyMyHistory && isActive && (transfer.sender !== account || transfer.receiver !== account)) {
+      if (onlyMyHistory && isActive && transfer.sender !== account && transfer.receiver !== account) {
         continue;
       }
 

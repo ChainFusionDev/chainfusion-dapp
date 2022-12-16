@@ -13,6 +13,7 @@ export interface EventRegistered {
 }
 
 interface BridgeState {
+  receiver: string | undefined;
   history: BridgeTransfer[];
   historyLoading: boolean;
   historyItemsToShow: number;
@@ -20,6 +21,7 @@ interface BridgeState {
 }
 
 const initialState: BridgeState = {
+  receiver: undefined,
   history: [],
   historyLoading: true,
   historyItemsToShow: 5,
@@ -30,6 +32,9 @@ const bridgeSlice = createSlice({
   name: 'bridge',
   initialState,
   reducers: {
+    setReceiver: (state, actions: PayloadAction<string | undefined>) => {
+      state.receiver = actions.payload;
+    },
     setHistory: (state, action: PayloadAction<BridgeTransfer[]>) => {
       state.history = action.payload;
     },
@@ -49,6 +54,7 @@ const bridgeSlice = createSlice({
 });
 
 export const {
+  setReceiver,
   setHistory,
   setHistoryLoading,
   setHistoryItemsToShow,
