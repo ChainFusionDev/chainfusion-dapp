@@ -91,7 +91,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   const initialNetworkContainer: NetworkContainer = {};
   const chains = getSupportedChains();
   for (const chain of chains) {
-    const provider = new ethers.providers.JsonRpcProvider(chain.rpc, chain.chainId);
+    const provider = new ethers.providers.StaticJsonRpcProvider(chain.rpc, chain.chainId);
 
     const chainNetwork: ChainNetwork = {
       chain: chain,
@@ -122,7 +122,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
       const nativeContracts = getNativeContracts();
 
       let connected = false;
-      let nativeProvider = new providers.JsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
+      let nativeProvider = new providers.StaticJsonRpcProvider(nativeChain.rpc, nativeChain.chainId);
       if (provider !== undefined && chainId === nativeChain.chainId) {
         nativeProvider = provider;
         connected = true;
@@ -157,7 +157,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
         return undefined;
       }
 
-      const provider = new providers.JsonRpcProvider(chain.rpc, chain.chainId);
+      const provider = new providers.StaticJsonRpcProvider(chain.rpc, chain.chainId);
 
       const erc20BridgeFactory = new ERC20Bridge__factory(provider.getSigner());
       const erc20Bridge = erc20BridgeFactory.attach(erc20BridgeAddress);
@@ -215,7 +215,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     const networkContainer = new Map<string, ChainNetwork>();
 
     for (const chain of chains) {
-      let chainProvider: providers.JsonRpcProvider = new providers.JsonRpcProvider(chain.rpc, chain.chainId);
+      let chainProvider: providers.JsonRpcProvider = new providers.StaticJsonRpcProvider(chain.rpc, chain.chainId);
       let chainAccount = defaultAccount;
       let chainConnected = false;
 
