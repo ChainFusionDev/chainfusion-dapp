@@ -100,12 +100,12 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
             Provided:
             <div className="liquidity-provided-sum">
               <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
-              <div className="liquidity-provided-plus" onClick={onAddLiquidity}>
+              <button className="liquidity-provided-plus" onClick={onAddLiquidity}>
                 <i className="fa-regular fa-plus"></i>
-              </div>
-              <div className="liquidity-provided-minus" onClick={onRemoveLiquidity}>
+              </button>
+              <button className="liquidity-provided-minus" onClick={onRemoveLiquidity}>
                 <i className="fa-regular fa-minus"></i>
-              </div>
+              </button>
             </div>
           </div>
           <div className="liquidity-rewards">

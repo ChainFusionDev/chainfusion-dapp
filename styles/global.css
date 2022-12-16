@@ -2350,7 +2350,6 @@ button .fa-spinner {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   width: 20px;
   height: 20px;
   font-size: 0.625rem !important;
