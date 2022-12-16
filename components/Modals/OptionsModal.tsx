@@ -1,5 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
+import { useBridge } from '@store/bridge/hooks';
+import { utils } from 'ethers';
+import { useWeb3React } from '@web3-react/core';
 
 interface OptionsModalProps {
   show: boolean;
@@ -7,6 +10,10 @@ interface OptionsModalProps {
 }
 
 const OptionsModal = ({ show, close }: OptionsModalProps) => {
+  const { account } = useWeb3React();
+  const { receiver, setReceiver } = useBridge();
+  const [receiverOption, setReceiverOption] = useState(receiver);
+
   return (
     <Modal show={show} onHide={close}>
       <ModalTitle close={close}>Options</ModalTitle>
@@ -17,16 +24,36 @@ const OptionsModal = ({ show, close }: OptionsModalProps) => {
             type="text"
             className="input-standart"
             id="receiver"
-            value="0xd13F66863ED91704e386C57501F00b5307CAbA18"
-            placeholder="Please write your wallet.."
+            value={receiverOption ?? ''}
+            onChange={(e) => setReceiverOption(e.target.value)}
+            placeholder={account ?? 'Enter transfer receiver address'}
           />
         </div>
       </ModalBody>
       <ModalFooter>
-        <button type="button" className="btn-cancel" onClick={close}>
+        <button
+          type="button"
+          className="btn-cancel"
+          onClick={() => {
+            setReceiverOption(receiver);
+            close();
+          }}
+        >
           Cancel
         </button>
-        <button type="button" className="btn-done" onClick={close}>
+        <button
+          type="button"
+          className="btn-done"
+          onClick={() => {
+            if (utils.isAddress(receiverOption ?? '')) {
+              setReceiver(receiverOption);
+            } else {
+              setReceiverOption(undefined);
+            }
+
+            close();
+          }}
+        >
           <i className="fa-regular fa-check"></i> Save
         </button>
       </ModalFooter>

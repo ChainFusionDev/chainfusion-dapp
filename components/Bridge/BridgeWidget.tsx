@@ -13,8 +13,9 @@ import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { decodeBridgeTransfer, getTransactionLink } from '@src/utils';
+import { decodeBridgeTransfer, decodeSendEventData, getTransactionLink } from '@src/utils';
 import { useAPI } from '@src/hooks/useAPI';
+import { useBridge } from '@store/bridge/hooks';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
@@ -64,6 +65,8 @@ const BridgeWidget = () => {
 
   const chains = getSupportedChains();
   const tokens = getSupportedTokens();
+
+  const { receiver } = useBridge();
 
   const [chainFromLocal, setChainFrom] = useLocalStorage<string>('chain-from');
   const [tokenFromLocal, setTokenFrom] = useLocalStorage<string>('token-from');
@@ -230,13 +233,18 @@ const BridgeWidget = () => {
       const { erc20Bridge } = fromNetwork.contracts;
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
+      let depositReceiver = fromNetwork.account;
+      if (receiver !== undefined) {
+        depositReceiver = receiver;
+      }
+
       const onEventRegisteredPromise = onEventRegistered(
         nativeContainer.eventRegistry,
         fromNetwork.contracts.relayBridge,
         {
           appContract: erc20Bridge.address,
           sender: fromNetwork.account,
-          receiver: fromNetwork.account,
+          receiver: depositReceiver,
           sourceChain: BigNumber.from(chainFrom.chainId),
           destinationChain: BigNumber.from(chainTo.chainId),
         }
@@ -244,13 +252,13 @@ const BridgeWidget = () => {
 
       const onTransferCompletePromise = onTransferComplete(toNetwork.contracts.erc20Bridge, {
         sender: fromNetwork.account,
-        receiver: fromNetwork.account,
+        receiver: depositReceiver,
         token: tokenToAddress,
         amount: amount,
       });
 
       const depositTx = await (
-        await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, fromNetwork.account, amount)
+        await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, depositReceiver, amount)
       ).wait(1);
       setStageLinks(new Map(stageLinks.set(1, getTransactionLink(fromNetwork.chain, depositTx.transactionHash))));
       setTransferStage(2);
@@ -512,7 +520,6 @@ async function onEventRegistered(
         eventType: BigNumber,
         event: Event
       ) => {
-        console.log(event);
         if (
           appContract !== filter.appContract ||
           !sourceChain.eq(filter.sourceChain) ||
@@ -528,7 +535,11 @@ async function onEventRegistered(
           return;
         }
 
-        const sentData = await relayBridge.sentData(hash);
+        const sentData = decodeSendEventData(data);
+        if (sentData === undefined) {
+          return;
+        }
+
         const item = decodeBridgeTransfer(hash.toString(), fromChain, toChain, sentData);
         if (item === undefined || item.sender !== filter.sender || item.receiver !== filter.receiver) {
           return;
