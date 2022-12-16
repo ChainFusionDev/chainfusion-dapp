@@ -112,9 +112,11 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
             Rewards:
             <div className="liquidity-rewards-sum">
               <span>{isLoading ? '...' : utils.formatEther(ourRewards)}</span>
-              <div className="liquidity-collect" data-toggle="modal" data-target="#modalLiquidityCollect">
-                Collect
-              </div>
+              {ourRewards.gt(0) && (
+                <button data-toggle="modal" data-target="#modalLiquidityCollect">
+                  Collect
+                </button>
+              )}
             </div>
           </div>
         </div>
