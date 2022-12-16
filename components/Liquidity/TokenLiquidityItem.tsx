@@ -1,7 +1,7 @@
 import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
-import { trimDecimals } from '@src/utils';
+import { nullAddress, trimDecimals } from '@src/utils';
 import { useWeb3React } from '@web3-react/core';
 import { BigNumber, utils } from 'ethers';
 import { useEffect, useState } from 'react';
@@ -55,7 +55,7 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
 
       const providedLiquidityPromise = liquidityPools.providedLiquidity(tokenAddress);
       const availableLiquidityPromise = mockToken.balanceOf(liquidityPools.address);
-      const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, account ?? '0x0');
+      const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, account ?? nullAddress);
       const ourRewardsPromise = liquidityPools.rewardsOwing(tokenAddress);
 
       const providedLiquidity = await providedLiquidityPromise;

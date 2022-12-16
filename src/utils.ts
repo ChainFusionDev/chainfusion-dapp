@@ -1,6 +1,8 @@
 import { BridgeTransfer, Chain } from '@src/types';
-import { BigNumber, BytesLike, utils } from 'ethers';
+import { BigNumber, BytesLike, ethers, utils } from 'ethers';
 import { getTokenByChainIdentifierAndAddress } from './config';
+
+export const nullAddress = '0x0000000000000000000000000000000000000000';
 
 export const getAddressLink = (chain: Chain, address: string): string => {
   return new URL(`/address/${address}`, chain.explorer).href;
