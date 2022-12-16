@@ -10,31 +10,9 @@ import { useStaking } from '@store/staking/hooks';
 import { BigNumber, utils } from 'ethers';
 import { defaultStakingInfo } from '@store/staking/reducer';
 import { useWeb3React } from '@web3-react/core';
-import Alert from '@components/Alerts/Alert';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-
-const MsgStakeSuccess = () => (
-  <Alert
-    alertType="success"
-    icon="fa-circle-check"
-    title="Success"
-    message="You have successfully increased your stake"
-  />
-);
-
-const MsgAnnounceSuccess = () => (
-  <Alert
-    alertType="success"
-    icon="fa-circle-check"
-    title="Success"
-    message="You have successfully announced withdrawal"
-  />
-);
-
-const MsgWithdrawSuccess = () => (
-  <Alert alertType="success" icon="fa-circle-check" title="Success" message="You have successfully withdwarn stake" />
-);
+import { MsgAnnounceSuccess, MsgStakeSuccess, MsgWithdrawSuccess } from '@components/Alerts/Staking';
 
 const Staking = () => {
   const [showIncreaseStakeModal, setShowIncreaseStakeModal] = useState(false);

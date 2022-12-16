@@ -4,38 +4,33 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 const MsgSuccess = () => (
-  <Alert
-    alertType="success"
-    icon="fa-circle-check"
-    title="Success"
-    message="You have successfully increased liquidity"
-  />
+  <Alert alertType="success" icon="fa-circle-check" title="Success">
+    You have successfully increased liquidity
+  </Alert>
 );
 
 const MsgInfo = () => (
-  <Alert
-    alertType="info"
-    icon="fa-circle-info"
-    title="Info"
-    message="You do not have enough tokens to increase liquidity"
-  />
+  <Alert alertType="info" icon="fa-circle-info" title="Info">
+    You do not have enough tokens to increase liquidity
+  </Alert>
 );
 
 const MsgWarning = () => (
-  <Alert
-    alertType="warning"
-    icon="fa-circle-exclamation"
-    title="Warning"
-    message="You have a limit on increasing liquidity"
-  />
+  <Alert alertType="warning" icon="fa-circle-exclamation" title="Warning">
+    You have a limit on increasing liquidity
+  </Alert>
 );
 
 const MsgError = () => (
-  <Alert alertType="error" icon="fa-circle-xmark" title="Error" message="There was an error adding liquidity" />
+  <Alert alertType="error" icon="fa-circle-xmark" title="Error">
+    There was an error adding liquidity
+  </Alert>
 );
 
 const MsgDeleted = () => (
-  <Alert alertType="deleted" icon="fa-circle-trash" title="Deleted" message="You have successfully removed liquidity" />
+  <Alert alertType="deleted" icon="fa-circle-trash" title="Deleted">
+    You have successfully removed liquidity
+  </Alert>
 );
 
 const Analytics = () => {

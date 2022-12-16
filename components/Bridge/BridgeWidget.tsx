@@ -11,57 +11,21 @@ import { getChain, getToken, getSupportedChains, getSupportedTokens, getChainByI
 import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
-import Alert from '@components/Alerts/Alert';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
 import { decodeBridgeTransfer, decodeSendEventData, getTransactionLink } from '@src/utils';
 import { useAPI } from '@src/hooks/useAPI';
 import { useBridge } from '@store/bridge/hooks';
+import {
+  MsgApproveCanceled,
+  MsgApproveSuccess,
+  MsgTransferCanceled,
+  MsgTransferSuccess,
+} from '@components/Alerts/Bridge';
 
 interface FeeInfo {
   validatorsFee: BigNumber;
   liquidityFee: BigNumber;
 }
-interface MsgApproveSuccessProps {
-  chain: string;
-  token: string;
-  amount: string;
-}
-
-const MsgApproveSuccess = ({ chain, token, amount }: MsgApproveSuccessProps) => (
-  <Alert alertType="success" icon="fa-circle-check" title="Success">
-    <p>Successfully approved token spending</p>
-    <p>
-      {amount} {token} on {chain}
-    </p>
-  </Alert>
-);
-
-const MsgApproveCanceled = () => (
-  <Alert alertType="info" icon="fa-circle-info" title="Info">
-    Token approval was canceled
-  </Alert>
-);
-
-interface MsgTransferSuccessProps {
-  chain: string;
-  token: string;
-  amount: string;
-}
-
-const MsgTransferSuccess = ({ chain, token, amount }: MsgTransferSuccessProps) => (
-  <Alert alertType="success" icon="fa-circle-check" title="Success">
-    <p>Successfully transferred</p>
-    <p>
-      {amount} {token} to {chain}
-    </p>
-  </Alert>
-);
-
-const MsgTransferCanceled = () => (
-  <Alert alertType="info" icon="fa-circle-info" title="Info">
-    Transfer was canceled
-  </Alert>
-);
 
 const BridgeWidget = () => {
   const [showFromModal, setShowFromModal] = useState(false);
