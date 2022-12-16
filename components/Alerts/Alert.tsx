@@ -1,14 +1,14 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 type AlertProps = {
   alertType: string;
   icon: string;
   title: string;
-  message: string;
+  children?: ReactNode;
 };
 
-const Alert = ({ alertType, icon, title, message }: AlertProps) => {
+const Alert = ({ alertType, icon, title, children }: AlertProps) => {
   return (
     <div className={`alertMsg ${alertType}`}>
       <div className="icon">
@@ -16,7 +16,7 @@ const Alert = ({ alertType, icon, title, message }: AlertProps) => {
       </div>
       <div className="alertMsgContent">
         <div className="titleAlert">{title}</div>
-        <p>{message}</p>
+        <p>{children}</p>
       </div>
     </div>
   );

@@ -21,18 +21,46 @@ interface FeeInfo {
   validatorsFee: BigNumber;
   liquidityFee: BigNumber;
 }
+interface MsgApproveSuccessProps {
+  chain: string;
+  token: string;
+  amount: string;
+}
 
-const MsgApproveSuccess = () => (
-  <Alert
-    alertType="success"
-    icon="fa-circle-check"
-    title="Success"
-    message="You have successfully approved token spending"
-  />
+const MsgApproveSuccess = ({ chain, token, amount }: MsgApproveSuccessProps) => (
+  <Alert alertType="success" icon="fa-circle-check" title="Success">
+    <p>Successfully approved token spending</p>
+    <p>
+      {amount} {token} on {chain}
+    </p>
+  </Alert>
 );
 
-const MsgTransferSuccess = () => (
-  <Alert alertType="success" icon="fa-circle-check" title="Success" message="Successfully transferred token" />
+const MsgApproveCanceled = () => (
+  <Alert alertType="info" icon="fa-circle-info" title="Info">
+    Token approval was canceled
+  </Alert>
+);
+
+interface MsgTransferSuccessProps {
+  chain: string;
+  token: string;
+  amount: string;
+}
+
+const MsgTransferSuccess = ({ chain, token, amount }: MsgTransferSuccessProps) => (
+  <Alert alertType="success" icon="fa-circle-check" title="Success">
+    <p>Successfully transferred</p>
+    <p>
+      {amount} {token} to {chain}
+    </p>
+  </Alert>
+);
+
+const MsgTransferCanceled = () => (
+  <Alert alertType="info" icon="fa-circle-info" title="Info">
+    Transfer was canceled
+  </Alert>
 );
 
 const BridgeWidget = () => {
@@ -203,11 +231,28 @@ const BridgeWidget = () => {
       const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
 
       await (await mockToken.approve(erc20Bridge.address, amount)).wait();
-    } catch (e) {
+
+      toast(
+        <MsgApproveSuccess
+          chain={chainFrom.name}
+          token={tokenFrom.symbol}
+          amount={utils.formatUnits(amount, tokenFrom.decimals)}
+        />
+      );
+    } catch (/* eslint-disable @typescript-eslint/no-explicit-any */ e: any) {
+      if (typeof e.code === 'string') {
+        const code = e.code as string;
+        switch (code) {
+          case 'ACTION_REJECTED':
+            toast(<MsgApproveCanceled />);
+            setShowTransferModal(false);
+            break;
+        }
+      }
+
       console.error(e);
     }
 
-    toast(<MsgApproveSuccess />);
     setApprovalPending(false);
   };
 
@@ -274,11 +319,28 @@ const BridgeWidget = () => {
       setTransferStage(4);
 
       loadHistory();
-    } catch (e) {
+
+      toast(
+        <MsgTransferSuccess
+          chain={chainTo.name}
+          token={tokenFrom.symbol}
+          amount={utils.formatUnits(amount, tokenFrom.decimals)}
+        />
+      );
+    } catch (/* eslint-disable @typescript-eslint/no-explicit-any */ e: any) {
+      if (typeof e.code === 'string') {
+        const code = e.code as string;
+        switch (code) {
+          case 'ACTION_REJECTED':
+            toast(<MsgTransferCanceled />);
+            setShowTransferModal(false);
+            break;
+        }
+      }
+
       console.error(e);
     }
 
-    toast(<MsgTransferSuccess />);
     setFromString('');
     setTransferPending(false);
   };
