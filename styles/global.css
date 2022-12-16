@@ -2350,7 +2350,6 @@ button .fa-spinner {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   width: 20px;
   height: 20px;
   font-size: 0.625rem !important;
@@ -2381,7 +2380,6 @@ button .fa-spinner {
 .liquidity-card-right .liquidity-rewards .liquidity-collect {
   display: flex;
   align-items: center;
-  cursor: pointer;
   padding: 1px 10px;
   font-weight: 500;
   font-size: 0.6875rem;

@@ -11,6 +11,8 @@ import {
   ERC20Bridge__factory,
   FeeManager,
   FeeManager__factory,
+  LiquidityPools,
+  LiquidityPools__factory,
   TokenManager,
   TokenManager__factory,
 } from '@chainfusion/erc-20-bridge-contracts';
@@ -58,6 +60,7 @@ export interface ChainAddresses {
   erc20Bridge: string;
   relayBridge: string;
   tokenManager: string;
+  liquidityPools: string;
   feeManager: string;
 }
 
@@ -65,6 +68,7 @@ export interface ChainContracts {
   erc20Bridge: ERC20Bridge;
   relayBridge: RelayBridge;
   tokenManager: TokenManager;
+  liqidityPools: LiquidityPools;
   feeManager: FeeManager;
 }
 
@@ -160,12 +164,14 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
 
       const relayBridgeAddressPromise = erc20Bridge.relayBridge();
       const tokenManagerAddressPromise = erc20Bridge.tokenManager();
+      const liquidityPoolsAddressPromise = erc20Bridge.liquidityPools();
       const feeManagerAddressPromise = erc20Bridge.feeManager();
 
       const chainAddresses: ChainAddresses = {
         erc20Bridge: erc20BridgeAddress,
         relayBridge: await relayBridgeAddressPromise,
         tokenManager: await tokenManagerAddressPromise,
+        liquidityPools: await liquidityPoolsAddressPromise,
         feeManager: await feeManagerAddressPromise,
       };
 
@@ -241,6 +247,9 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
         const tokenManagerFactory = new TokenManager__factory(signer);
         const tokenManager = tokenManagerFactory.attach(chainAddresses.tokenManager);
 
+        const liqidityPoolsFactory = new LiquidityPools__factory(signer);
+        const liqidityPools = liqidityPoolsFactory.attach(chainAddresses.liquidityPools);
+
         const feeManagerFactory = new FeeManager__factory(signer);
         const feeManager = feeManagerFactory.attach(chainAddresses.feeManager);
 
@@ -248,6 +257,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
           erc20Bridge,
           relayBridge,
           tokenManager,
+          liqidityPools,
           feeManager,
         };
       }
