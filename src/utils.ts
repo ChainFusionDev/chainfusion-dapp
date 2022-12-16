@@ -10,6 +10,10 @@ export const getTransactionLink = (chain: Chain, txHash: string): string => {
   return new URL(`/tx/${txHash}`, chain.explorer).href;
 };
 
+export const trimDecimals = (value: BigNumber, decimals: number, showDecimals: number) => {
+  return value.sub(value.mod(BigNumber.from(10).pow(decimals - showDecimals)));
+};
+
 export const decodeSendEventData = (data: BytesLike): BytesLike | undefined => {
   try {
     const decodeResult = utils.defaultAbiCoder.decode(['bytes'], data);

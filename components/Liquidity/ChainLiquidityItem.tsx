@@ -1,6 +1,8 @@
+import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { getSupportedTokens } from '@src/config';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain } from '@src/types';
+import { trimDecimals } from '@src/utils';
 import { BigNumber, utils } from 'ethers';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -40,7 +42,10 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
           continue;
         }
 
-        tokenTVLPromises.push(liquidityPools.availableLiquidity(tokenAddress));
+        const mockTokenFactory = new MockToken__factory(network.provider.getSigner());
+        const mockToken = mockTokenFactory.attach(tokenAddress);
+
+        tokenTVLPromises.push(mockToken.balanceOf(liquidityPools.address));
       }
 
       for (const tvlPromise of tokenTVLPromises) {
@@ -48,7 +53,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
       }
 
       if (pending) {
-        setTVL(tvl.sub(tvl.mod(BigNumber.from(10).pow(18))));
+        setTVL(trimDecimals(tvl, 18, 2));
         setIsLoading(false);
       }
     };
