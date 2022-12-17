@@ -1,5 +1,5 @@
 import { BridgeTransfer } from '@src/types';
-import { getAddressLink } from '@src/utils';
+import { getAddressLink, trimDecimals } from '@src/utils';
 import { utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -37,7 +37,11 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
             <span className="blockchain-fees">
               <img src={`/img/${transfer.fromChain.identifier}.svg`} alt={`${transfer.fromChain.name} Logo`} />
               &nbsp;
-              {transfer.fromChain.name}: <strong>{utils.formatUnits(amountFrom, transfer.token.decimals)}</strong>&nbsp;
+              {transfer.fromChain.name}:{' '}
+              <strong>
+                {utils.formatUnits(trimDecimals(amountFrom, transfer.token.decimals, 4), transfer.token.decimals)}
+              </strong>
+              &nbsp;
             </span>
             <span className="token-fees">
               <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
@@ -52,7 +56,11 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
             <span className="blockchain-fees">
               <img src={`/img/${transfer.toChain.identifier}.svg`} alt={`${transfer.toChain.name} Logo`} />
               &nbsp;
-              {transfer.toChain.name}: <strong>{utils.formatUnits(amountTo, transfer.token.decimals)}</strong>&nbsp;
+              {transfer.toChain.name}:{' '}
+              <strong>
+                {utils.formatUnits(trimDecimals(amountTo, transfer.token.decimals, 4), transfer.token.decimals)}
+              </strong>
+              &nbsp;
             </span>
             <span className="token-fees">
               <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
