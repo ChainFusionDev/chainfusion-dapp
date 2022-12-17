@@ -43,7 +43,7 @@ const BridgeWidget = () => {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [showTransferModal, setShowTransferModal] = useState(false);
 
-  const [validationPending, setValidationPending] = useState(false);
+  const [updatePending, setUpdatePending] = useState(false);
   const [approvalPending, setApprovalPending] = useState(false);
   const [transferPending, setTransferPending] = useState(false);
   const [needsApproval, setNeedsApproval] = useState(true);
@@ -83,6 +83,7 @@ const BridgeWidget = () => {
   const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
   const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
+  const [allowance, setAllowance] = useState<BigNumber>(BigNumber.from(0));
 
   const [fromString, setFromString] = useState<string>('');
   const from = parseUnits(fromString, tokenFrom.decimals);
@@ -108,139 +109,103 @@ const BridgeWidget = () => {
   };
 
   useEffect(() => {
-    let pending = true;
+    if (
+      amountInput.amount.eq(0) ||
+      networkFrom === undefined ||
+      networkFrom.contracts === undefined ||
+      tokenFromAddress === undefined ||
+      validatorsFee === undefined ||
+      tokenFeePercentage === undefined
+    ) {
+      setInsufficientBalance(false);
+      setNeedsApproval(false);
+      setEstimatedFee({
+        validatorsFee: BigNumber.from(0),
+        liquidityFee: BigNumber.from(0),
+      });
 
-    const updateBalance = async () => {
-      if (networkFrom === undefined || tokenFromAddress === undefined) {
-        if (pending) {
-          setBalance(BigNumber.from(0));
-        }
-        return;
-      }
+      if (amountInput.field === InputField.FROM) setToString('');
+      if (amountInput.field === InputField.TO) setFromString('');
 
-      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
-      const mockToken = mockTokenFactory.attach(tokenFromAddress);
-      const balance = await mockToken.balanceOf(networkFrom.account);
+      return;
+    }
 
-      if (pending) {
-        setBalance(balance);
-      }
-    };
+    let amount = BigNumber.from(0);
+    let estimatedFee = BigNumber.from(0);
 
-    updateBalance();
+    if (amountInput.field === InputField.FROM) {
+      amount = amountInput.amount;
+      estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
+      setToString(utils.formatUnits(amount.sub(estimatedFee), tokenFrom.decimals));
+    }
 
-    return () => {
-      pending = false;
-    };
-  }, [networkFrom, tokenFromAddress, transferPending]);
+    if (amountInput.field === InputField.TO) {
+      amount = amountInput.amount.add(validatorsFee).mul(oneEther).div(oneEther.sub(tokenFeePercentage));
+      estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
+      setFromString(utils.formatEther(amount));
+    }
 
-  useEffect(() => {
-    let pending = true;
-
-    const updateFees = async () => {
-      if (networkFrom?.contracts === undefined || tokenFromAddress === undefined) {
-        return;
-      }
-
-      const validatorsFeePromise = networkFrom.contracts.feeManager.validatorRefundFee();
-      const tokenFeePercentagePromise = networkFrom.contracts.feeManager.tokenFeePercentage(tokenFromAddress);
-
-      const validatorsFee = await validatorsFeePromise;
-      const tokenFeePercentage = await tokenFeePercentagePromise;
-
-      if (pending) {
-        setValidatorsFee(validatorsFee);
-        setTokenFeePercentage(tokenFeePercentage);
-      }
-    };
-
-    updateFees();
-
-    return () => {
-      pending = false;
-    };
-  }, [networkFrom, tokenFromAddress]);
-
-  useEffect(() => {
-    let pending = true;
-    setValidationPending(true);
-
-    const validate = async () => {
-      if (
-        amountInput.amount.eq(0) ||
-        networkFrom === undefined ||
-        networkFrom.contracts === undefined ||
-        tokenFromAddress === undefined ||
-        validatorsFee === undefined ||
-        tokenFeePercentage === undefined
-      ) {
-        if (pending) {
-          setInsufficientBalance(false);
-          setNeedsApproval(false);
-          setEstimatedFee({
-            validatorsFee: BigNumber.from(0),
-            liquidityFee: BigNumber.from(0),
-          });
-
-          if (amountInput.field === InputField.FROM) setToString('');
-          if (amountInput.field === InputField.TO) setFromString('');
-
-          setValidationPending(false);
-        }
-        return;
-      }
-
-      let allowancePromise = new Promise<BigNumber>((resolve) => resolve(BigNumber.from(0)));
-      if (networkFrom.connected) {
-        const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
-        const mockToken = mockTokenFactory.attach(tokenFromAddress);
-        allowancePromise = mockToken.allowance(networkFrom.account, networkFrom.contracts.erc20Bridge.address);
-      }
-
-      const allowance = await allowancePromise;
-
-      let amount = BigNumber.from(0);
-      let estimatedFee = BigNumber.from(0);
-
-      if (amountInput.field === InputField.FROM) {
-        amount = amountInput.amount;
-        estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
-        if (pending) setToString(utils.formatUnits(amount.sub(estimatedFee), tokenFrom.decimals));
-      }
-
-      if (amountInput.field === InputField.TO) {
-        amount = amountInput.amount.add(validatorsFee).mul(oneEther).div(oneEther.sub(tokenFeePercentage));
-        estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
-        if (pending) setFromString(utils.formatEther(amount));
-      }
-
-      if (pending) {
-        setInsufficientBalance(balance.lt(amount));
-        setNeedsApproval(allowance.lt(amount));
-        setEstimatedFee({
-          validatorsFee: validatorsFee,
-          liquidityFee: estimatedFee.sub(validatorsFee),
-        });
-
-        setValidationPending(false);
-      }
-    };
-
-    validate();
-
-    return () => {
-      pending = false;
-    };
+    setInsufficientBalance(balance.lt(amount));
+    setNeedsApproval(allowance.lt(amount));
+    setEstimatedFee({
+      validatorsFee: validatorsFee,
+      liquidityFee: estimatedFee.sub(validatorsFee),
+    });
   }, [
     amountInput,
     tokenFrom,
     tokenFromAddress,
     networkFrom,
     balance,
+    allowance,
     approvalPending,
     validatorsFee,
     tokenFeePercentage,
   ]);
+
+  useEffect(() => {
+    let pending = true;
+
+    setUpdatePending(true);
+
+    const update = async () => {
+      if (networkFrom?.contracts === undefined || tokenFromAddress === undefined) {
+        if (pending) {
+          setBalance(BigNumber.from(0));
+          setAllowance(BigNumber.from(0));
+          setUpdatePending(false);
+        }
+        return;
+      }
+
+      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
+      const mockToken = mockTokenFactory.attach(tokenFromAddress);
+      const balancePromise = mockToken.balanceOf(networkFrom.account);
+      const allowancePromise = mockToken.allowance(networkFrom.account, networkFrom.contracts.erc20Bridge.address);
+
+      const validatorsFeePromise = networkFrom.contracts.feeManager.validatorRefundFee();
+      const tokenFeePercentagePromise = networkFrom.contracts.feeManager.tokenFeePercentage(tokenFromAddress);
+
+      const balance = await balancePromise;
+      const allowance = await allowancePromise;
+      const validatorsFee = await validatorsFeePromise;
+      const tokenFeePercentage = await tokenFeePercentagePromise;
+
+      if (pending) {
+        setBalance(balance);
+        setAllowance(allowance);
+        setValidatorsFee(validatorsFee);
+        setTokenFeePercentage(tokenFeePercentage);
+        setUpdatePending(false);
+      }
+    };
+
+    update();
+
+    return () => {
+      pending = false;
+    };
+  }, [networkFrom, tokenFromAddress, approvalPending, transferPending]);
 
   const approve = async () => {
     if (
@@ -386,10 +351,10 @@ const BridgeWidget = () => {
       );
     }
 
-    if (validationPending) {
+    if (updatePending) {
       return (
         <button disabled={true} className="transfer-button">
-          <i className="fa-solid fa-spinner"></i> Calculating...
+          <i className="fa-solid fa-spinner"></i> Updating...
         </button>
       );
     }
@@ -552,7 +517,7 @@ const BridgeWidget = () => {
           token={tokenFrom}
           validatorsFee={estimatedFee.validatorsFee}
           liquidityFee={estimatedFee.liquidityFee}
-          isEstimating={validationPending}
+          isEstimating={updatePending}
         />
       )}
       {transferButton()}
