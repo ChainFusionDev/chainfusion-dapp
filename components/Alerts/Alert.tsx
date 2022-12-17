@@ -16,7 +16,7 @@ const Alert = ({ alertType, icon, title, children }: AlertProps) => {
       </div>
       <div className="alertMsgContent">
         <div className="titleAlert">{title}</div>
-        <p>{children}</p>
+        <div>{children}</div>
       </div>
     </div>
   );
