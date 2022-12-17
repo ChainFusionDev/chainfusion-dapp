@@ -12,7 +12,14 @@ import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { decodeBridgeTransfer, decodeSendEventData, getTransactionLink, oneEther, parseUnits } from '@src/utils';
+import {
+  decodeBridgeTransfer,
+  decodeSendEventData,
+  getTransactionLink,
+  oneEther,
+  parseUnits,
+  trimDecimals,
+} from '@src/utils';
 import { useAPI } from '@src/hooks/useAPI';
 import { useBridge } from '@store/bridge/hooks';
 import {
@@ -473,7 +480,7 @@ const BridgeWidget = () => {
                 });
               }}
             >
-              {ethers.utils.formatUnits(balance, tokenFrom.decimals)}
+              {ethers.utils.formatUnits(trimDecimals(balance, tokenFrom.decimals, 4), tokenFrom.decimals)}
             </button>
           </div>
         )}
