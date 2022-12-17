@@ -210,7 +210,6 @@ const BridgeWidget = () => {
 
       if (amountInput.field === InputField.TO) {
         amount = amountInput.amount.add(validatorsFee).mul(oneEther).div(oneEther.sub(tokenFeePercentage));
-
         estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
         if (pending) setFromString(utils.formatEther(amount));
       }
