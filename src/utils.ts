@@ -1,7 +1,8 @@
 import { BridgeTransfer, Chain } from '@src/types';
-import { BigNumber, BytesLike, utils } from 'ethers';
+import { BigNumber, BigNumberish, BytesLike, utils } from 'ethers';
 import { getTokenByChainIdentifierAndAddress } from './config';
 
+export const oneEther = utils.parseEther('1');
 export const nullAddress = '0x0000000000000000000000000000000000000000';
 
 export const getAddressLink = (chain: Chain, address: string): string => {
@@ -23,6 +24,14 @@ export const decodeSendEventData = (data: BytesLike): BytesLike | undefined => {
     return decodeResult[0];
   } catch (e) {
     return undefined;
+  }
+};
+
+export const parseUnits = (value: string, unitName?: BigNumberish): BigNumber => {
+  try {
+    return utils.parseUnits(value, unitName);
+  } catch (e) {
+    return BigNumber.from(0);
   }
 };
 

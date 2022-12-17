@@ -12,7 +12,7 @@ import { useLocalStorage } from '@src/hooks/useLocalStorage';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import { EventRegistry, RelayBridge } from '@chainfusion/chainfusion-contracts';
-import { decodeBridgeTransfer, decodeSendEventData, getTransactionLink } from '@src/utils';
+import { decodeBridgeTransfer, decodeSendEventData, getTransactionLink, oneEther, parseUnits } from '@src/utils';
 import { useAPI } from '@src/hooks/useAPI';
 import { useBridge } from '@store/bridge/hooks';
 import {
@@ -25,6 +25,16 @@ import {
 interface FeeInfo {
   validatorsFee: BigNumber;
   liquidityFee: BigNumber;
+}
+
+enum InputField {
+  FROM,
+  TO,
+}
+
+interface AmountInput {
+  field: InputField;
+  amount: BigNumber;
 }
 
 const BridgeWidget = () => {
@@ -41,12 +51,10 @@ const BridgeWidget = () => {
 
   const isLoading = approvalPending || transferPending;
 
-  const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
-  const [fromString, setFromString] = useState<string>('');
-  const [toString, setToString] = useState<string>('');
-  const parsedFrom = parseFloat(fromString);
-  const from = isNaN(parsedFrom) ? 0 : parsedFrom;
+  const [amountInput, setAmountInput] = useState<AmountInput>({ field: InputField.FROM, amount: BigNumber.from(0) });
 
+  const [validatorsFee, setValidatorsFee] = useState<BigNumber | undefined>(undefined);
+  const [tokenFeePercentage, setTokenFeePercentage] = useState<BigNumber | undefined>(undefined);
   const [estimatedFee, setEstimatedFee] = useState<FeeInfo>({
     validatorsFee: BigNumber.from(0),
     liquidityFee: BigNumber.from(0),
@@ -66,20 +74,28 @@ const BridgeWidget = () => {
   const [tokenFromLocal, setTokenFrom] = useLocalStorage<string>('token-from');
   const chainFrom = chainFromLocal ? getChain(chainFromLocal) : chains[0];
   const tokenFrom = tokenFromLocal ? getToken(tokenFromLocal) : tokens[0];
+  const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
 
   const [chainToLocal, setChainTo] = useLocalStorage<string>('chain-to');
   const [tokenToLocal, setTokenTo] = useLocalStorage<string>('token-to');
   const chainTo = chainToLocal ? getChain(chainToLocal) : chains[1];
   const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
+  const tokenToAddress = tokenTo.chains[chainTo.identifier];
+
+  const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
+
+  const [fromString, setFromString] = useState<string>('');
+  const from = parseUnits(fromString, tokenFrom.decimals);
+
+  const [toString, setToString] = useState<string>('');
+  const to = parseUnits(toString, tokenTo.decimals);
 
   const { isActive, chainId } = useWeb3React();
   const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
   const { loadHistory } = useAPI();
-  const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
-  const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
-  const fromNetwork = networkContainer.get(chainFrom.identifier);
-  const toNetwork = networkContainer.get(chainTo.identifier);
+  const networkFrom = networkContainer.get(chainFrom.identifier);
+  const networkTo = networkContainer.get(chainTo.identifier);
 
   const swapFromTo = () => {
     setChainFrom(chainTo.identifier);
@@ -95,16 +111,16 @@ const BridgeWidget = () => {
     let pending = true;
 
     const updateBalance = async () => {
-      if (fromNetwork === undefined || tokenFromAddress === undefined) {
+      if (networkFrom === undefined || tokenFromAddress === undefined) {
         if (pending) {
           setBalance(BigNumber.from(0));
         }
         return;
       }
 
-      const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
+      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenFromAddress);
-      const balance = await mockToken.balanceOf(fromNetwork.account);
+      const balance = await mockToken.balanceOf(networkFrom.account);
 
       if (pending) {
         setBalance(balance);
@@ -116,28 +132,58 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [fromNetwork, tokenFromAddress]);
+  }, [networkFrom, tokenFromAddress, transferPending]);
 
   useEffect(() => {
     let pending = true;
 
+    const updateFees = async () => {
+      if (networkFrom?.contracts === undefined || tokenFromAddress === undefined) {
+        return;
+      }
+
+      const validatorsFeePromise = networkFrom.contracts.feeManager.validatorRefundFee();
+      const tokenFeePercentagePromise = networkFrom.contracts.feeManager.tokenFeePercentage(tokenFromAddress);
+
+      const validatorsFee = await validatorsFeePromise;
+      const tokenFeePercentage = await tokenFeePercentagePromise;
+
+      if (pending) {
+        setValidatorsFee(validatorsFee);
+        setTokenFeePercentage(tokenFeePercentage);
+      }
+    };
+
+    updateFees();
+
+    return () => {
+      pending = false;
+    };
+  }, [networkFrom, tokenFromAddress]);
+
+  useEffect(() => {
+    let pending = true;
     setValidationPending(true);
 
     const validate = async () => {
       if (
-        from === 0.0 ||
-        fromNetwork === undefined ||
-        fromNetwork.contracts === undefined ||
-        tokenFromAddress === undefined
+        amountInput.amount.eq(0) ||
+        networkFrom === undefined ||
+        networkFrom.contracts === undefined ||
+        tokenFromAddress === undefined ||
+        validatorsFee === undefined ||
+        tokenFeePercentage === undefined
       ) {
         if (pending) {
           setInsufficientBalance(false);
           setNeedsApproval(false);
-          setToString('');
           setEstimatedFee({
             validatorsFee: BigNumber.from(0),
             liquidityFee: BigNumber.from(0),
           });
+
+          if (amountInput.field === InputField.FROM) setToString('');
+          if (amountInput.field === InputField.TO) setFromString('');
 
           setValidationPending(false);
         }
@@ -145,27 +191,33 @@ const BridgeWidget = () => {
       }
 
       let allowancePromise = new Promise<BigNumber>((resolve) => resolve(BigNumber.from(0)));
-      if (fromNetwork.connected) {
-        const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
+      if (networkFrom.connected) {
+        const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
         const mockToken = mockTokenFactory.attach(tokenFromAddress);
-        allowancePromise = mockToken.allowance(fromNetwork.account, fromNetwork.contracts.erc20Bridge.address);
+        allowancePromise = mockToken.allowance(networkFrom.account, networkFrom.contracts.erc20Bridge.address);
       }
 
-      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
-
-      const validatorsFeePromise = fromNetwork.contracts.feeManager.validatorRefundFee();
-      const estimatedFeePromise = fromNetwork.contracts.feeManager.calculateFee(tokenFromAddress, amount);
-
       const allowance = await allowancePromise;
-      const validatorsFee = await validatorsFeePromise;
-      const estimatedFee = await estimatedFeePromise;
 
-      const willReceive = amount.sub(estimatedFee);
+      let amount = BigNumber.from(0);
+      let estimatedFee = BigNumber.from(0);
+
+      if (amountInput.field === InputField.FROM) {
+        amount = amountInput.amount;
+        estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
+        if (pending) setToString(utils.formatUnits(amount.sub(estimatedFee), tokenFrom.decimals));
+      }
+
+      if (amountInput.field === InputField.TO) {
+        amount = amountInput.amount.add(validatorsFee).mul(oneEther).div(oneEther.sub(tokenFeePercentage));
+
+        estimatedFee = calculateFee(amount, tokenFeePercentage, validatorsFee);
+        if (pending) setFromString(utils.formatEther(amount));
+      }
 
       if (pending) {
         setInsufficientBalance(balance.lt(amount));
         setNeedsApproval(allowance.lt(amount));
-        setToString(utils.formatUnits(willReceive, tokenFrom.decimals));
         setEstimatedFee({
           validatorsFee: validatorsFee,
           liquidityFee: estimatedFee.sub(validatorsFee),
@@ -180,13 +232,22 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [fromNetwork, balance, from, tokenFrom, approvalPending, tokenFromAddress]);
+  }, [
+    amountInput,
+    tokenFrom,
+    tokenFromAddress,
+    networkFrom,
+    balance,
+    approvalPending,
+    validatorsFee,
+    tokenFeePercentage,
+  ]);
 
   const approve = async () => {
     if (
-      fromNetwork === undefined ||
-      !fromNetwork.connected ||
-      fromNetwork.contracts === undefined ||
+      networkFrom === undefined ||
+      !networkFrom.connected ||
+      networkFrom.contracts === undefined ||
       tokenFromAddress === undefined
     ) {
       return;
@@ -195,10 +256,10 @@ const BridgeWidget = () => {
     setApprovalPending(true);
 
     try {
-      const { erc20Bridge } = fromNetwork.contracts;
-      const mockTokenFactory = new MockToken__factory(fromNetwork.provider.getSigner());
+      const { erc20Bridge } = networkFrom.contracts;
+      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
       const mockToken = mockTokenFactory.attach(tokenFromAddress);
-      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
+      const amount = from;
 
       await (await mockToken.approve(erc20Bridge.address, amount)).wait();
 
@@ -228,10 +289,10 @@ const BridgeWidget = () => {
 
   const transfer = async () => {
     if (
-      fromNetwork === undefined ||
-      !fromNetwork.connected ||
-      fromNetwork.contracts === undefined ||
-      toNetwork?.contracts === undefined ||
+      networkFrom === undefined ||
+      !networkFrom.connected ||
+      networkFrom.contracts === undefined ||
+      networkTo?.contracts === undefined ||
       tokenFromAddress === undefined ||
       tokenToAddress === undefined ||
       nativeContainer === undefined
@@ -245,28 +306,28 @@ const BridgeWidget = () => {
     setShowTransferModal(true);
 
     try {
-      const { erc20Bridge } = fromNetwork.contracts;
-      const amount = ethers.utils.parseUnits(from.toString(), tokenFrom.decimals);
+      const { erc20Bridge } = networkFrom.contracts;
+      const amount = from;
 
-      let depositReceiver = fromNetwork.account;
+      let depositReceiver = networkFrom.account;
       if (receiver !== undefined) {
         depositReceiver = receiver;
       }
 
       const onEventRegisteredPromise = onEventRegistered(
         nativeContainer.eventRegistry,
-        fromNetwork.contracts.relayBridge,
+        networkFrom.contracts.relayBridge,
         {
           appContract: erc20Bridge.address,
-          sender: fromNetwork.account,
+          sender: networkFrom.account,
           receiver: depositReceiver,
           sourceChain: BigNumber.from(chainFrom.chainId),
           destinationChain: BigNumber.from(chainTo.chainId),
         }
       );
 
-      const onTransferCompletePromise = onTransferComplete(toNetwork.contracts.erc20Bridge, {
-        sender: fromNetwork.account,
+      const onTransferCompletePromise = onTransferComplete(networkTo.contracts.erc20Bridge, {
+        sender: networkFrom.account,
         receiver: depositReceiver,
         token: tokenToAddress,
         amount: amount,
@@ -275,7 +336,7 @@ const BridgeWidget = () => {
       const depositTx = await (
         await erc20Bridge.deposit(tokenFromAddress, chainTo.chainId, depositReceiver, amount)
       ).wait(1);
-      setStageLinks(new Map(stageLinks.set(1, getTransactionLink(fromNetwork.chain, depositTx.transactionHash))));
+      setStageLinks(new Map(stageLinks.set(1, getTransactionLink(networkFrom.chain, depositTx.transactionHash))));
       setTransferStage(2);
 
       const registeredEvent = await onEventRegisteredPromise;
@@ -284,7 +345,7 @@ const BridgeWidget = () => {
 
       const transferCompleteEvent = await onTransferCompletePromise;
       setStageLinks(
-        new Map(stageLinks.set(3, getTransactionLink(toNetwork.chain, transferCompleteEvent.transactionHash)))
+        new Map(stageLinks.set(3, getTransactionLink(networkTo.chain, transferCompleteEvent.transactionHash)))
       );
       setTransferStage(4);
 
@@ -312,11 +373,13 @@ const BridgeWidget = () => {
     }
 
     setFromString('');
+    setToString('');
+    setAmountInput({ field: InputField.FROM, amount: BigNumber.from(0) });
     setTransferPending(false);
   };
 
   const transferButton = () => {
-    if (from === 0.0) {
+    if (from.eq(0) && to.eq(0)) {
       return (
         <button disabled={true} className="transfer-button">
           Enter Amount
@@ -350,7 +413,7 @@ const BridgeWidget = () => {
       );
     }
 
-    if (fromNetwork?.contracts === undefined || tokenFromAddress === undefined) {
+    if (networkFrom?.contracts === undefined || tokenFromAddress === undefined) {
       return (
         <button disabled={true} className="transfer-button">
           Not Supported
@@ -422,9 +485,16 @@ const BridgeWidget = () => {
           autoComplete="off"
           className={`form-control ${balance.gt(0) && 'bridge-input-with-balance'}`}
           id="from-amount"
-          placeholder="0.0000"
+          placeholder="0"
           value={fromString}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFromString(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const input = e.target.value;
+            if (/^[0-9\b.]*$/.test(input)) {
+              setFromString(input);
+              const amount = parseUnits(input, tokenFrom.decimals);
+              setAmountInput({ field: InputField.FROM, amount: amount });
+            }
+          }}
         />
         {balance.gt(0) && (
           <div className="bridge-balance amount-afterform">
@@ -433,6 +503,10 @@ const BridgeWidget = () => {
               disabled={isLoading}
               onClick={() => {
                 setFromString(ethers.utils.formatUnits(balance, tokenFrom.decimals));
+                setAmountInput({
+                  field: InputField.FROM,
+                  amount: balance,
+                });
               }}
             >
               {ethers.utils.formatUnits(balance, tokenFrom.decimals)}
@@ -457,13 +531,21 @@ const BridgeWidget = () => {
           <i className="fa-light fa-chevron-down"></i>
         </button>
         <input
-          disabled={true}
+          disabled={isLoading}
           type="text"
           autoComplete="off"
           className="form-control"
           id="to-amount"
           value={toString}
-          placeholder="0.0000"
+          placeholder="0"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const input = e.target.value;
+            if (/^[0-9\b.]*$/.test(input)) {
+              setToString(input);
+              const amount = parseUnits(input, tokenTo.decimals);
+              setAmountInput({ field: InputField.TO, amount: amount });
+            }
+          }}
         />
       </div>
       {estimatedFee.validatorsFee.add(estimatedFee.liquidityFee).gt(0) && (
@@ -617,3 +699,7 @@ async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferComp
     );
   });
 }
+
+const calculateFee = (amount: BigNumber, feePercentage: BigNumber, fixedFee: BigNumber) => {
+  return fixedFee.add(feePercentage.mul(amount).div(oneEther));
+};
