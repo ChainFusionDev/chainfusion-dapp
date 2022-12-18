@@ -26,10 +26,10 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
         role="button"
         aria-expanded={open}
         aria-controls={transfer.sender}
-        className="btn-block with-chevron"
+        className="btn-block with-chevron py-2"
         onClick={() => setOpen(!open)}
       >
-        <p className="transaction-info mb-0 px-3 py-3 d-flex align-items-center">
+        <p className="transaction-info mb-0 px-3 py-2 d-flex align-items-center">
           <span>
             <i className={`fa-regular ${open ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
           </span>
