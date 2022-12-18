@@ -26,10 +26,10 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
         role="button"
         aria-expanded={open}
         aria-controls={transfer.sender}
-        className="btn-block py-2 with-chevron"
+        className="btn-block with-chevron"
         onClick={() => setOpen(!open)}
       >
-        <p className="transaction-info mb-0 px-3 py-2 d-flex align-items-center">
+        <p className="transaction-info mb-0 px-3 py-3 d-flex align-items-center">
           <span>
             <i className={`fa-regular ${open ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
           </span>
@@ -69,7 +69,7 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
           </span>
         </p>
       </a>
-      <div id={transfer.sender} className={`collapse ${open && 'show'}`}>
+      <div id={transfer.sender} className={`transfer-block-content ${open ? '' : 'slide-out'}`}>
         <div className="card">
           <div className="card-body">
             <span className="transaction-details">

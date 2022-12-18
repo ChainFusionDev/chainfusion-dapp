@@ -63,7 +63,7 @@ main,
   position: absolute;
 }
 
-.logo-nav > img {
+.logo-nav>img {
   max-width: 200px;
 }
 
@@ -257,7 +257,7 @@ main,
   color: var(--silver);
 }
 
-.form-bridge small > strong {
+.form-bridge small>strong {
   color: var(--dark);
 }
 
@@ -588,9 +588,14 @@ label {
   color: var(--main-color);
   text-align: center;
   border-radius: 50px;
-  border: 2px solid var(--white);
+  border: 1px solid var(--white);
   box-shadow: 0px 0px 21px rgba(128, 131, 133, 0.08);
+  transition: all ease-out 0.3s;
   z-index: 2;
+}
+
+.change-token:not([disabled]):hover {
+  border: 1px solid var(--light);
 }
 
 .change-token .fa-arrow-up-arrow-down {
@@ -606,6 +611,7 @@ label {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -736,12 +742,12 @@ button .fa-spinner {
   margin-top: 2px;
 }
 
-.token-icon .media > img {
+.token-icon .media>img {
   width: 17px;
   margin-top: 1px;
 }
 
-.blockchain-icon .media > img {
+.blockchain-icon .media>img {
   width: 18px;
 }
 
@@ -1143,7 +1149,7 @@ button .fa-spinner {
   border: 1px solid var(--light-blue);
 }
 
-.wallet-list li > img {
+.wallet-list li>img {
   margin-top: -3px;
   width: 17px;
   margin-right: 6px;
@@ -1306,6 +1312,29 @@ button .fa-spinner {
   color: var(--dark);
 }
 
+.slide-out {
+  line-height: 0;
+  color: transparent;
+  opacity: 0;
+}
+
+.slide-out .card {
+  border-top: 0;
+}
+
+.slide-out .card .card-body {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.transfer-block {
+  transition: all ease-out 0.1s;
+}
+
+.transfer-block-content {
+  transition: all ease-out 0.1s;
+}
+
 .transfer-block .card {
   border-color: var(--light);
   box-shadow: none;
@@ -1318,6 +1347,7 @@ button .fa-spinner {
   text-decoration: none;
   border-bottom: none;
   background: var(--white);
+  transition: all ease-out 0.1s;
 }
 
 .transfer-block .btn-block[aria-expanded='false'] {
@@ -1391,6 +1421,7 @@ button .fa-spinner {
 
 .transfer-block .card-body {
   padding: 10px 25px;
+  transition: all ease-out 0.1s;
 }
 
 .transfer-block .fa-arrow-right-long {
@@ -1489,6 +1520,7 @@ button .fa-spinner {
   -ms-user-select: none;
   user-select: none;
 }
+
 .toggleTransactions::before {
   content: "";
   position: absolute;
@@ -1499,31 +1531,38 @@ button .fa-spinner {
   background: var(--main-color);
   transition: all 0.3s;
 }
-.transactionsCheckbox:checked + .toggleTransactions::before {
+
+.transactionsCheckbox:checked+.toggleTransactions::before {
   left: 50%;
   border-radius: 0px 7px 7px 0px;
 }
+
 .toggleTransactions div {
   padding: 2px;
   text-align: center;
   z-index: 1;
 }
+
 .transactionsCheckbox {
   display: none;
 }
-.transactionsCheckbox:checked + .toggleTransactions div:first-child {
+
+.transactionsCheckbox:checked+.toggleTransactions div:first-child {
   color: var(--gray-two);
   transition: color 0.3s;
 }
-.transactionsCheckbox:checked + .toggleTransactions div:last-child {
+
+.transactionsCheckbox:checked+.toggleTransactions div:last-child {
   color: var(--white);
   transition: color 0.3s;
 }
-.transactionsCheckbox + .toggleTransactions div:first-child {
+
+.transactionsCheckbox+.toggleTransactions div:first-child {
   color: var(--white);
   transition: color 0.3s;
 }
-.transactionsCheckbox + .toggleTransactions div:last-child {
+
+.transactionsCheckbox+.toggleTransactions div:last-child {
   color: var(--gray-two);
   transition: color 0.3s;
 }
@@ -2307,7 +2346,7 @@ button .fa-spinner {
   color: var(--dark);
 }
 
-.liquidity-card-left .liquidity-sum span > strong {
+.liquidity-card-left .liquidity-sum span>strong {
   font-style: normal;
   font-weight: 500;
   font-size: 0.625rem;
@@ -2526,14 +2565,14 @@ footer .copyright {
   margin-right: 15px;
 }
 
-.footer-link li > a {
+.footer-link li>a {
   font-style: normal;
   font-weight: 500;
   font-size: 0.75rem;
   color: #52657a;
 }
 
-.footer-link li > a:hover {
+.footer-link li>a:hover {
   color: var(--hover-color);
 }
 
