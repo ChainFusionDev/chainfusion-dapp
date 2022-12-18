@@ -7,12 +7,14 @@ export const useLocalStorage = <S>(
   const [state, setState] = useState<S>(initialState as S);
   useDebugValue(state);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (state !== initialState) {
       localStorage.setItem(key, JSON.stringify(state));
     }
   }, [state]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const item = localStorage.getItem(key);
     if (item) setState(parse(item));

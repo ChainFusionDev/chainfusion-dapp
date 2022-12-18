@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '@components/Modal';
 import { BigNumber, utils } from 'ethers';
+import { trimDecimals } from '@src/utils';
 
 interface InputCFNModalProps {
   show: boolean;
@@ -49,9 +50,9 @@ const InputCFNModal = ({
         {maxValue.gt(0) ? (
           <div className="amount-afterform">
             {maxValueText}:{' '}
-            <span onClick={() => setAmount(utils.formatUnits(maxValue, decimals))}>
-              {utils.formatUnits(maxValue, decimals)}
-            </span>
+            <button onClick={() => setAmount(utils.formatUnits(maxValue, decimals))}>
+              {utils.formatUnits(trimDecimals(maxValue, decimals, 8), decimals)}
+            </button>
             <div className="token-liquidity-amount">
               <img src="/img/cfn.svg" className="cfn-token-icon" alt="CFN" />
               <span>CFN</span>

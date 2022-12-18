@@ -42,9 +42,9 @@ const InputTokenModal = ({
           />
         </div>
         <div className="amount-afterform">
-          {maxValueText}: <span onClick={() => setAmount(maxValue)}>{maxValue}</span>
+          {maxValueText}: <button onClick={() => setAmount(maxValue)}>{maxValue}</button>
           <div className="token-liquidity-amount">
-            <img alt="" src="/img/liquidity/tokens/tether.svg" />
+            <img alt="" src="/img/usdt.svg" />
             <span>USDT</span>
           </div>
         </div>
