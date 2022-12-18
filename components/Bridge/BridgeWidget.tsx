@@ -276,6 +276,8 @@ const BridgeWidget = () => {
     setTransferPending(true);
     setShowTransferModal(true);
 
+    const stageLinks = new Map<number, string>();
+
     try {
       const { erc20Bridge } = networkFrom.contracts;
       const amount = from;
