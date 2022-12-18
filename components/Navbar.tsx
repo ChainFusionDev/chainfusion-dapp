@@ -59,14 +59,14 @@ const Navbar = ({ module }: NavbarProps) => {
                 <a className="nav-link">Bridge</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'staking' && 'active'}`}>
-              <Link href="/staking">
-                <a className="nav-link">Staking</a>
-              </Link>
-            </li>
             <li className={`nav-item ${module === 'liquidity' && 'active'}`}>
               <Link href="/liquidity">
                 <a className="nav-link">Liquidity</a>
+              </Link>
+            </li>
+            <li className={`nav-item ${module === 'staking' && 'active'}`}>
+              <Link href="/staking">
+                <a className="nav-link">Staking</a>
               </Link>
             </li>
             <li className={`nav-item ${module === 'slashing' && 'active'}`}>
@@ -74,11 +74,11 @@ const Navbar = ({ module }: NavbarProps) => {
                 <a className="nav-link">Slashing</a>
               </Link>
             </li>
-            <li className={`nav-item ${module === 'analytics' && 'active'}`}>
+            {/* <li className={`nav-item ${module === 'analytics' && 'active'}`}>
               <Link href="/analytics">
                 <a className="nav-link">Analytics</a>
               </Link>
-            </li>
+            </li> */}
           </ul>
           <ul className="navbar-nav ml-auto w-100 justify-content-end">
             <li className="nav-item">
