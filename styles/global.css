@@ -2328,6 +2328,7 @@ button .fa-spinner {
   flex-direction: column;
   border-left: 1px solid var(--light);
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .liquidity-card-left .liquidity-sum {
@@ -2361,6 +2362,7 @@ button .fa-spinner {
   justify-content: center;
   border-left: 1px solid var(--light);
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .liquidity-card-right .liquidity-provided,

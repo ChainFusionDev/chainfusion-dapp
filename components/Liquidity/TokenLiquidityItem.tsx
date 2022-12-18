@@ -89,40 +89,56 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
         <div className="liquidity-card-left flex-sm-grow-1">
           <div className="liquidity-sum">
             Provided:{' '}
-            <span>
-              {isLoading ? '...' : utils.formatEther(providedLiquidity)} <strong>{token.symbol}</strong>
-            </span>
+            {isLoading ? (
+              <span className="line-skeleton line-skeleton-liquidity">&nbsp;</span>
+            ) : (
+              <span>
+                {utils.formatEther(providedLiquidity)} <strong>{token.symbol}</strong>
+              </span>
+            )}
           </div>
           <div className="liquidity-sum">
             Available:{' '}
-            <span>
-              {isLoading ? '...' : utils.formatEther(availableLiquidity)} <strong>{token.symbol}</strong>
-            </span>
+            {isLoading ? (
+              <span className="line-skeleton line-skeleton-liquidity">&nbsp;</span>
+            ) : (
+              <span>
+                {utils.formatEther(availableLiquidity)} <strong>{token.symbol}</strong>
+              </span>
+            )}
           </div>
         </div>
         <div className="liquidity-card-right flex-sm-grow-1">
           <div className="liquidity-provided">
             You Provided:
-            <div className="liquidity-provided-sum">
-              <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
-              <button className="liquidity-provided-plus" onClick={onAddLiquidity}>
-                <i className="fa-regular fa-plus"></i>
-              </button>
-              <button className="liquidity-provided-minus" onClick={onRemoveLiquidity}>
-                <i className="fa-regular fa-minus"></i>
-              </button>
-            </div>
+            {isLoading ? (
+              <span className="line-skeleton line-skeleton-liquidity">&nbsp;</span>
+            ) : (
+              <div className="liquidity-provided-sum">
+                <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
+                <button className="liquidity-provided-plus" onClick={onAddLiquidity}>
+                  <i className="fa-regular fa-plus"></i>
+                </button>
+                <button className="liquidity-provided-minus" onClick={onRemoveLiquidity}>
+                  <i className="fa-regular fa-minus"></i>
+                </button>
+              </div>
+            )}
           </div>
           <div className="liquidity-rewards">
             Rewards:
-            <div className="liquidity-rewards-sum">
-              <span>{isLoading ? '...' : utils.formatEther(ourRewards)}</span>
-              {ourRewards.gt(0) && (
-                <button data-toggle="modal" data-target="#modalLiquidityCollect">
-                  Collect
-                </button>
-              )}
-            </div>
+            {isLoading ? (
+              <span className="line-skeleton line-skeleton-liquidity">&nbsp;</span>
+            ) : (
+              <div className="liquidity-rewards-sum">
+                <span>{isLoading ? '...' : utils.formatEther(ourRewards)}</span>
+                {ourRewards.gt(0) && (
+                  <button data-toggle="modal" data-target="#modalLiquidityCollect">
+                    Collect
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

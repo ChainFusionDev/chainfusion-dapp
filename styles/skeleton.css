@@ -16,7 +16,8 @@
   background-size: 600px;
   animation: shine-avatar-skeleton 0.5s linear infinite alternate;
 }
-.skeleton .line-skeleton {
+
+.line-skeleton {
   float: left;
   width: 100%;
   box-sizing: border-box;
@@ -26,6 +27,19 @@
   border-radius: 10px;
   background-size: 100% auto;
   animation: shine-lines-skeleton 0.5s linear infinite alternate;
+}
+
+.line-skeleton-tvl {
+  height: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.line-skeleton-liquidity {
+  height: 12px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .skeleton .line-skeleton:first-child {

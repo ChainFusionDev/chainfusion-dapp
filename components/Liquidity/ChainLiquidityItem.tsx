@@ -36,6 +36,9 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
     const loadTVL = async () => {
       let tvl: BigNumber = BigNumber.from(0);
       const tokenTVLPromises: Promise<BigNumber>[] = [];
+
+      // TODO: Implement useConfig() hook to load list of supported tokens, chains, etc.
+      const tokens = getSupportedTokens().filter((token) => token.chains[chain.identifier] !== undefined);
       for (const token of tokens) {
         const tokenAddress = token.chains[chain.identifier];
         if (tokenAddress === undefined) {
@@ -63,7 +66,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
     return () => {
       pending = false;
     };
-  }, [networkContainer, chain, tokens]);
+  }, [networkContainer, chain]);
 
   const tokenItems = tokens.slice(0, 3).map((token) => {
     return (
@@ -87,7 +90,13 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
             </div>
             <div className="liquidity-tvl">
               <span>TVL</span>
-              <div className="liquidity-sum">{isLoading ? 'Loading' : `$${utils.commify(utils.formatEther(tvl))}`}</div>
+              <div className="liquidity-sum">
+                {isLoading ? (
+                  <div className="line-skeleton line-skeleton-tvl"></div>
+                ) : (
+                  `$${utils.commify(utils.formatEther(tvl))}`
+                )}
+              </div>
             </div>
           </div>
         </div>

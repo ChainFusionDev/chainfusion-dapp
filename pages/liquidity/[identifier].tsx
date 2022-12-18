@@ -17,7 +17,25 @@ const LiquidityManagement = () => {
   if (identifier === undefined) {
     return (
       <Layout module="liquidity" title="Liquidity" description="Manage bridge liquidity in blockchais per token">
-        Loading
+        <section className="section-page">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <ul className="breadcrumbs-custom">
+                  <li className="breadcrumbs-link">
+                    <Link href="/liquidity">
+                      <a>Liquidity</a>
+                    </Link>
+                  </li>
+                  <li className="breadcrumbs-link active">Chain Liquidity</li>
+                </ul>
+                <div className="title-page">
+                  <span>Chain</span> Liquidity
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </Layout>
     );
   }
