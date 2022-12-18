@@ -53,7 +53,7 @@ const InputCFNModal = ({
               {utils.formatUnits(maxValue, decimals)}
             </span>
             <div className="token-liquidity-amount">
-              <img src="/img/cfn-token.svg" className="cfn-token-icon" alt="CFN" />
+              <img src="/img/cfn.svg" className="cfn-token-icon" alt="CFN" />
               <span>CFN</span>
             </div>
           </div>
