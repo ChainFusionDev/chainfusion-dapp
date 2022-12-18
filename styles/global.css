@@ -1316,10 +1316,11 @@ button .fa-spinner {
   line-height: 0;
   color: transparent;
   opacity: 0;
+  pointer-events: none;
 }
 
 .slide-out .card {
-  border-top: 0;
+  border: 0;
 }
 
 .slide-out .card .card-body {
@@ -1339,6 +1340,7 @@ button .fa-spinner {
   border-color: var(--light);
   box-shadow: none;
   border-radius: 0px 0px 20px 20px;
+  transition: all ease-out 0.1s;
 }
 
 .transfer-block .btn-block {
