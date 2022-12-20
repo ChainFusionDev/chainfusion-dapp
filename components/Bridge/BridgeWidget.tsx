@@ -72,21 +72,29 @@ const BridgeWidget = () => {
 
   const [swap, setSwap] = useState(false);
 
-  const chains = getSupportedChains();
-  const tokens = getSupportedTokens();
-
   const { receiver } = useBridge();
 
   const [chainFromLocal, setChainFrom] = useLocalStorage<string>('chain-from');
   const [tokenFromLocal, setTokenFrom] = useLocalStorage<string>('token-from');
-  const chainFrom = chainFromLocal ? getChain(chainFromLocal) : chains[0];
-  const tokenFrom = tokenFromLocal ? getToken(tokenFromLocal) : tokens[0];
-  const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
 
   const [chainToLocal, setChainTo] = useLocalStorage<string>('chain-to');
   const [tokenToLocal, setTokenTo] = useLocalStorage<string>('token-to');
-  const chainTo = chainToLocal ? getChain(chainToLocal) : chains[1];
-  const tokenTo = tokenToLocal ? getToken(tokenToLocal) : tokens[0];
+
+  let chainFrom = getChain(chainFromLocal ?? '');
+  let tokenFrom = getToken(tokenFromLocal ?? '');
+  let chainTo = getChain(chainToLocal ?? '');
+  let tokenTo = getToken(tokenToLocal ?? '');
+
+  if (chainFrom === undefined || tokenFrom === undefined || chainTo === undefined || tokenTo === undefined) {
+    const chains = getSupportedChains();
+    const tokens = getSupportedTokens();
+    chainFrom = chains[0];
+    chainTo = chains[1];
+    tokenFrom = tokens[0];
+    tokenTo = tokens[0];
+  }
+
+  const tokenFromAddress = tokenFrom.chains[chainFrom.identifier];
   const tokenToAddress = tokenTo.chains[chainTo.identifier];
 
   const [balance, setBalance] = useState<BigNumber>(BigNumber.from(0));
