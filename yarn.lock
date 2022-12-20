@@ -116,10 +116,10 @@
     "@openzeppelin/contracts" "^4.5.0"
     cpy-cli "^4.2.0"
 
-"@chainfusion/erc-20-bridge-contracts@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@chainfusion/erc-20-bridge-contracts/-/erc-20-bridge-contracts-0.0.1.tgz#38035eb11bd6b9047ef39939c46a90e72936140a"
-  integrity sha512-/8VdyDOukqaJFifwU/aiQEwg05R1xmW36ahjyeA0q6yGnG2aD6muD28pEdCDqYxvmeX9YyfdMyacogfDq/efQw==
+"@chainfusion/erc-20-bridge-contracts@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@chainfusion/erc-20-bridge-contracts/-/erc-20-bridge-contracts-0.0.2.tgz#a61fc8abb02424254e01a2080732c09de770348e"
+  integrity sha512-ErIrM37OiEg+xnwKeUupM2I4alkAz1xVVVLG2O+MKQs91JTXzdRRSd3VH3Uf0bLy6JkKxleWcNayvKU7NiuB/w==
   dependencies:
     cpy-cli "^4.2.0"
 

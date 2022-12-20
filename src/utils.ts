@@ -43,7 +43,7 @@ export const decodeBridgeTransfer = (
 ): BridgeTransfer | undefined => {
   try {
     const result = utils.defaultAbiCoder.decode(
-      ['uint256', 'address', 'address', 'uint256', 'address', 'uint256', 'uint256'],
+      ['uint256', 'address', 'address', 'address', 'uint256', 'uint256'],
       data
     );
 
@@ -55,12 +55,12 @@ export const decodeBridgeTransfer = (
     return {
       hash: hash,
       sender: result[1] as string,
-      receiver: result[4] as string,
+      receiver: result[3] as string,
       fromChain: fromChain,
       toChain: toChain,
       token: token,
-      amount: result[5] as BigNumber,
-      fee: result[6] as BigNumber,
+      amount: result[4] as BigNumber,
+      fee: result[5] as BigNumber,
     };
   } catch (e) {
     return undefined;

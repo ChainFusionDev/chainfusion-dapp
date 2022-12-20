@@ -99,7 +99,8 @@ const BridgeWidget = () => {
   const to = parseUnits(toString, tokenTo.decimals);
 
   const { isActive, chainId } = useWeb3React();
-  const { networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } = useChainContext();
+  const { signerAccount, networkContainer, nativeContainer, switchNetwork, showConnectWalletDialog } =
+    useChainContext();
   const { loadHistory } = useAPI();
 
   const networkFrom = networkContainer.get(chainFrom.identifier);
@@ -185,7 +186,7 @@ const BridgeWidget = () => {
         return;
       }
 
-      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
+      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner(signerAccount));
       const mockToken = mockTokenFactory.attach(tokenFromAddress);
       const balancePromise = mockToken.balanceOf(networkFrom.account);
       const allowancePromise = mockToken.allowance(networkFrom.account, networkFrom.contracts.erc20Bridge.address);
@@ -212,7 +213,7 @@ const BridgeWidget = () => {
     return () => {
       pending = false;
     };
-  }, [networkFrom, tokenFromAddress, approvalPending, transferPending]);
+  }, [signerAccount, networkFrom, tokenFromAddress, approvalPending, transferPending]);
 
   const approve = async () => {
     if (
@@ -228,7 +229,7 @@ const BridgeWidget = () => {
 
     try {
       const { erc20Bridge } = networkFrom.contracts;
-      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner());
+      const mockTokenFactory = new MockToken__factory(networkFrom.provider.getSigner(signerAccount));
       const mockToken = mockTokenFactory.attach(tokenFromAddress);
       const amount = from;
 
@@ -654,11 +655,13 @@ async function onTransferComplete(erc20Bridge: ERC20Bridge, filter: TransferComp
     erc20Bridge.on(
       'Transferred',
       (
+        nonce: BigNumber,
         sender: string,
         token: string,
-        destinationChain: BigNumber,
+        sourceChainId: BigNumber,
         receiver: string,
         amount: BigNumber,
+        fee: BigNumber,
         event: Event
       ) => {
         if (sender !== filter.sender || receiver !== filter.receiver || token !== filter.token) {

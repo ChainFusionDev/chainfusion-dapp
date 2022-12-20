@@ -12,7 +12,7 @@ export interface ChainLiquidityItemProps {
 }
 
 export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
-  const { networkContainer } = useChainContext();
+  const { networkContainer, signerAccount } = useChainContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [tvl, setTVL] = useState(BigNumber.from(0));
@@ -45,7 +45,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
           continue;
         }
 
-        const mockTokenFactory = new MockToken__factory(network.provider.getSigner());
+        const mockTokenFactory = new MockToken__factory(network.provider.getSigner(signerAccount));
         const mockToken = mockTokenFactory.attach(tokenAddress);
 
         tokenTVLPromises.push(mockToken.balanceOf(liquidityPools.address));
@@ -66,7 +66,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
     return () => {
       pending = false;
     };
-  }, [networkContainer, chain]);
+  }, [signerAccount, networkContainer, chain]);
 
   const tokenItems = tokens.slice(0, 3).map((token) => {
     return (
