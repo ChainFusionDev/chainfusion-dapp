@@ -17,43 +17,82 @@
   },
   "chains": [
     {
-      "chainId": 5001,
-      "identifier": "chainfusion-bg1",
-      "name": "Bridgenet 1",
-      "rpc": "https://bg1-rpc.chainfusion.org",
-      "explorer": "https://bg1-explorer.chainfusion.org",
+      "chainId": 11155111,
+      "identifier": "sepolia",
+      "name": "Sepolia",
+      "rpc": "https://rpc.sepolia.org",
+      "explorer": "https://sepolia.etherscan.io",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0xd0Db21ad119668be94592eD64D15E6B5d15798D1"
+      "erc20BridgeAddress": "0xc9eF05688C8c6D3bB9ba0b89E0860B21b941C291"
     },
     {
-      "chainId": 5002,
-      "identifier": "chainfusion-bg2",
-      "name": "Bridgenet 2",
-      "rpc": "https://bg2-rpc.chainfusion.org",
-      "explorer": "https://bg2-explorer.chainfusion.org",
+      "chainId": 35443,
+      "identifier": "q-testnet",
+      "name": "Q Testnet",
+      "rpc": "https://rpc.qtestnet.org",
+      "explorer": "https://explorer.qtestnet.org",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x9770A17cBc41bB2538F4fBD3178cEBb40D1c089d"
+      "erc20BridgeAddress": "0xa4e87F02b3b8C3068f5c382eB350662Bd0cAdd28"
     },
     {
-      "chainId": 5003,
-      "identifier": "chainfusion-bg3",
-      "name": "Bridgenet 3",
-      "rpc": "https://bg3-rpc.chainfusion.org",
-      "explorer": "https://bg3-explorer.chainfusion.org",
+      "chainId": 43113,
+      "identifier": "fuji",
+      "name": "Fuji",
+      "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
+      "explorer": "https://testnet.snowtrace.io",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x3c2eBEce65C31bfD47a2bb5f9013719cb107949D"
+      "erc20BridgeAddress": "0x6d2d5b2a77eBc22717f83aD1cEC500fCAe10a3f3"
+    },
+    {
+      "chainId": 80001,
+      "identifier": "mumbai",
+      "name": "Mumbai",
+      "rpc": "https://rpc-mumbai.maticvigil.com",
+      "explorer": "https://mumbai.polygonscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x704B7166dDF1526Cdfb65bD86DeeADaFe3191A1D"
+    },
+    {
+      "chainId": 953842,
+      "identifier": "ternopil",
+      "name": "Ternopil",
+      "rpc": "https://rpc.chainfusion.org",
+      "explorer": "https://explorer.chainfusion.org",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x77c2c95A50571Ff8e6D0a6C2bf3B07737027f2AF"
+    },
+    {
+      "chainId": 97,
+      "identifier": "bsc-testnet",
+      "name": "BSC Testnet",
+      "rpc": "https://data-seed-prebsc-1-s1.binance.org:8545",
+      "explorer": "https://testnet.bscscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x4f962e68DBa89d51557D537A24FA73596890acd5"
     }
   ],
   "tokens": [
@@ -63,9 +102,12 @@
       "symbol": "USDT",
       "decimals": 18,
       "chains": {
-        "chainfusion-bg1": "0x3279a4289EE8bBF6e563A5DfE944b632C0c549B1",
-        "chainfusion-bg2": "0x4faECa3a2783b4B92b104494B08C6468982ae34A",
-        "chainfusion-bg3": "0x4a510E35394F95bE0F3225bcC59Fe23128d618f8"
+        "sepolia": "0xBB982642c4273091F07E3247661c2A4192fb16f8",
+        "q-testnet": "0xbfF7eD8cD87db54829c08f38fa1A668F458D27Cd",
+        "fuji": "0x9770A17cBc41bB2538F4fBD3178cEBb40D1c089d",
+        "mumbai": "0xd03254D181F267e7054227516dFe0153f0FD381A",
+        "ternopil": "0x22a9252F8c2c89984b77366e57c20D13ce1C852c",
+        "bsc-testnet": "0x3c2eBEce65C31bfD47a2bb5f9013719cb107949D"
       }
     },
     {
@@ -74,9 +116,26 @@
       "symbol": "USDC",
       "decimals": 18,
       "chains": {
-        "chainfusion-bg1": "0x94825c4DC8B50873500D0B226A2626E5673172F2",
-        "chainfusion-bg2": "0xF887Cf413FDbFb843a6613a671E4b8048cB62DaD",
-        "chainfusion-bg3": "0x2ACB42eC0aF90a05c6382ef68B1CE516EB12a48a"
+        "sepolia": "0x3c83EA3676A66a3Ce8BE4C8927A4108baF2087e7",
+        "q-testnet": "0xd0Db21ad119668be94592eD64D15E6B5d15798D1",
+        "fuji": "0x4faECa3a2783b4B92b104494B08C6468982ae34A",
+        "mumbai": "0xB0FA6be969109be10edf8Cd0A533846C02fA6bfb",
+        "ternopil": "0xCE77AFFE77820e80b6BcdF135c79Ad6B3FfbdB35",
+        "bsc-testnet": "0x4a510E35394F95bE0F3225bcC59Fe23128d618f8"
+      }
+    },
+    {
+      "identifier": "dai",
+      "name": "DAI",
+      "symbol": "DAI",
+      "decimals": 18,
+      "chains": {
+        "sepolia": "0x0Cb1b2c72a7E34EF3FB5E751DBa7C24238e483dd",
+        "q-testnet": "0x3279a4289EE8bBF6e563A5DfE944b632C0c549B1",
+        "fuji": "0xF887Cf413FDbFb843a6613a671E4b8048cB62DaD",
+        "mumbai": "0xC09012aB576009fD26923bE9B77bE26E1ADEd634",
+        "ternopil": "0x1DD344da9219724C51D058b9644a324Ba670E67B",
+        "bsc-testnet": "0x2ACB42eC0aF90a05c6382ef68B1CE516EB12a48a"
       }
     }
   ]
