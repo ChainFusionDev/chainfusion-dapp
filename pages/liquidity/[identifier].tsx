@@ -27,11 +27,9 @@ const LiquidityManagement = () => {
                       <a>Liquidity</a>
                     </Link>
                   </li>
-                  <li className="breadcrumbs-link active">Chain Liquidity</li>
+                  <li className="breadcrumbs-link active">Chain Pool</li>
                 </ul>
-                <div className="title-page">
-                  <span>Chain</span> Liquidity
-                </div>
+                <div className="title-page">Chain Pool</div>
               </div>
             </div>
           </div>
@@ -67,10 +65,12 @@ const LiquidityManagement = () => {
                     <a>Liquidity</a>
                   </Link>
                 </li>
-                <li className="breadcrumbs-link active">{chain.name} Liquidity</li>
+                <li className="breadcrumbs-link active">{chain.name} Pool</li>
               </ul>
+
               <div className="title-page">
-                <span>{chain.name}</span> Liquidity
+                <img className="liquidity-pool-logo" alt={`${chain.name} Logo`} src={`/img/${chain.identifier}.svg`} />
+                {chain.name} Pool
               </div>
             </div>
             {tokenItems}
