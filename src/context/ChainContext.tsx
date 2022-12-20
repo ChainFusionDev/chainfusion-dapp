@@ -73,6 +73,7 @@ export interface ChainContracts {
 }
 
 export interface ChainContextData {
+  signerAccount: string;
   nativeContainer?: NativeContainer;
   networkContainer: Map<string, ChainNetwork>;
   addressContainer?: AddressContainer;
@@ -109,6 +110,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
   const [networkContainer, setNetworkContainer] = useState(new Map<string, ChainNetwork>());
   const [nativeContainer, setNativeContainer] = useState<NativeContainer | undefined>(undefined);
   const { chainId, account, provider, connector } = useWeb3React();
+  const signerAccount = account ?? defaultAccount;
 
   useEffect(() => {
     metaMask.connectEagerly().catch(() => null);
@@ -128,16 +130,14 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
         connected = true;
       }
 
-      const nativeAccount = account ?? defaultAccount;
-
-      const stakingFactory = new Staking__factory(nativeProvider.getSigner(nativeAccount));
+      const stakingFactory = new Staking__factory(nativeProvider.getSigner(signerAccount));
       const staking = stakingFactory.attach(nativeContracts.staking);
 
-      const eventRegistryFactory = new EventRegistry__factory(nativeProvider.getSigner(nativeAccount));
+      const eventRegistryFactory = new EventRegistry__factory(nativeProvider.getSigner(signerAccount));
       const eventRegistry = eventRegistryFactory.attach(nativeContracts.eventRegistry);
 
       setNativeContainer({
-        account: nativeAccount,
+        account: signerAccount,
         provider: nativeProvider,
         connected,
         staking,
@@ -146,7 +146,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     } catch (e) {
       setNativeContainer(undefined);
     }
-  }, [account, chainId, provider]);
+  }, [signerAccount, chainId, provider]);
 
   useEffect(() => {
     let pending = true;
@@ -159,7 +159,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
 
       const provider = new providers.StaticJsonRpcProvider(chain.rpc, chain.chainId);
 
-      const erc20BridgeFactory = new ERC20Bridge__factory(provider.getSigner());
+      const erc20BridgeFactory = new ERC20Bridge__factory(provider.getSigner(signerAccount));
       const erc20Bridge = erc20BridgeFactory.attach(erc20BridgeAddress);
 
       const relayBridgeAddressPromise = erc20Bridge.relayBridge();
@@ -191,7 +191,6 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
         }
 
         const chainAddresses = await value;
-
         if (chainAddresses === undefined) {
           continue;
         }
@@ -209,19 +208,13 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     return () => {
       pending = false;
     };
-  }, [chains]);
+  }, [chains, signerAccount]);
 
   useEffect(() => {
     const networkContainer = new Map<string, ChainNetwork>();
-
     for (const chain of chains) {
       let chainProvider: providers.JsonRpcProvider = new providers.StaticJsonRpcProvider(chain.rpc, chain.chainId);
-      let chainAccount = defaultAccount;
       let chainConnected = false;
-
-      if (account !== undefined) {
-        chainAccount = account;
-      }
 
       if (chain.chainId === chainId && provider !== undefined) {
         chainProvider = provider;
@@ -236,7 +229,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
       let chainContracts: ChainContracts | undefined = undefined;
 
       if (chainAddresses !== undefined) {
-        const signer = chainProvider.getSigner();
+        const signer = chainProvider.getSigner(signerAccount);
 
         const erc20BridgeFactory = new ERC20Bridge__factory(signer);
         const erc20Bridge = erc20BridgeFactory.attach(chainAddresses.erc20Bridge);
@@ -265,7 +258,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
       const chainNetwork: ChainNetwork = {
         chain: chain,
         provider: chainProvider,
-        account: chainAccount,
+        account: signerAccount,
         connected: chainConnected,
 
         contracts: chainContracts,
@@ -275,7 +268,7 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
     }
 
     setNetworkContainer(networkContainer);
-  }, [account, chains, chainId, provider, addressContainer]);
+  }, [signerAccount, chains, chainId, provider, addressContainer]);
 
   const switchNetwork = async (chain: Chain) => {
     await connector.activate(getChainParams(chain));
@@ -288,7 +281,14 @@ export const ChainContextProvider = ({ children }: ChainContextProviderProps) =>
 
   return (
     <ChainContext.Provider
-      value={{ nativeContainer, networkContainer, addressContainer, switchNetwork, showConnectWalletDialog }}
+      value={{
+        signerAccount,
+        nativeContainer,
+        networkContainer,
+        addressContainer,
+        switchNetwork,
+        showConnectWalletDialog,
+      }}
     >
       {children}
       <ConnectWalletModal

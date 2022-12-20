@@ -17,8 +17,6 @@ const Liquidity = () => {
     return <ChainLiquidityItem key={chain.identifier} chain={chain} />;
   });
 
-  console.log('Render main');
-
   return (
     <Layout module="liquidity" title="Liquidity" description="Manage bridge liquidity in blockchais per token">
       <section className="section-page">

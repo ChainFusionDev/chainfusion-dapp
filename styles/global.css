@@ -2150,6 +2150,12 @@ button .fa-spinner {
   transition: all ease-out 0.1s;
 }
 
+img.liquidity-pool-logo {
+  width: 32px;
+  height: 32px;
+  padding-right: 5px;
+}
+
 .liquidity-block:hover {
   border: 1px solid var(--light-blue);
 }
@@ -2162,6 +2168,7 @@ button .fa-spinner {
 }
 
 .liquidity-title-pool img {
+  vertical-align: middle;
   width: 20px;
   height: 20px;
   margin: -5px 0px 0px 1px;

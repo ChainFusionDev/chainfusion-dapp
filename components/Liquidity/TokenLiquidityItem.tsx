@@ -1,8 +1,7 @@
 import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
-import { nullAddress, trimDecimals } from '@src/utils';
-import { useWeb3React } from '@web3-react/core';
+import { trimDecimals } from '@src/utils';
 import { BigNumber, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -15,8 +14,7 @@ export interface TokenLiquidityItemProps {
 }
 
 export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiquidity }: TokenLiquidityItemProps) => {
-  const { account } = useWeb3React();
-  const { networkContainer } = useChainContext();
+  const { networkContainer, signerAccount } = useChainContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [ourLiquidity, setOurLiquidity] = useState(BigNumber.from(0));
@@ -50,12 +48,12 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
     const liquidityPools = network.contracts.liqidityPools;
 
     const loadLiqudity = async () => {
-      const mockTokenFactory = new MockToken__factory(network.provider.getSigner());
+      const mockTokenFactory = new MockToken__factory(network.provider.getSigner(signerAccount));
       const mockToken = mockTokenFactory.attach(tokenAddress);
 
       const providedLiquidityPromise = liquidityPools.providedLiquidity(tokenAddress);
       const availableLiquidityPromise = mockToken.balanceOf(liquidityPools.address);
-      const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, account ?? nullAddress);
+      const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, signerAccount);
       const ourRewardsPromise = liquidityPools.rewardsOwing(tokenAddress);
 
       const providedLiquidity = await providedLiquidityPromise;
@@ -77,7 +75,7 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
     return () => {
       pending = false;
     };
-  }, [networkContainer, account, chain, token]);
+  }, [signerAccount, networkContainer, chain, token]);
 
   return (
     <div className="col-12 col-sm-6 col-md-6 col-lg-6 mx-auto mx-lg-0">
