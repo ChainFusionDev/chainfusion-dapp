@@ -45,10 +45,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
           continue;
         }
 
-        const mockTokenFactory = new MockToken__factory(network.provider.getSigner(signerAccount));
-        const mockToken = mockTokenFactory.attach(tokenAddress);
-
-        tokenTVLPromises.push(mockToken.balanceOf(liquidityPools.address));
+        tokenTVLPromises.push(liquidityPools.availableLiquidity(tokenAddress));
       }
 
       for (const tvlPromise of tokenTVLPromises) {

@@ -48,11 +48,8 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
     const liquidityPools = network.contracts.liqidityPools;
 
     const loadLiqudity = async () => {
-      const mockTokenFactory = new MockToken__factory(network.provider.getSigner(signerAccount));
-      const mockToken = mockTokenFactory.attach(tokenAddress);
-
       const providedLiquidityPromise = liquidityPools.providedLiquidity(tokenAddress);
-      const availableLiquidityPromise = mockToken.balanceOf(liquidityPools.address);
+      const availableLiquidityPromise = liquidityPools.availableLiquidity(tokenAddress);
       const ourLiquidityPromise = liquidityPools.liquidityPositions(tokenAddress, signerAccount);
       const ourRewardsPromise = liquidityPools.rewardsOwing(tokenAddress);
 
