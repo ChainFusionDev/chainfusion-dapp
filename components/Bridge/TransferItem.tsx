@@ -45,7 +45,7 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
             </span>
             <span className="token-fees">
               <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
-              {transfer.token.name}
+              {transfer.token.symbol}
             </span>
           </span>
           <span className="transaction-arrow d-flex flex-grow-1 justify-content-center">
@@ -64,7 +64,7 @@ export const TransferItem = ({ transfer }: TransferItemProps) => {
             </span>
             <span className="token-fees">
               <img src={`/img/${transfer.token.identifier}.svg`} alt={`${transfer.token.name} Logo`} />{' '}
-              {transfer.token.name}
+              {transfer.token.symbol}
             </span>
           </span>
         </p>
