@@ -30,6 +30,45 @@
       "erc20BridgeAddress": "0xc9eF05688C8c6D3bB9ba0b89E0860B21b941C291"
     },
     {
+      "chainId": 80001,
+      "identifier": "mumbai",
+      "name": "Mumbai",
+      "rpc": "https://rpc-mumbai.maticvigil.com",
+      "explorer": "https://mumbai.polygonscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x704B7166dDF1526Cdfb65bD86DeeADaFe3191A1D"
+    },
+    {
+      "chainId": 97,
+      "identifier": "bsc-testnet",
+      "name": "BSC Testnet",
+      "rpc": "https://data-seed-prebsc-1-s3.binance.org:8545",
+      "explorer": "https://testnet.bscscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x4f962e68DBa89d51557D537A24FA73596890acd5"
+    },
+    {
+      "chainId": 43113,
+      "identifier": "fuji",
+      "name": "Fuji",
+      "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
+      "explorer": "https://testnet.snowtrace.io",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x6d2d5b2a77eBc22717f83aD1cEC500fCAe10a3f3"
+    },
+    {
       "chainId": 35443,
       "identifier": "q-testnet",
       "name": "Q Testnet",
@@ -56,32 +95,6 @@
       "erc20BridgeAddress": "0xe6068C38168e2e27f8d1256BD8565e060744Cd48"
     },
     {
-      "chainId": 43113,
-      "identifier": "fuji",
-      "name": "Fuji",
-      "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
-      "explorer": "https://testnet.snowtrace.io",
-      "nativeCurrency": {
-        "name": "ChainFusion",
-        "symbol": "CFN",
-        "decimals": 18
-      },
-      "erc20BridgeAddress": "0x6d2d5b2a77eBc22717f83aD1cEC500fCAe10a3f3"
-    },
-    {
-      "chainId": 80001,
-      "identifier": "mumbai",
-      "name": "Mumbai",
-      "rpc": "https://rpc-mumbai.maticvigil.com",
-      "explorer": "https://mumbai.polygonscan.com",
-      "nativeCurrency": {
-        "name": "ChainFusion",
-        "symbol": "CFN",
-        "decimals": 18
-      },
-      "erc20BridgeAddress": "0x704B7166dDF1526Cdfb65bD86DeeADaFe3191A1D"
-    },
-    {
       "chainId": 953842,
       "identifier": "ternopil",
       "name": "Ternopil",
@@ -93,19 +106,6 @@
         "decimals": 18
       },
       "erc20BridgeAddress": "0x77c2c95A50571Ff8e6D0a6C2bf3B07737027f2AF"
-    },
-    {
-      "chainId": 97,
-      "identifier": "bsc-testnet",
-      "name": "BSC Testnet",
-      "rpc": "https://data-seed-prebsc-1-s3.binance.org:8545",
-      "explorer": "https://testnet.bscscan.com",
-      "nativeCurrency": {
-        "name": "ChainFusion",
-        "symbol": "CFN",
-        "decimals": 18
-      },
-      "erc20BridgeAddress": "0x4f962e68DBa89d51557D537A24FA73596890acd5"
     }
   ],
   "tokens": [
