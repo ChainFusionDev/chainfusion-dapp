@@ -43,6 +43,19 @@
       "erc20BridgeAddress": "0xa4e87F02b3b8C3068f5c382eB350662Bd0cAdd28"
     },
     {
+      "chainId": 4002,
+      "identifier": "fantom-testnet",
+      "name": "FTM Testnet",
+      "rpc": "https://rpc.ankr.com/fantom_testnet",
+      "explorer": "https://testnet.ftmscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0xe6068C38168e2e27f8d1256BD8565e060744Cd48"
+    },
+    {
       "chainId": 43113,
       "identifier": "fuji",
       "name": "Fuji",
@@ -104,6 +117,7 @@
       "chains": {
         "sepolia": "0xBB982642c4273091F07E3247661c2A4192fb16f8",
         "q-testnet": "0xbfF7eD8cD87db54829c08f38fa1A668F458D27Cd",
+        "fantom-testnet": "0xB6dD6A883d2A97fFF37386D2a7ad210096F2C5Af",
         "fuji": "0x9770A17cBc41bB2538F4fBD3178cEBb40D1c089d",
         "mumbai": "0xd03254D181F267e7054227516dFe0153f0FD381A",
         "ternopil": "0x22a9252F8c2c89984b77366e57c20D13ce1C852c",
@@ -118,6 +132,7 @@
       "chains": {
         "sepolia": "0x3c83EA3676A66a3Ce8BE4C8927A4108baF2087e7",
         "q-testnet": "0xd0Db21ad119668be94592eD64D15E6B5d15798D1",
+        "fantom-testnet": "0xc2d6AB812a1A4A2A4Dd10c06EcCd4ed57505D69a",
         "fuji": "0x4faECa3a2783b4B92b104494B08C6468982ae34A",
         "mumbai": "0xB0FA6be969109be10edf8Cd0A533846C02fA6bfb",
         "ternopil": "0xCE77AFFE77820e80b6BcdF135c79Ad6B3FfbdB35",
@@ -132,6 +147,7 @@
       "chains": {
         "sepolia": "0x0Cb1b2c72a7E34EF3FB5E751DBa7C24238e483dd",
         "q-testnet": "0x3279a4289EE8bBF6e563A5DfE944b632C0c549B1",
+        "fantom-testnet": "0x1115131753a73b8eB5B8eBf968a1CaCcd5F90456",
         "fuji": "0xF887Cf413FDbFb843a6613a671E4b8048cB62DaD",
         "mumbai": "0xC09012aB576009fD26923bE9B77bE26E1ADEd634",
         "ternopil": "0x1DD344da9219724C51D058b9644a324Ba670E67B",
