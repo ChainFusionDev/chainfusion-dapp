@@ -2,15 +2,13 @@ import Layout from '@components/Layout';
 import { ChainLiquidityItem } from '@components/Liquidity/ChainLiquidityItem';
 import { getSupportedChains } from '@src/config';
 import { Chain } from '@src/types';
-import React, { useEffect, useState } from 'react';
-import ReactTooltip from 'react-tooltip';
 
 const Liquidity = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  // const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsMounted(true);
+  // }, []);
 
   const supportedChains = getSupportedChains();
   const liquidityItems = supportedChains.map((chain: Chain) => {
@@ -24,7 +22,7 @@ const Liquidity = () => {
           <div className="row">{liquidityItems}</div>
         </div>
       </section>
-      {isMounted && (
+      {/* {isMounted && (
         <ReactTooltip
           id="liquidity-tokens-tooltip"
           className="hover-tooltip"
@@ -33,10 +31,10 @@ const Liquidity = () => {
           offset={{ top: 0, right: 0, left: 0, bottom: 0 }}
           border={true}
         >
-          <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/ethereum.svg" />
-          <img alt="" className="tokens-tooltip-img" src="/img/liquidity/tokens/dai.svg" />
+          <img alt="" className="tokens-tooltip-img" src="/img/ethereum.svg" />
+          <img alt="" className="tokens-tooltip-img" src="/img/dai.svg" />
         </ReactTooltip>
-      )}
+      )} */}
     </Layout>
   );
 };
