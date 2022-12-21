@@ -1431,7 +1431,6 @@ button .fa-spinner {
 }
 
 .transfer-block .transaction-arrow {
-  position: absolute;
   margin: 0 auto;
   left: 0;
   right: 0;
