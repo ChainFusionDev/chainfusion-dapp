@@ -33,7 +33,7 @@
       "chainId": 80001,
       "identifier": "mumbai",
       "name": "Mumbai",
-      "rpc": "https://rpc-mumbai.maticvigil.com",
+      "rpc": "https://polygon-mumbai.g.alchemy.com/v2/gYQSqPZceFc6CGPrJ7643H2Rj1tGxb5m",
       "explorer": "https://mumbai.polygonscan.com",
       "nativeCurrency": {
         "name": "ChainFusion",

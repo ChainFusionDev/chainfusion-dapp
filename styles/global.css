@@ -2371,8 +2371,8 @@ img.liquidity-pool-logo {
   padding-right: 20px;
 }
 
-.liquidity-card-right .liquidity-provided,
-.liquidity-card-right .liquidity-rewards {
+.liquidity-provided,
+.liquidity-rewards {
   font-style: normal;
   font-weight: 500;
   font-size: 0.8125rem;
@@ -2380,19 +2380,18 @@ img.liquidity-pool-logo {
   color: var(--gray-two);
 }
 
-.liquidity-card-right .liquidity-provided .liquidity-provided-sum {
+.liquidity-provided .liquidity-provided-sum {
   display: flex;
 }
 
-.liquidity-card-right .liquidity-provided span {
+.liquidity-provided span {
   font-weight: 700;
   font-size: 0.8125rem;
   color: var(--main-color);
   margin-right: 5px;
 }
 
-.liquidity-card-right .liquidity-provided-plus,
-.liquidity-card-right .liquidity-provided-minus {
+.liquidity-provided-circle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2407,8 +2406,7 @@ img.liquidity-pool-logo {
   transition: all ease-out 0.1s;
 }
 
-.liquidity-card-right .liquidity-provided-plus:hover,
-.liquidity-card-right .liquidity-provided-minus:hover {
+.liquidity-provided-circle:not([disabled]):hover {
   background: var(--light);
   border: 1px solid var(--light-blue);
 }
@@ -2421,6 +2419,7 @@ img.liquidity-pool-logo {
   font-weight: 700;
   font-size: 0.8125rem;
   color: var(--main-color);
+  margin-right: 5px;
 }
 
 .liquidity-card-right .liquidity-rewards .liquidity-collect {
@@ -2433,20 +2432,11 @@ img.liquidity-pool-logo {
   color: var(--white);
   background: var(--main-color);
   border-radius: 50px;
-  margin-left: 6px;
   transition: all ease-out 0.1s;
 }
 
-.liquidity-card-right .liquidity-rewards .liquidity-collect:hover {
+.liquidity-card-right .liquidity-rewards .liquidity-collect:not([disabled]):hover {
   background: var(--hover-color);
-}
-
-.liquidity-collect.disabled-collect,
-.liquidity-collect.disabled-collect:hover,
-.liquidity-collect.disabled-collect:active,
-.liquidity-collect.disabled-collect:focus {
-  color: var(--gray-two) !important;
-  background: var(--light-1) !important;
 }
 
 .liquidity-sum:nth-child(1) {

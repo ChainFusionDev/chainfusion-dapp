@@ -1,6 +1,7 @@
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import { trimDecimals } from '@src/utils';
+import { useWeb3React } from '@web3-react/core';
 import { BigNumber, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -13,13 +14,66 @@ export interface TokenLiquidityItemProps {
 }
 
 export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiquidity }: TokenLiquidityItemProps) => {
-  const { networkContainer, signerAccount } = useChainContext();
+  const { networkContainer, signerAccount, switchNetwork } = useChainContext();
+  const { isActive, chainId } = useWeb3React();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshPending, setRefreshPending] = useState(false);
+  const [collectPending, setCollectPending] = useState(false);
   const [ourLiquidity, setOurLiquidity] = useState(BigNumber.from(0));
   const [ourRewards, setOurRewards] = useState(BigNumber.from(0));
   const [providedLiquidity, setProvidedLiquidity] = useState(BigNumber.from(0));
   const [availableLiquidity, setAvailableLiquidity] = useState(BigNumber.from(0));
+
+  const refreshRewards = async () => {
+    const network = networkContainer.get(chain.identifier);
+    if (network?.contracts === undefined) {
+      return;
+    }
+
+    const tokenAddress = token.chains[chain.identifier];
+    if (tokenAddress === undefined) {
+      return;
+    }
+
+    setRefreshPending(true);
+
+    try {
+      if (chainId !== chain.chainId) {
+        await switchNetwork(chain);
+      }
+
+      await (await network.contracts.feeManager.distributeRewards(tokenAddress)).wait();
+      setRefreshPending(false);
+    } catch (e) {
+      setRefreshPending(false);
+    }
+  };
+
+  const collectRewards = async () => {
+    const network = networkContainer.get(chain.identifier);
+    if (network?.contracts === undefined) {
+      return;
+    }
+
+    const tokenAddress = token.chains[chain.identifier];
+    if (tokenAddress === undefined) {
+      return;
+    }
+
+    setCollectPending(true);
+
+    try {
+      if (chainId !== chain.chainId) {
+        await switchNetwork(chain);
+      }
+
+      await (await network.contracts.liqidityPools.claimRewards(tokenAddress)).wait();
+      setCollectPending(false);
+    } catch (e) {
+      setCollectPending(false);
+    }
+  };
 
   useEffect(() => {
     let pending = true;
@@ -58,10 +112,10 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
       const ourRewards = await ourRewardsPromise;
 
       if (pending) {
-        setProvidedLiquidity(trimDecimals(providedLiquidity, token.decimals, 2));
-        setAvailableLiquidity(trimDecimals(availableLiquidity, token.decimals, 2));
-        setOurLiquidity(trimDecimals(ourLiquidity.balance, token.decimals, 2));
-        setOurRewards(trimDecimals(ourRewards, token.decimals, 2));
+        setProvidedLiquidity(trimDecimals(providedLiquidity, token.decimals, 6));
+        setAvailableLiquidity(trimDecimals(availableLiquidity, token.decimals, 6));
+        setOurLiquidity(trimDecimals(ourLiquidity.balance, token.decimals, 6));
+        setOurRewards(trimDecimals(ourRewards, token.decimals, 6));
         setIsLoading(false);
       }
     };
@@ -71,7 +125,7 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
     return () => {
       pending = false;
     };
-  }, [signerAccount, networkContainer, chain, token]);
+  }, [signerAccount, networkContainer, chain, token, refreshPending, collectPending]);
 
   return (
     <div className="col-12 col-sm-6 col-md-6 col-lg-6 mx-auto mx-lg-0">
@@ -108,15 +162,17 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
             {isLoading ? (
               <span className="line-skeleton line-skeleton-liquidity">&nbsp;</span>
             ) : (
-              <div className="liquidity-provided-sum">
-                <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
-                <button className="liquidity-provided-plus" onClick={onAddLiquidity}>
-                  <i className="fa-regular fa-plus"></i>
-                </button>
-                <button className="liquidity-provided-minus" onClick={onRemoveLiquidity}>
-                  <i className="fa-regular fa-minus"></i>
-                </button>
-              </div>
+              isActive && (
+                <div className="liquidity-provided-sum">
+                  <span>{isLoading ? '...' : utils.formatEther(ourLiquidity)}</span>
+                  <button className="liquidity-provided-circle" onClick={onAddLiquidity}>
+                    <i className="fa-regular fa-plus"></i>
+                  </button>
+                  <button className="liquidity-provided-circle" onClick={onRemoveLiquidity}>
+                    <i className="fa-regular fa-minus"></i>
+                  </button>
+                </div>
+              )
             )}
           </div>
           <div className="liquidity-rewards">
@@ -126,9 +182,15 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
             ) : (
               <div className="liquidity-rewards-sum">
                 <span>{isLoading ? '...' : utils.formatEther(ourRewards)}</span>
-                {ourRewards.gt(0) && (
-                  <button data-toggle="modal" data-target="#modalLiquidityCollect">
+                {isActive && (
+                  <button disabled={refreshPending} className="liquidity-provided-circle" onClick={refreshRewards}>
+                    <i className={`fa-regular fa-arrows-rotate ${refreshPending && 'fa-spinner'}`}></i>
+                  </button>
+                )}
+                {isActive && ourRewards.gt(0) && (
+                  <button disabled={collectPending} className="liquidity-collect" onClick={collectRewards}>
                     Collect
+                    {collectPending && <i className={`fa-regular fa-arrows-rotate fa-spinner ml-1`}></i>}
                   </button>
                 )}
               </div>
