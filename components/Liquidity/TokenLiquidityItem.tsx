@@ -1,4 +1,3 @@
-import { MockToken__factory } from '@chainfusion/erc-20-bridge-contracts';
 import { useChainContext } from '@src/context/ChainContext';
 import { Chain, Token } from '@src/types';
 import { trimDecimals } from '@src/utils';
