@@ -374,6 +374,7 @@
   }
 
   .transaction-arrow {
+    position: absolute;
     left: 34px !important;
     right: unset !important;
   }
