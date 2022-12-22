@@ -159,9 +159,7 @@ const Staking = () => {
     let pending = true;
 
     setBalance(BigNumber.from(0));
-    if (stakingInfo.validator !== nativeContainer.account) {
-      setStakingInfoLoading();
-    }
+    setStakingInfoLoading();
 
     loadStakingInfo().then((stakingInfo) => {
       if (pending) {
@@ -195,7 +193,6 @@ const Staking = () => {
     setStakingInfoLoading,
     loadStakingInfo,
     loadBalance,
-    stakingInfo.validator,
   ]);
 
   const buttons: ReactElement[] = [];
