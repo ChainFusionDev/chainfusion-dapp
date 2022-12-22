@@ -38,6 +38,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5.7.2",
+    "framer-motion": "^8.0.1",
     "husky": "^8.0.1",
     "i": "^0.3.7",
     "jquery": "^3.6.1",

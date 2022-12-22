@@ -4,6 +4,7 @@ import { useBridge } from '@store/bridge/hooks';
 import { useWeb3React } from '@web3-react/core';
 import { BridgeTransfer } from '@src/types';
 import { useAPI } from '@src/hooks/useAPI';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const TransferHistory = () => {
   const { isActive } = useWeb3React();
@@ -42,26 +43,36 @@ const TransferHistory = () => {
           </label>
         </div>
       )}
-      {historyLoading ? (
-        <>
-          <SkeletonTransferItem />
-          <SkeletonTransferItem />
-          <SkeletonTransferItem />
-          <SkeletonTransferItem />
-          <SkeletonTransferItem />
-        </>
-      ) : transactionItems.length > 0 ? (
-        transactionItems
-      ) : (
-        <></>
-      )}
-      {history.length > historyItemsToShow && !historyLoading && (
-        <div className="text-center mt-4 mb-2">
-          <a onClick={() => setHistoryItemsToShow(historyItemsToShow + 5)} className="show-more-btn">
-            Show More
-          </a>
-        </div>
-      )}
+      <AnimatePresence>
+        <motion.div
+          key={`only-my-${onlyMyHistory}-${historyItemsToShow}`}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {historyLoading ? (
+            <>
+              <SkeletonTransferItem />
+              <SkeletonTransferItem />
+              <SkeletonTransferItem />
+              <SkeletonTransferItem />
+              <SkeletonTransferItem />
+            </>
+          ) : transactionItems.length > 0 ? (
+            transactionItems
+          ) : (
+            <></>
+          )}
+
+          {history.length > historyItemsToShow && !historyLoading && (
+            <div className="text-center mt-4 mb-2">
+              <a onClick={() => setHistoryItemsToShow(historyItemsToShow + 5)} className="show-more-btn">
+                Show More
+              </a>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

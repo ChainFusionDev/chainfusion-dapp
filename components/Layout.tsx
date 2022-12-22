@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Navbar from '@components/Navbar';
 import { Footer } from '@components/Footer';
 import AlertContainer from '@components/Alerts/AlertContainer';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -25,7 +26,16 @@ function Layout({ children, module, title, description }: LayoutProps) {
 
       <main className="d-flex flex-column h-100">
         <Navbar module={module} />
-        {children}
+        <AnimatePresence>
+          <motion.div
+            className="col-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
         <AlertContainer />
         <Footer />
       </main>
