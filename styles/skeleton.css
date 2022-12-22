@@ -14,7 +14,8 @@
   height: 24px;
   border-radius: 50%;
   background-size: 600px;
-  animation: shine-avatar-skeleton 0.5s linear infinite alternate;
+  background-color: var(--light);
+  animation: shine-skeleton 1s linear infinite alternate;
 }
 
 .line-skeleton {
@@ -26,7 +27,8 @@
   margin-bottom: 3px;
   border-radius: 10px;
   background-size: 100% auto;
-  animation: shine-lines-skeleton 0.5s linear infinite alternate;
+  background-color: var(--light);
+  animation: shine-skeleton 1s linear infinite alternate;
 }
 
 .line-skeleton-tvl {
@@ -55,20 +57,11 @@
   width: 100px;
 }
 
-@keyframes shine-lines-skeleton {
+@keyframes shine-skeleton {
   0% {
-    background-color: hsl(205, 29%, 92%);
+    opacity: 1;
   }
-  100% {
-    background-color: hsl(204, 33%, 97%);
-  }
-}
-
-@keyframes shine-avatar-skeleton {
-  0% {
-    background-color: hsl(205, 29%, 92%);
-  }
-  100% {
-    background-color: hsl(204, 33%, 97%);
+  40%, 100% {
+    opacity: 0.5;
   }
 }
