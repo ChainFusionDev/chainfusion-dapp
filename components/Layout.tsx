@@ -31,7 +31,7 @@ function Layout({ children, module, title, description }: LayoutProps) {
             className="col-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.15 }}
           >
             {children}
           </motion.div>

@@ -222,12 +222,10 @@ main,
   position: relative;
   margin-top: 120px;
   padding: 30px 40px;
-  background: rgba(255, 255, 255, 0.1);
+  background-color: var(--white);
   border: 1px solid var(--light);
   border-radius: 38px;
   box-shadow: 0px 17px 40px rgb(35 43 64 / 8%);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
 }
 
 .logo {
