@@ -1,7 +1,6 @@
 import Layout from '@components/Layout';
 import TransferHistory from '@components/Bridge/TransferHistory';
 import BridgeWidget from '@components/Bridge/BridgeWidget';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Bridge = () => {
   return (
