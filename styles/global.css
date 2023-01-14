@@ -1629,7 +1629,7 @@ button .fa-spinner {
 
 .current-stake-block .number-block {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.3125rem;
   line-height: 29px;
   text-align: center;
   color: var(--main-color);
@@ -2168,7 +2168,7 @@ img.liquidity-pool-logo {
   vertical-align: middle;
   width: 20px;
   height: 20px;
-  margin: -5px 0px 0px 1px;
+  margin: -3px 0px 0px 1px;
 }
 
 .liquidity-info {
