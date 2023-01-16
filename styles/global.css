@@ -11,6 +11,7 @@
   --white: #ffffff;
   --silver: #a0afb9;
   --dark: #122439;
+  --dark-text: #4a657e;
   --gray: #88919c;
   --gray-two: #8694a5;
   --success: #29c195;
@@ -38,7 +39,7 @@ body,
 
 body {
   font: normal 14px/1.8 'Inter', sans-serif, 'Font Awesome 6 Pro';
-  background-color: var(--white);
+  background-color: #fafafa;
   background-image: url('/img/bg.svg');
   background-attachment: fixed;
   background-position: center;
@@ -63,7 +64,7 @@ main,
   position: absolute;
 }
 
-.logo-nav>img {
+.logo-nav > img {
   max-width: 200px;
 }
 
@@ -133,13 +134,10 @@ main,
   transform: rotate(0);
 }
 
-.navbar-collapse {
-  margin-top: 10px;
-}
-
 .navbarMenu {
   display: block;
-  margin-top: 25px;
+  background: #fff;
+  box-shadow: 0 0 64px 0 rgb(57 64 97 / 13%);
 }
 
 .navbarMenu .navbar-nav .nav-item .nav-link {
@@ -149,7 +147,7 @@ main,
   font-weight: 500;
   font-size: 1rem;
   line-height: 19px;
-  color: var(--gray-two);
+  color: var(--dark-text);
   transition: all ease-out 0.3s;
 }
 
@@ -223,9 +221,9 @@ main,
   margin-top: 120px;
   padding: 30px 40px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 38px;
-  box-shadow: 0px 17px 40px rgb(35 43 64 / 8%);
+  box-shadow: 24px 54px 24px rgb(75 105 139 / 1%), 14px 30px 20px rgb(75 105 139 / 2%),
+    6px 14px 15px rgb(75 105 139 / 3%), 2px 3px 8px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
 }
 
 .logo {
@@ -255,7 +253,7 @@ main,
   color: var(--silver);
 }
 
-.form-bridge small>strong {
+.form-bridge small > strong {
   color: var(--dark);
 }
 
@@ -740,12 +738,12 @@ button .fa-spinner {
   margin-top: 2px;
 }
 
-.token-icon .media>img {
+.token-icon .media > img {
   width: 17px;
   margin-top: 1px;
 }
 
-.blockchain-icon .media>img {
+.blockchain-icon .media > img {
   width: 18px;
 }
 
@@ -1147,7 +1145,7 @@ button .fa-spinner {
   border: 1px solid var(--light-blue);
 }
 
-.wallet-list li>img {
+.wallet-list li > img {
   margin-top: -3px;
   width: 17px;
   margin-right: 6px;
@@ -1498,9 +1496,9 @@ button .fa-spinner {
   margin-top: 5px;
   padding: 17px 20px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 20px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
 }
 
 .toggleTransactions {
@@ -1513,7 +1511,7 @@ button .fa-spinner {
   border-radius: 7px;
   background: var(--light-1);
   font-weight: 500;
-  font-size: .75rem;
+  font-size: 0.75rem;
   cursor: pointer;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -1521,7 +1519,7 @@ button .fa-spinner {
 }
 
 .toggleTransactions::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 50%;
   height: 100%;
@@ -1531,7 +1529,7 @@ button .fa-spinner {
   transition: all 0.3s;
 }
 
-.transactionsCheckbox:checked+.toggleTransactions::before {
+.transactionsCheckbox:checked + .toggleTransactions::before {
   left: 50%;
   border-radius: 0px 7px 7px 0px;
 }
@@ -1546,22 +1544,22 @@ button .fa-spinner {
   display: none;
 }
 
-.transactionsCheckbox:checked+.toggleTransactions div:first-child {
+.transactionsCheckbox:checked + .toggleTransactions div:first-child {
   color: var(--gray-two);
   transition: color 0.3s;
 }
 
-.transactionsCheckbox:checked+.toggleTransactions div:last-child {
+.transactionsCheckbox:checked + .toggleTransactions div:last-child {
   color: var(--white);
   transition: color 0.3s;
 }
 
-.transactionsCheckbox+.toggleTransactions div:first-child {
+.transactionsCheckbox + .toggleTransactions div:first-child {
   color: var(--white);
   transition: color 0.3s;
 }
 
-.transactionsCheckbox+.toggleTransactions div:last-child {
+.transactionsCheckbox + .toggleTransactions div:last-child {
   color: var(--gray-two);
   transition: color 0.3s;
 }
@@ -1577,9 +1575,9 @@ button .fa-spinner {
 .validator-info {
   padding: 25px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
 }
 
 .validator-avatar {
@@ -1631,7 +1629,7 @@ button .fa-spinner {
 
 .current-stake-block .number-block {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.3125rem;
   line-height: 29px;
   text-align: center;
   color: var(--main-color);
@@ -1703,9 +1701,9 @@ button .fa-spinner {
 .staking-table-title {
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
 }
 
 .staking-table-title .rank,
@@ -1738,9 +1736,9 @@ button .fa-spinner {
   margin-top: 5px;
   padding: 10px 20px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
 }
 
 .staking-table-tr .rank,
@@ -1914,9 +1912,10 @@ button .fa-spinner {
   margin-bottom: 10px;
   padding: 15px 18px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
+  filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 0));
   -ms-flex-order: 1;
   order: 1;
 }
@@ -2141,9 +2140,10 @@ button .fa-spinner {
   margin-bottom: 15px;
   padding: 15px 18px;
   background-color: var(--white);
-  border: 1px solid var(--light);
+  border: 1px solid var(--white);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
   transition: all ease-out 0.1s;
 }
 
@@ -2154,7 +2154,7 @@ img.liquidity-pool-logo {
 }
 
 .liquidity-block:hover {
-  border: 1px solid var(--light-blue);
+  border: 1px solid var(--light);
 }
 
 .liquidity-title-pool {
@@ -2168,7 +2168,7 @@ img.liquidity-pool-logo {
   vertical-align: middle;
   width: 20px;
   height: 20px;
-  margin: -5px 0px 0px 1px;
+  margin: -3px 0px 0px 1px;
 }
 
 .liquidity-info {
@@ -2299,9 +2299,9 @@ img.liquidity-pool-logo {
   margin-bottom: 15px;
   padding: 13px;
   background-color: var(--white);
-  border: 1px solid var(--light);
   border-radius: 15px;
-  filter: drop-shadow(0px 10px 20px rgba(75, 105, 139, 0.03));
+  box-shadow: 0 16px 6px rgb(75 105 139 / 1%), 0 9px 5px rgb(75 105 139 / 2%), 0 4px 4px rgb(75 105 139 / 3%),
+    0 1px 2px rgb(75 105 139 / 4%), 0 0 0 rgb(75 105 139 / 4%);
   transition: all ease-out 0.1s;
 }
 
@@ -2353,7 +2353,7 @@ img.liquidity-pool-logo {
   color: var(--dark);
 }
 
-.liquidity-card-left .liquidity-sum span>strong {
+.liquidity-card-left .liquidity-sum span > strong {
   font-style: normal;
   font-weight: 500;
   font-size: 0.625rem;
@@ -2563,14 +2563,14 @@ footer .copyright {
   margin-right: 15px;
 }
 
-.footer-link li>a {
+.footer-link li > a {
   font-style: normal;
   font-weight: 500;
   font-size: 0.75rem;
   color: #52657a;
 }
 
-.footer-link li>a:hover {
+.footer-link li > a:hover {
   color: var(--hover-color);
 }
 
@@ -2716,4 +2716,35 @@ footer .copyright {
 
 .alertMsg.deleted .icon i {
   color: var(--info);
+}
+
+/* Not results block */
+
+.not-results-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.not-results-block img {
+  width: 110px;
+}
+
+.not-results-block .title-text {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 19px;
+  margin-top: 15px;
+  color: var(--dark);
+}
+
+.not-results-block p {
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 19px;
+  margin-top: 10px;
+  color: var(--gray-two);
+  text-align: center;
 }

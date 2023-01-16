@@ -73,7 +73,7 @@ export const ChainLiquidityItem = ({ chain }: ChainLiquidityItemProps) => {
   });
 
   return (
-    <div className="col-12 col-sm-9 col-md-6 col-lg-4 mx-auto mx-lg-0">
+    <div className="col-12 col-sm-9 col-md-6 col-lg-4 mx-auto mx-md-0">
       <Link href={`/liquidity/${chain.identifier}`}>
         <div className="liquidity-block">
           <div className="liquidity-title-pool">
