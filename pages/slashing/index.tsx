@@ -27,16 +27,7 @@ const Slashing = () => {
             </div>
 
             <div className="col-12">
-              <div className="not-results-block">
-                <img src="img/not-results-found.svg" />
-                <div className="title-text">Not results found</div>
-                <p>
-                  You do not have a slashing yet. <br />
-                  You can create a new one by clicking on the &quot;Сreate Proposal&quot;.
-                </p>
-              </div>
-
-              {/*  <div className="slashing-block">
+              <div className="slashing-block">
                 <div className="vote-block">
                   <span className="vote-btn voted-active">
                     <i className="fa-light fa-hand"></i>
@@ -208,10 +199,10 @@ const Slashing = () => {
                     <i className="fa-light fa-clock"></i> 15.02.2022 - 17:35:35
                   </div>
                 </div>
-               </div> */}
+              </div>
             </div>
 
-            {/* <div className="col-12">
+            <div className="col-12">
               <div className="pagination-block d-flex justify-content-between">
                 <ul className="pagination-nav">
                   <li className="prev-btn">
@@ -230,7 +221,7 @@ const Slashing = () => {
                   Page <span>2</span> of <span>18</span>
                 </div>
               </div>
-              </div> */}
+            </div>
           </div>
         </div>
       </section>

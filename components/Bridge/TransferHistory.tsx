@@ -61,13 +61,7 @@ const TransferHistory = () => {
           ) : transactionItems.length > 0 ? (
             transactionItems
           ) : (
-            <>
-              <div className="not-results-block">
-                <img src="img/not-results-found.svg" />
-                <div className="title-text">Not results found</div>
-                <p>You do not have a transaction yet.</p>
-              </div>
-            </>
+            <></>
           )}
 
           {history.length > historyItemsToShow && !historyLoading && (

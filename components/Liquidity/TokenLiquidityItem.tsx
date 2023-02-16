@@ -128,7 +128,7 @@ export const TokenLiquidityItem = ({ chain, token, onAddLiquidity, onRemoveLiqui
   }, [signerAccount, networkContainer, chain, token, refreshPending, collectPending]);
 
   return (
-    <div className="col-12 col-sm-6 col-md-6 col-lg-6 mx-sm-0">
+    <div className="col-12 col-sm-6 col-md-6 col-lg-6 mx-auto mx-lg-0">
       <div className="liquidity-inside-block">
         <div className="liquidity-card-token flex-sm-grow-1">
           <img alt="" src={`/img/${token.identifier}.svg`} />

@@ -284,11 +284,6 @@
 }
 
 @media only screen and (max-width: 991px) {
-
-  .navbar-collapse {
-    margin-bottom: 10px;
-  }
-
   .section-page {
     padding-top: 100px;
   }
@@ -324,7 +319,7 @@
 
   .connect-wallet-btn {
     max-width: 210px;
-    margin: 10px auto;
+    margin: 0 auto;
   }
 
   .logo-nav {
