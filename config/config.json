@@ -27,7 +27,7 @@
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x6c0a4472714ac4Bf9B768E0801cCD7EbF67fc675"
+      "erc20BridgeAddress": "0x87964Da59B33BEBe6bC67F87705cDDA41818ef91"
     },
     {
       "chainId": 5002,
@@ -40,7 +40,7 @@
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x6c0a4472714ac4Bf9B768E0801cCD7EbF67fc675"
+      "erc20BridgeAddress": "0x2F2D212589d2ce756634ead5C3aD65ecA59A6AEF"
     },
     {
       "chainId": 5003,
@@ -53,7 +53,7 @@
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0xd11207Bb3E52dB73493eD1995A4749f309f9C888"
+      "erc20BridgeAddress": "0x37dfeAF0e31e92B9e8878eA44CB54Fd5A3973bDF"
     }
   ],
   "tokens": [
@@ -63,9 +63,9 @@
       "symbol": "USDT",
       "decimals": 18,
       "chains": {
-        "bg1": "0x880Ae1133c245dcAdac4fBD69146e1Ee455B58cb",
-        "bg2": "0x880Ae1133c245dcAdac4fBD69146e1Ee455B58cb",
-        "bg3": "0x8E28dEe88154cB5198F8fed2Ea21928E4D294763"
+        "bg1": "0xa935227e4d9f906899aBdC575B299673194390c0",
+        "bg2": "0x7708264A6d6c79F3fA930DEfded2AFd358Efde7D",
+        "bg3": "0x38Dea1044Ce226136B18e4941520A57520D3e030"
       }
     },
     {
@@ -74,9 +74,9 @@
       "symbol": "USDC",
       "decimals": 18,
       "chains": {
-        "bg1": "0xF173cf4C93447120688D0bEf9EDF9c2e0d03CE36",
-        "bg2": "0xF173cf4C93447120688D0bEf9EDF9c2e0d03CE36",
-        "bg3": "0x1F190b538a72975735927F1d0c6c2E4588A943aF"
+        "bg1": "0xb9DA246aEF2E333534Ba30EaFbb0FE6503a02834",
+        "bg2": "0xA6f4b5093d7510dDce08D5aAadB70D6dba657393",
+        "bg3": "0xBf377d41051311aF4afaeD5BB2473b934ab89b8b"
       }
     }
   ]
