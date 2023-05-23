@@ -30,7 +30,7 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" target="_blank" rel="noreferrer">
+                <a href="https://t.me/chainfusion" target="_blank" rel="noreferrer">
                   <img src="/img/social/telegram.svg" alt="Telegram" />
                 </a>
               </li>
