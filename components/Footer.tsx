@@ -11,7 +11,7 @@ export const Footer = () => {
             </div>
             <ul className="footer-link d-flex justify-content-between mr-auto">
               <li>
-                <Link href="https://chainfusion.org">Home</Link>
+                <Link href="https://chainfusion.org">About</Link>
               </li>
               <li>
                 <Link href="https://explorer.chainfusion.org">Explorer</Link>
@@ -20,7 +20,7 @@ export const Footer = () => {
                 <Link href="https://docs.chainfusion.org">Documentation</Link>
               </li>
               <li>
-                <Link href="/">Data privacy</Link>
+                <Link href="/">Data Privacy</Link>
               </li>
             </ul>
             <ul className="footer-social-icon d-flex ml-auto">
