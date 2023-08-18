@@ -17,43 +17,82 @@
   },
   "chains": [
     {
-      "chainId": 5001,
-      "identifier": "bg1",
-      "name": "BG 1",
-      "rpc": "https://bg1-rpc.chainfusion.org",
-      "explorer": "https://bg1-explorer.chainfusion.org",
+      "chainId": 11155111,
+      "identifier": "sepolia",
+      "name": "Sepolia",
+      "rpc": "https://ethereum-sepolia.blockpi.network/v1/rpc/public",
+      "explorer": "https://sepolia.etherscan.io",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x87964Da59B33BEBe6bC67F87705cDDA41818ef91"
+      "erc20BridgeAddress": "0xB2446b2390e05C497A4EFEbe7c0d2B9a6be0717A"
     },
     {
-      "chainId": 5002,
-      "identifier": "bg2",
-      "name": "BG 2",
-      "rpc": "https://bg2-rpc.chainfusion.org",
-      "explorer": "https://bg2-explorer.chainfusion.org",
+      "chainId": 35443,
+      "identifier": "q-testnet",
+      "name": "Q Testnet",
+      "rpc": "https://rpc.qtestnet.org",
+      "explorer": "https://explorer.qtestnet.org",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x2F2D212589d2ce756634ead5C3aD65ecA59A6AEF"
+      "erc20BridgeAddress": "0x9cE907E4C549ADDF4aDfF829b47ACc543E33abC2"
     },
     {
-      "chainId": 5003,
-      "identifier": "bg3",
-      "name": "BG 3",
-      "rpc": "https://bg3-rpc.chainfusion.org",
-      "explorer": "https://bg3-explorer.chainfusion.org",
+      "chainId": 43113,
+      "identifier": "fuji",
+      "name": "Fuji",
+      "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
+      "explorer": "https://testnet.snowtrace.io",
       "nativeCurrency": {
         "name": "ChainFusion",
         "symbol": "CFN",
         "decimals": 18
       },
-      "erc20BridgeAddress": "0x37dfeAF0e31e92B9e8878eA44CB54Fd5A3973bDF"
+      "erc20BridgeAddress": "0x9cE907E4C549ADDF4aDfF829b47ACc543E33abC2"
+    },
+    {
+      "chainId": 80001,
+      "identifier": "mumbai",
+      "name": "Mumbai",
+      "rpc": "https://rpc-mumbai.maticvigil.com",
+      "explorer": "https://mumbai.polygonscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x947DBAdF561806519030066c5662916AC36256bd"
+    },
+    {
+      "chainId": 953842,
+      "identifier": "ternopil",
+      "name": "Ternopil",
+      "rpc": "https://rpc.chainfusion.org",
+      "explorer": "https://explorer.chainfusion.org",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x5C2a52039f0dAE5e946535Be1a8719E849c72746"
+    },
+    {
+      "chainId": 97,
+      "identifier": "bsc-testnet",
+      "name": "BSC Testnet",
+      "rpc": "https://data-seed-prebsc-1-s1.binance.org:8545",
+      "explorer": "https://testnet.bscscan.com",
+      "nativeCurrency": {
+        "name": "ChainFusion",
+        "symbol": "CFN",
+        "decimals": 18
+      },
+      "erc20BridgeAddress": "0x5404B207BF91fcC68Fb24e53755D67CA065ED8A8"
     }
   ],
   "tokens": [
@@ -63,9 +102,12 @@
       "symbol": "USDT",
       "decimals": 18,
       "chains": {
-        "bg1": "0xa935227e4d9f906899aBdC575B299673194390c0",
-        "bg2": "0x7708264A6d6c79F3fA930DEfded2AFd358Efde7D",
-        "bg3": "0x38Dea1044Ce226136B18e4941520A57520D3e030"
+        "sepolia": "0x17534a190edcFB228f233430325Dc434cFcbFd45",
+        "q-testnet": "0x21C5501aa2CaEa736A84e2c832876d2074e156AA",
+        "fuji": "0x82732010B431bc62e10D3fF19C0dbfE18Bd1d821",
+        "mumbai": "0x957ECEcfE05b4cF4c26491e7C05ac5a78F32ad5b",
+        "ternopil": "0x1AC87812fd101443d0B24B9F793bc3ad4D492Af6",
+        "bsc-testnet": "0xf7D385f39792f43939EE0b09F963100c14a38226"
       }
     },
     {
@@ -74,9 +116,12 @@
       "symbol": "USDC",
       "decimals": 18,
       "chains": {
-        "bg1": "0xb9DA246aEF2E333534Ba30EaFbb0FE6503a02834",
-        "bg2": "0xA6f4b5093d7510dDce08D5aAadB70D6dba657393",
-        "bg3": "0xBf377d41051311aF4afaeD5BB2473b934ab89b8b"
+        "sepolia": "0xD4bE2B921F390C9ab79c1f7c7a004106301e3e5F",
+        "q-testnet": "0xd5a32EE055f1E7662Dd8d3485A6e5A41d7f857f3",
+        "fuji": "0x6B04f62134Dd42Efa1aaF8D5259e2C5B3aEFeb8B",
+        "mumbai": "0x032c0030a83e5Da4e09385bf6298086CFAaC6dEB",
+        "ternopil": "0x7aEEecd9bd1Ae7a3B82eD1522cAABE485187a8a4",
+        "bsc-testnet": "0x277A57BdEdb9811D0A54663Fd681687435dC865E"
       }
     }
   ]
